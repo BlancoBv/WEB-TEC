@@ -8,3 +8,48 @@
   opacity: 0.7;
   background-color: #f6f6f6;
 }
+.h-30 {
+  height: 30%;
+}
+
+.imageOpacity img:hover {
+  opacity: 0.7;
+}
+.hideWhiteMenu {
+  height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  transition: all ease-in-out 1s;
+}
+.blueBackground {
+  background-color: rgba(27, 57, 106, 0.98);
+}
+.blueMenu {
+  height: 50px;
+}
+/* Estilos dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(27, 57, 106, 0.98);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-item:hover {
+  opacity: 0.7;
+}
