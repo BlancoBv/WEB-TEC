@@ -1,4 +1,5 @@
 import Carrousel from "../../components/Carrousel";
+import Mapa from "../../components/Mapa";
 import NoticiaCard from "../../components/NoticiaCard";
 import SectionContainer from "../../components/SectionContainer";
 
@@ -70,7 +71,9 @@ function Home() {
           ))}
         </div>
       </SectionContainer>
-      <SectionContainer title="Convocatorias"></SectionContainer>
+      <SectionContainer title="Convocatorias">
+        <Mapa />
+      </SectionContainer>
     </div>
   );
 }
