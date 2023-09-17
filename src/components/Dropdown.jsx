@@ -1,12 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Dropdown({ items, title }) {
   return (
     <div className="dropdown">
       {title} <i className="fa-solid fa-caret-down" />
       <div className="dropdown-content">
-        {items.map((el) => (
-          <p className="dropdown-item">{el.item}</p>
+        {items.map((el, i) => (
+          <Link key={i} className="dropdown-item" to={el.link}>
+            {el.item}
+          </Link>
         ))}
       </div>
     </div>

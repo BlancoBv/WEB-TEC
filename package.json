@@ -12,8 +12,12 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
     "bootstrap": "^5.3.1",
+    "draft-convert": "^2.1.13",
+    "draft-js": "^0.11.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draft-wysiwyg": "^1.15.0",
+    "react-placeholder-image": "^0.1.8",
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {

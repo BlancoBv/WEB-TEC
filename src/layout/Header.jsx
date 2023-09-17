@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
-import LogoGob from "../img/logoheader.svg";
-import LogoGobMx from "../img/placa-gob1.png";
-import LogoSep from "../img/placa-gob2.png";
-import LogoTec from "../img/placa_tecnm.jpg";
+import { forwardRef, useEffect, useState } from "react";
+import LogoGob from "../assets/img/logoheader.svg";
+import LogoGobMx from "../assets/img/placa-gob1.png";
+import LogoSep from "../assets/img/placa-gob2.png";
+import LogoTec from "../assets/img/placa_tecnm.jpg";
 import Dropdown from "../components/Dropdown";
+import { Link } from "react-router-dom";
 
-function Header() {
+const Header = () => {
   const [showWhiteMenu, setShowWhiteMenu] = useState(true);
+  /* Funcion usada para esconder la barra blanca en el header al desplazarse en el contenedor principal */
   useEffect(() => {
-    window.addEventListener("scroll", (e) => {
-      const currentScroll = window.scrollY;
+    const element = document.getElementById("main");
+    element.addEventListener("scroll", (e) => {
+      const currentScroll = element.scrollTop;
 
       if (currentScroll >= 100) {
         setShowWhiteMenu((prev) => (prev = false));
@@ -20,7 +23,7 @@ function Header() {
   }, []);
 
   return (
-    <header className="w-100 position-fixed top-0">
+    <header className="w-100 z-3">
       {/* Barra gobierno */}
       <div className="header w-100 d-flex justify-content-end position-relative">
         <a
@@ -75,13 +78,13 @@ function Header() {
       </div>
       {/* Barra azul */}
       <div className="blueBackground text-white blueMenu d-flex justify-content-evenly align-items-center">
-        <a className="text-decoration-none text-white" href="">
+        <Link className="text-decoration-none text-white" to="/">
           <i className="fa-solid fa-house" />
-        </a>
+        </Link>
         <Dropdown
           title="Conocenos"
           items={[
-            { item: "Antecedentes Historicos", link: "" },
+            { item: "Antecedentes Historicos", link: "/antecedentes" },
             { item: "Misión", link: "" },
             { item: "Visión", link: "" },
             { item: "Valores institucionales", link: "" },
@@ -138,6 +141,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

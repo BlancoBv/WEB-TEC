@@ -1,0 +1,15 @@
+.noticia-card {
+  height: 20rem;
+  width: 20rem;
+  padding: 10px;
+}
+.noticia-imagen {
+  width: 100%;
+  height: 10rem;
+}
+
+.noticia-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
