@@ -8,9 +8,11 @@ import "@fortawesome/fontawesome-free/css/fontawesome.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.esm";
 import "bootstrap/dist/js/bootstrap.bundle";
+import "../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <App />
+  /* <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode> */
 );

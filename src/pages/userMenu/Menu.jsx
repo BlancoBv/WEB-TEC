@@ -1,7 +1,8 @@
 import React from "react";
+import Base from "./layout/Base";
 
 function Menu() {
-  return <div>Menu</div>;
+  return <Base />;
 }
 
 export default Menu;

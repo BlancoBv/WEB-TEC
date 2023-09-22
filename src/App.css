@@ -15,6 +15,15 @@
 .h-30 {
   height: 30%;
 }
+.h-90 {
+  height: 90%;
+}
+.w-85 {
+  width: 85%;
+}
+.w-15 {
+  width: 15%;
+}
 
 .imageOpacity img:hover {
   opacity: 0.7;

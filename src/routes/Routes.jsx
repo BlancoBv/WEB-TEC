@@ -5,6 +5,8 @@ import {
 import IndexLayout from "../layout/IndexLayout";
 import Antecedentes from "../pages/conocenos/Antecedentes";
 import Home from "../pages/home/Home";
+import IndexMenu from "../pages/userMenu/IndexMenu";
+import Menu from "../pages/userMenu/Menu";
 
 function Routes() {
   const rutas = Router([
@@ -18,6 +20,8 @@ function Routes() {
     },
     {
       path: "menu",
+      element: <IndexMenu />,
+      children: [{ index: true, element: <Menu /> }],
     },
   ]);
   return <RouterProvider router={rutas} />;
