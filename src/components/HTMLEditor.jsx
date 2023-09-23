@@ -1,12 +1,33 @@
 import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
-import { convertToHTML } from "draft-convert";
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 
-function HTMLEditor({ setVariable }) {
+function HTMLEditor({ setVariable, initialContent }) {
+  const intialValue = {
+    blocks: [
+      {
+        key: "5ra2q",
+        text: "Borra este texto para comenzar.",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [
+          {
+            offset: 0,
+            length: 31,
+            style: "ITALIC",
+          },
+        ],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  };
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
+    initialContent
+      ? EditorState.createWithContent(convertFromRaw(initialContent))
+      : EditorState.createWithContent(convertFromRaw(intialValue))
   );
 
   const handleEditor = (content) => {
@@ -16,10 +37,11 @@ function HTMLEditor({ setVariable }) {
         html: {
           __html: draftToHtml(convertToRaw(editorState.getCurrentContent())),
         },
+        json: convertToRaw(editorState.getCurrentContent()),
       });
     }
   };
-  console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+
   return (
     <div className="d-flex w-100 h-50 ">
       <Editor

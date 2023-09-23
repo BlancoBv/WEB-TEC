@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HTMLEditor from "../../../components/HTMLEditor";
 import Modal from "../../../components/Modal";
 import Input, { InputImage } from "../../../components/Input";
+import { convertFromRaw } from "draft-js";
 
 function Base() {
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,6 @@ function Base() {
     const { name, value } = e.target;
     setBody({ ...body, [name]: value });
   };
-  console.log(body);
 
   return (
     <div className="vw-100 vh-100 d-flex">
