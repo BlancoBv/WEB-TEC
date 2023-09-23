@@ -23,6 +23,8 @@ function HTMLEditor({ setVariable }) {
   return (
     <div className="d-flex w-100 h-50 ">
       <Editor
+        editorClassName="customEditor"
+        wrapperClassName="customWrapper"
         editorState={editorState}
         onEditorStateChange={/* setEditorState */ handleEditor}
       />

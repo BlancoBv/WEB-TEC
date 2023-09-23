@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import HTMLEditor from "../../../components/HTMLEditor";
 import Modal from "../../../components/Modal";
-import Input from "../../../components/Input";
+import Input, { InputImage } from "../../../components/Input";
 
 function Base() {
   const [showModal, setShowModal] = useState(false);
@@ -13,21 +13,8 @@ function Base() {
     const { name, value } = e.target;
     setBody({ ...body, [name]: value });
   };
+  console.log(body);
 
-  const handleImage = (e) => {
-    e.preventDefault();
-    console.log(e);
-    const { name, value, files } = e.target;
-
-    let reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = (e) => {
-      console.log("image data: ", e.target.result);
-      setBody({ ...body, [name]: e.target.result });
-    };
-  };
-
-  console.log(editorContent);
   return (
     <div className="vw-100 vh-100 d-flex">
       <Modal
@@ -36,16 +23,29 @@ function Base() {
         title={body.titulo}
       >
         <img
-          className="w-100"
+          className="w-100 mb-3"
           alt="Imagen principal"
           src={body.imagenPrincipal}
         />
+
         <div
           className="w-100"
           dangerouslySetInnerHTML={
             editorContent.html || { __html: "<p>Texto de ejemplo</p>" }
           }
         ></div>
+        {body.hasOwnProperty("imagenesSecundarias") && (
+          <div className="d-flex flex-column w-100 align-items-center gap-4">
+            {body.imagenesSecundarias.map((el, i) => (
+              <img
+                key={i}
+                className="w-50"
+                alt={`Imagen secundaria ${i}`}
+                src={el}
+              />
+            ))}
+          </div>
+        )}
       </Modal>
       <div className="border w-15 d-flex flex-column">
         <span>Añadir noticia</span>
@@ -58,16 +58,20 @@ function Base() {
             name="titulo"
             handle={handle}
           />
-          <input
-            className="form-control"
-            type="file"
-            //value={body.imagenPrincipal}
+          <InputImage
+            label="Imagen principal"
             name="imagenPrincipal"
-            onChange={handleImage}
-            accept="image/*"
+            variable={body}
+            setVariable={setBody}
           />
-          XDD
           <HTMLEditor setVariable={setEditorContent} />
+          <InputImage
+            label="Imagenes secundarias"
+            name="imagenesSecundarias"
+            variable={body}
+            setVariable={setBody}
+            multiple={true}
+          />
         </div>
         <div className="d-flex justify-content-evenly align-items-center">
           <button>Guardar</button>

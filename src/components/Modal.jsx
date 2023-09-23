@@ -1,7 +1,10 @@
 import { useTransition, animated } from "@react-spring/web";
 import { createPortal } from "react-dom";
+import { useHotkeys } from "react-hotkeys-hook";
 
 function Modal({ show, close, title, children }) {
+  useHotkeys("esc", () => close());
+
   const transitions = useTransition(show, {
     from: { x: 0, opacity: 0 },
     enter: { x: 0, opacity: 1 },
