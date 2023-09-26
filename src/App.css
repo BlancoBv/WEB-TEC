@@ -73,3 +73,10 @@
 .customEditor {
   flex-grow: 1;
 }
+
+.footer-verde {
+  background-image: url(assets/img/fondofooter.jpg);
+}
+.footer-azul {
+  padding: 30px 10px 30px 10px;
+}
