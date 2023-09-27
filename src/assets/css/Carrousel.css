@@ -1,11 +1,19 @@
 .carrousel {
   height: 400px;
   width: 100%;
-  border: 1px solid black;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
-.carrousel img {
+/* .carrousel img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+} */
+
+.carrousel div {
+  background-size: cover;
+  background-position: center;
+  position: absolute;
 }

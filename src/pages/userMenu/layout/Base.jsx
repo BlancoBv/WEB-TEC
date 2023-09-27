@@ -3,17 +3,27 @@ import HTMLEditor from "../../../components/HTMLEditor";
 import Modal from "../../../components/Modal";
 import Input, { InputImage } from "../../../components/Input";
 import { convertFromRaw } from "draft-js";
+import Axios from "../../../axios/Axios";
 
 function Base() {
   const [showModal, setShowModal] = useState(false);
   const [editorContent, setEditorContent] = useState({ html: "" });
   const [body, setBody] = useState({ titulo: "", imagenPrincipal: "" });
+  const [banner, setBanner] = useState({ imagen: "" });
 
   const handle = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setBody({ ...body, [name]: value });
   };
+
+  const saveBanner = async (e) => {
+    e.preventDefault();
+    try {
+      await Axios.post("/banners/crear", { imagen: banner.imagen[0] });
+    } catch (error) {}
+  };
+  console.log(banner.imagen);
 
   return (
     <div className="vw-100 vh-100 d-flex">
@@ -72,6 +82,18 @@ function Base() {
             setVariable={setBody}
             multiple={true}
           />
+
+          <div className="mt-3 border-top">
+            <form onSubmit={saveBanner}>
+              <InputImage
+                label="Subir banner"
+                name="imagen"
+                variable={banner}
+                setVariable={setBanner}
+              />
+              <button type="submit">Guardar banner</button>
+            </form>
+          </div>
         </div>
         <div className="d-flex justify-content-evenly align-items-center">
           <button>Guardar</button>

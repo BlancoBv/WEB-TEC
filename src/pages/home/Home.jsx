@@ -1,3 +1,4 @@
+import Axios from "../../axios/Axios";
 import Carrousel from "../../components/Carrousel";
 import Mapa from "../../components/Mapa";
 import NoticiaCard from "../../components/NoticiaCard";
@@ -61,6 +62,10 @@ function Home() {
       fecha: "2023-05-20",
     },
   ];
+
+  const getData = async () => {
+    const XD = await Axios.get("/banners/obtener");
+  };
   return (
     <div>
       <Carrousel />
@@ -76,7 +81,7 @@ function Home() {
         <p>Texto de ejemplo</p>
       </SectionContainer>
       <SectionContainer title="Redes sociales">
-        <div className="d-flex align-items-center justify-content-evenly p-2">
+        {/*   <div className="d-flex align-items-center justify-content-evenly p-2">
           <div className="w-25">
             <a
               className="twitter-timeline"
@@ -91,13 +96,12 @@ function Home() {
             src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ftecnmdelosrios%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
             width="340"
             height="500"
-            /* style="border:none;overflow:hidden" */
             scrolling="no"
             frameborder="0"
             allowfullscreen="true"
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           ></iframe>
-        </div>
+        </div> */}
       </SectionContainer>
     </div>
   );
