@@ -6,7 +6,7 @@ import IndexLayout from "../layout/IndexLayout";
 import Antecedentes from "../pages/conocenos/Antecedentes";
 import Home from "../pages/home/Home";
 import IndexMenu from "../pages/userMenu/IndexMenu";
-import Menu from "../pages/userMenu/Menu";
+import AddNoticias from "../pages/userMenu/sections/AddNoticias";
 
 function Routes() {
   const rutas = Router([
@@ -21,7 +21,7 @@ function Routes() {
     {
       path: "menu",
       element: <IndexMenu />,
-      children: [{ index: true, element: <Menu /> }],
+      /*  children: [{ index: true, element: <AddNoticias /> }], */
     },
   ]);
   return <RouterProvider router={rutas} />;

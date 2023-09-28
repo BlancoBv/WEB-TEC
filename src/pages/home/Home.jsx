@@ -3,6 +3,7 @@ import Carrousel from "../../components/Carrousel";
 import Mapa from "../../components/Mapa";
 import NoticiaCard from "../../components/NoticiaCard";
 import SectionContainer from "../../components/SectionContainer";
+import UseGetData from "../../hooks/UseGetData";
 
 function Home() {
   const Noticias = [
@@ -63,12 +64,11 @@ function Home() {
     },
   ];
 
-  const getData = async () => {
-    const XD = await Axios.get("/banners/obtener");
-  };
+  const { data, isPending } = UseGetData("/banners/obtener?mostrar=vigentes");
+  console.log(data);
   return (
     <div>
-      <Carrousel />
+      {!isPending && <Carrousel images={data.response} />}
       <SectionContainer title="Noticias">
         <div className="w-100 h-100 d-flex overflow-x-auto">
           {Noticias.map((el) => (

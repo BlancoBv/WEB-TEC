@@ -1,43 +1,76 @@
 import { useTransition, animated } from "@react-spring/web";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { urlMain } from "../axios/Axios";
 
 function Carrousel({ images }) {
   const [index, set] = useState(0);
-
-  const ola = [
-    "https://placehold.co/500x400",
-    "https://placehold.co/800x400",
-    "https://placehold.co/600x400",
-  ];
+  const [isManualChanged, setIsManualChanged] = useState(false);
 
   const transitions = useTransition(index, {
-    key: null,
+    key: index,
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    config: { duration: 2000 },
+    config: { duration: 3000 },
+
     onRest: (_a, _b, item) => {
       if (index === item) {
-        set((state) => (state + 1) % ola.length);
+        set((state) => (state + 1) % images.length);
       }
     },
+
     exitBeforeEnter: true,
   });
+
+  const manualChange = (e) => {
+    const { id } = e.target;
+    setIsManualChanged(true);
+    set(Number(id));
+  };
+  /* 
+  useEffect(() => {
+    if (isManualChanged) {
+      setTimeout(() => {
+        setIsManualChanged(false);
+      }, 2000);
+    }
+  }, [isManualChanged, setIsManualChanged]); */
+
   return (
-    <div className="carrousel">
-      {/*  */}
-      {transitions((style, i) => (
-        <animated.div
-          style={{
-            ...style,
-            backgroundImage: `url(${ola[i]})`,
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      ))}
+    <div>
+      <div className="carrousel">
+        {/*  */}
+        {transitions((style, i) => (
+          <animated.div
+            style={{
+              ...style,
+              backgroundImage: `url(${urlMain}${images[i].imagen})`,
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        ))}
+      </div>
+      {/*  <div className="d-flex justify-content-center gap-3 p-2">
+        {images.map((el, i) => (
+          <i
+            key={el.idbanner}
+            id={i}
+            className="fa-regular fa-circle-dot"
+            onClick={manualChange}
+          />
+        ))}
+      </div> */}
     </div>
   );
 }
+
+Carrousel.defaultProps = {
+  images: [
+    "https://placehold.co/500x400",
+    "https://placehold.co/800x400",
+    "https://placehold.co/600x400",
+  ],
+};
 
 export default Carrousel;

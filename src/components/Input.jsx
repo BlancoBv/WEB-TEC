@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Input({ name, value, label, handle, placeholder, type }) {
   return (
@@ -28,6 +28,7 @@ export const InputImage = ({
   setVariable,
   variable,
   label,
+  required,
 }) => {
   const handle = (e) => {
     e.preventDefault();
@@ -48,7 +49,7 @@ export const InputImage = ({
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = (e) => {
-        setVariable({ ...variable, [name]: [e.target.result] });
+        setVariable({ ...variable, [name]: e.target.result });
       };
     }
   };
@@ -64,6 +65,7 @@ export const InputImage = ({
         onChange={handle}
         accept="image/*"
         multiple={multiple}
+        required={required}
       />
     </div>
   );
@@ -71,6 +73,40 @@ export const InputImage = ({
 InputImage.defaultProps = {
   multiple: false,
   label: "Input tipo imagen de ejemplo",
+  required: false,
 };
 
+export const InputSwitchAction = ({
+  initialChecked,
+  checkedAction,
+  uncheckedAction,
+}) => {
+  const [value, setValue] = useState(initialChecked);
+
+  const handle = (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      setValue(checked);
+      checkedAction();
+    } else {
+      setValue(checked);
+      uncheckedAction();
+    }
+  };
+
+  return (
+    <div className="form-check form-switch">
+      <input
+        className="form-check-input"
+        type="checkbox"
+        role="switch"
+        checked={value}
+        onChange={handle}
+      />
+    </div>
+  );
+};
+InputSwitchAction.defaultProps = {
+  initialChecked: false,
+};
 export default Input;

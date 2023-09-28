@@ -21,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-hotkeys-hook": "^4.4.1",
+    "react-loader-spinner": "^5.4.5",
     "react-placeholder-image": "^0.1.8",
     "react-router-dom": "^6.16.0"
   },
