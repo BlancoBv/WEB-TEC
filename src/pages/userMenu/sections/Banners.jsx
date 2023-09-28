@@ -18,7 +18,7 @@ function Banners() {
   const saveBanner = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post("/banners/crear", { imagen: banner.imagen });
+      await Axios.post("/banners/crear", { imagen: banner.imagen[0] });
 
       showSuccess();
       setTimeout(() => {

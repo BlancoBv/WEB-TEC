@@ -7,14 +7,28 @@ import Axios from "../../../axios/Axios";
 function AddNoticias() {
   const [showModal, setShowModal] = useState(false);
   const [editorContent, setEditorContent] = useState({ html: "" });
-  const [body, setBody] = useState({ titulo: "", imagenPrincipal: "" });
-  const [banner, setBanner] = useState({ imagen: "" });
+  const [body, setBody] = useState({
+    /* titulo: "", */ imagenPrincipal: "",
+    fechaVigente: " ",
+  });
 
   const handle = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setBody({ ...body, [name]: value });
   };
+
+  const saveBlog = async () => {
+    try {
+      await Axios.post("/blogs/crear", {
+        content: editorContent.html["__html"],
+        imagenes: body.imagenes,
+        imagenPrincipal: body.imagenPrincipal[0],
+        fechaVigente: body.fechaVigente,
+      });
+    } catch (error) {}
+  };
+  console.log(body);
 
   return (
     <div>
@@ -35,9 +49,9 @@ function AddNoticias() {
             editorContent.html || { __html: "<p>Texto de ejemplo</p>" }
           }
         ></div>
-        {body.hasOwnProperty("imagenesSecundarias") && (
+        {body.hasOwnProperty("imagenes") && (
           <div className="d-flex flex-column w-100 align-items-center gap-4">
-            {body.imagenesSecundarias.map((el, i) => (
+            {body.imagenes.map((el, i) => (
               <img
                 key={i}
                 className="w-50"
@@ -49,12 +63,12 @@ function AddNoticias() {
         )}
       </Modal>
       <div className="h-90 d-flex flex-column">
-        <Input
+        {/*         <Input
           label="Titulo de noticia"
           value={body}
           name="titulo"
           handle={handle}
-        />
+        /> */}
         <InputImage
           label="Imagen principal"
           name="imagenPrincipal"
@@ -64,26 +78,20 @@ function AddNoticias() {
         <HTMLEditor setVariable={setEditorContent} />
         <InputImage
           label="Imagenes secundarias"
-          name="imagenesSecundarias"
+          name="imagenes"
           variable={body}
           setVariable={setBody}
           multiple={true}
         />
-
-        {/* <div className="mt-3 border-top">
-          <form onSubmit={saveBanner}>
-            <InputImage
-              label="Subir banner"
-              name="imagen"
-              variable={banner}
-              setVariable={setBanner}
-            />
-            <button type="submit">Guardar banner</button>
-          </form>
-        </div> */}
+        <input
+          type="date"
+          name="fechaVigente"
+          onChange={handle}
+          value={body.fechaVigente}
+        />
       </div>
       <div className="d-flex justify-content-evenly align-items-center">
-        <button>Guardar</button>
+        <button onClick={saveBlog}>Guardar</button>
         <button onClick={() => setShowModal(true)}>Previsualizar</button>
       </div>
     </div>

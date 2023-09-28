@@ -64,16 +64,21 @@ function Home() {
     },
   ];
 
-  const { data, isPending } = UseGetData("/banners/obtener?mostrar=vigentes");
-  console.log(data);
+  const { data, isPending, error } = UseGetData(
+    "/banners/obtener?mostrar=vigentes"
+  );
+
+  const blogs = UseGetData("/blogs/obtener");
+  console.log(blogs);
   return (
     <div>
-      {!isPending && <Carrousel images={data.response} />}
+      {!isPending && !error && data.response && (
+        <Carrousel images={data.response} />
+      )}
       <SectionContainer title="Noticias">
         <div className="w-100 h-100 d-flex overflow-x-auto">
-          {Noticias.map((el) => (
-            <NoticiaCard element={el} />
-          ))}
+          {!blogs.isPending &&
+            blogs.data.response.map((el) => <NoticiaCard element={el} />)}
         </div>
       </SectionContainer>
       <SectionContainer title="Convocatorias">
@@ -81,7 +86,7 @@ function Home() {
         <p>Texto de ejemplo</p>
       </SectionContainer>
       <SectionContainer title="Redes sociales">
-        {/*   <div className="d-flex align-items-center justify-content-evenly p-2">
+        <div className="d-flex align-items-center justify-content-evenly p-2">
           <div className="w-25">
             <a
               className="twitter-timeline"
@@ -101,7 +106,7 @@ function Home() {
             allowfullscreen="true"
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           ></iframe>
-        </div> */}
+        </div>
       </SectionContainer>
     </div>
   );

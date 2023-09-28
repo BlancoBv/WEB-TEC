@@ -23,7 +23,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="w-100 z-3">
+    <header className="w-100">
       {/* Barra gobierno */}
       <div className="header w-100 d-flex justify-content-end position-relative">
         <a

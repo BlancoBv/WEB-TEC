@@ -49,7 +49,7 @@ export const InputImage = ({
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = (e) => {
-        setVariable({ ...variable, [name]: e.target.result });
+        setVariable({ ...variable, [name]: [e.target.result] });
       };
     }
   };
