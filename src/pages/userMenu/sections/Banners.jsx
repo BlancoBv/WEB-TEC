@@ -17,8 +17,15 @@ function Banners() {
 
   const saveBanner = async (e) => {
     e.preventDefault();
+
     try {
-      await Axios.post("/banners/crear", { imagen: banner.imagen[0] });
+      const fdata = new FormData();
+      fdata.append("imagen", banner.imagen.file);
+      await Axios.post("/banners/crear", fdata, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      });
 
       showSuccess();
       setTimeout(() => {
@@ -49,7 +56,13 @@ function Banners() {
             />
             <button type="submit">Guardar</button>
           </div>
-          <img src={banner.imagen} alt="previsualización" width="100%" />
+          {banner.imagen && (
+            <img
+              src={banner.imagen && banner.imagen.src}
+              alt="previsualización"
+              width="100%"
+            />
+          )}
         </form>
       </Modal>
       <div className="h-10 border-bottom">
@@ -85,6 +98,7 @@ const Success = ({ data, actualizarState, bannerState }) => {
   const [banner, setBanner] = useState({ imagen: "" });
 
   const visualizarImagen = (el) => {
+    console.log(el);
     setShowImage({
       status: true,
       url: `${urlMain}${el.imagen}`,
@@ -100,17 +114,29 @@ const Success = ({ data, actualizarState, bannerState }) => {
         closeAlerts();
       }, 1000);
       setActualizar(!actualizar);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const updateImage = async (e) => {
     e.preventDefault();
     try {
+      const fdata = new FormData();
+      fdata.append("imagen", banner.imagen.file);
       await Axios.put(
         `/banners/actualizarxidbanner/${showChangeImage.idbanner}`,
-        banner
+        fdata,
+        {
+          headers: {
+            "Content-type": "multipart/form-data",
+          },
+        }
       );
       setActualizar(!actualizar);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -141,7 +167,13 @@ const Success = ({ data, actualizarState, bannerState }) => {
             />
             <button type="submit">Actualizar</button>
           </div>
-          <img src={banner.imagen} alt="previsualización" width="100%" />
+          {banner.imagen && (
+            <img
+              src={banner.imagen && banner.imagen.src}
+              alt="previsualización"
+              width="100%"
+            />
+          )}
         </form>
       </Modal>
 
@@ -158,8 +190,8 @@ const Success = ({ data, actualizarState, bannerState }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((el) => (
-              <tr>
+            {data.map((el, i) => (
+              <tr key={i}>
                 <td>{el.usuario}</td>
                 <td>{el.updatedAt}</td>
                 <td>{el.mostrar ? "Visible" : "Oculta"}</td>

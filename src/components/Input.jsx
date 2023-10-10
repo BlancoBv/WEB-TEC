@@ -46,11 +46,8 @@ export const InputImage = ({
       console.log(resultForMultiple);
       setVariable({ ...variable, [name]: resultForMultiple });
     } else {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onload = (e) => {
-        setVariable({ ...variable, [name]: [e.target.result] });
-      };
+      const imgSrc = URL.createObjectURL(files[0]);
+      setVariable({ ...variable, [name]: { file: files[0], src: imgSrc } });
     }
   };
 
