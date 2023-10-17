@@ -1,8 +1,22 @@
 import { useTransition, animated } from "@react-spring/web";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { urlMain } from "../axios/Axios";
 
 function Carrousel({ images }) {
+  /**
+   * Esta instruccion resuelve la problematica de si no existe o hay elementos vacios en la BD regresa parametros predeterminados
+   * @returns {Array} Returna un arreglo con las rutas de las imagenes.
+   */
+  images = (images &&
+    images.length > 0 &&
+    images.map((img) => ({ imagen: urlMain + img.imagen }))) || [
+    { imagen: "https://placehold.co/500x400" },
+    { imagen: "https://placehold.co/800x400" },
+    { imagen: "https://placehold.co/600x400" },
+  ];
+
+  console.log(images);
+
   const [index, set] = useState(0);
   const [isManualChanged, setIsManualChanged] = useState(false);
 
@@ -44,7 +58,7 @@ function Carrousel({ images }) {
           <animated.div
             style={{
               ...style,
-              backgroundImage: `url(${urlMain}${images[i].imagen})`,
+              backgroundImage: `url(${images[i].imagen})`,
               width: "100%",
               height: "100%",
             }}
@@ -64,13 +78,5 @@ function Carrousel({ images }) {
     </div>
   );
 }
-
-Carrousel.defaultProps = {
-  images: [
-    "https://placehold.co/500x400",
-    "https://placehold.co/800x400",
-    "https://placehold.co/600x400",
-  ],
-};
 
 export default Carrousel;

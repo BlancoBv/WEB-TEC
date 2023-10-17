@@ -3,7 +3,7 @@ import Carrousel from "../../components/Carrousel";
 import Mapa from "../../components/Mapa";
 import NoticiaCard from "../../components/NoticiaCard";
 import SectionContainer from "../../components/SectionContainer";
-import UseGetData from "../../hooks/UseGetData";
+import useGetData from "../../hooks/useGetData";
 
 function Home() {
   const Noticias = [
@@ -64,21 +64,25 @@ function Home() {
     },
   ];
 
-  const { data, isPending, error } = UseGetData(
+  const { data, isPending, error } = useGetData(
     "/banners/obtener?mostrar=vigentes"
   );
 
-  const blogs = UseGetData("/blogs/obtener");
+  const blogs = useGetData("/blogs/obtener");
   console.log(blogs);
+
   return (
     <div>
       {!isPending && !error && data.response && (
         <Carrousel images={data.response} />
       )}
+
       <SectionContainer title="Noticias">
         <div className="w-100 h-100 d-flex overflow-x-auto">
           {!blogs.isPending &&
-            blogs.data.response.map((el) => <NoticiaCard element={el} />)}
+            blogs.data.response.map((el, i) => (
+              <NoticiaCard key={i} element={el} />
+            ))}
         </div>
       </SectionContainer>
       <SectionContainer title="Convocatorias">
@@ -102,8 +106,8 @@ function Home() {
             width="340"
             height="500"
             scrolling="no"
-            frameborder="0"
-            allowfullscreen="true"
+            frameBorder="0"
+            allowFullScreen={true}
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           ></iframe>
         </div>

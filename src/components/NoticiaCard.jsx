@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import { urlMain } from "../axios/Axios";
-import UseGetData from "../hooks/UseGetData";
+import UseGetData from "../hooks/useGetData";
 
 function NoticiaCard({ element }) {
   const [showViewer, setShowViewer] = useState({

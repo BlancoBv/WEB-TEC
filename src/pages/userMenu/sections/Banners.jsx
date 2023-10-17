@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import Axios, { urlMain } from "../../../axios/Axios";
-import UseGetData from "../../../hooks/UseGetData";
+import UseGetData from "../../../hooks/useGetData";
 import Modal from "../../../components/Modal";
 
 import { InputImage, InputSwitchAction } from "../../../components/Input";
