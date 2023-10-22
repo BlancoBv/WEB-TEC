@@ -14,6 +14,7 @@ function Banners() {
   const [showAddBanner, setShowAddBanner] = useState(false);
 
   const [banner, setBanner] = useState({ imagen: "" });
+  console.log(banner);
 
   const saveBanner = async (e) => {
     e.preventDefault();

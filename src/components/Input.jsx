@@ -106,4 +106,23 @@ export const InputSwitchAction = ({
 InputSwitchAction.defaultProps = {
   initialChecked: false,
 };
+
+export const InputDate = ({ label, name, handle, value }) => {
+  return (
+    <div className="mb-3">
+      <label>{label}</label>
+      <input
+        name={name}
+        className="form-control"
+        type="date"
+        value={value.hasOwnProperty(name) ? value[name] : ""}
+        onChange={handle}
+      />
+    </div>
+  );
+};
+InputDate.defaultProps = {
+  label: "Input fecha",
+};
+
 export default Input;

@@ -17,7 +17,7 @@ function NoticiaCard({ element }) {
           {element.updatedAt}
         </span>
       </div>
-      <h5>{element.title}</h5>
+      <h5>{element.titulo}</h5>
       <div className="d-flex justify-content-start w-100">
         <button
           onClick={() =>
@@ -54,12 +54,12 @@ const ModalNoticia = ({ viewerState }) => {
 };
 
 const Success = ({ data, setShowViewer, showViewer }) => {
-  console.log(data);
+  console.log(data, "ola");
   return (
     <Modal
       show={showViewer.status}
       close={() => setShowViewer({ status: false, idNoticia: "" })}
-      title={"ola"}
+      title={data.titulo}
     >
       <div className="d-flex flex-column w-100 align-items-center">
         <img
@@ -70,16 +70,16 @@ const Success = ({ data, setShowViewer, showViewer }) => {
         <p className="text-start w-100">{data.updatedAt}</p>
         <div
           className="w-100"
-          dangerouslySetInnerHTML={{ __html: data.content }}
+          dangerouslySetInnerHTML={{ __html: data.contenido }}
         ></div>
-        {data.imagenes_blogs.map((el, i) => (
+        {/*  {data.imagenes_blogs.map((el, i) => (
           <img
             key={i}
             className="w-50 mb-2"
             alt={`Imagen secundaria ${i}`}
             src={`${urlMain}${el.imagen}`}
           />
-        ))}
+        ))} */}
       </div>
     </Modal>
   );
