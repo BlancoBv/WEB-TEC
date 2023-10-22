@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Axios from "../axios/Axios";
 
-function UseGetData(url, actualizador) {
+function useGetData(url, actualizador) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [dataError, setDataError] = useState(null);
@@ -36,7 +36,7 @@ function UseGetData(url, actualizador) {
   return { data, error, dataError, isPending };
 }
 
-export default UseGetData;
+export default useGetData;
 
 /* export default function useGetData(url, actualizar) {
   const stateAuth = Data();
