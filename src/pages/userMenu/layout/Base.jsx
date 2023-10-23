@@ -2,40 +2,31 @@ import { useState } from "react";
 
 import AddNoticias from "../sections/AddNoticias";
 import Banners from "../sections/Banners";
+import NoticiasPendientes from "../sections/NoticiasPendientes";
 
 function Base() {
   const [showAddNotice, setShowAddNotice] = useState(false);
   const [showBanners, setShowBanners] = useState(false);
-  /* const [showModal, setShowModal] = useState(false);
-  const [editorContent, setEditorContent] = useState({ html: "" });
-  const [body, setBody] = useState({ titulo: "", imagenPrincipal: "" });
-  const [banner, setBanner] = useState({ imagen: "" });
-
-  const handle = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setBody({ ...body, [name]: value });
-  };
-
-  const saveBanner = async (e) => {
-    e.preventDefault();
-    try {
-      await Axios.post("/banners/crear", { imagen: banner.imagen[0] });
-    } catch (error) {}
-  };
-  console.log(banner.imagen);
- */
+  const [showNoticiasPend, setShowNoticiasPend] = useState(false);
 
   const showBannersSection = () => {
     setShowAddNotice(false);
     setShowBanners(true);
+    setShowNoticiasPend(false);
   };
   const showNoticeSection = () => {
     setShowBanners(false);
     setShowAddNotice(true);
+    setShowNoticiasPend(false);
+  };
+  const showNoticiasPendientes = () => {
+    setShowBanners(false);
+    setShowAddNotice(false);
+    setShowNoticiasPend(true);
   };
   const configOptions = [
     { name: "Añadir Noticia", activate: () => showNoticeSection() },
+    { name: "Noticias pendientes", activate: () => showNoticiasPendientes() },
     { name: "Banners", activate: () => showBannersSection() },
   ];
 
@@ -55,6 +46,7 @@ function Base() {
         <div className="border w-85 p-2 h-100">
           {showAddNotice && <AddNoticias />}
           {showBanners && <Banners />}
+          {showNoticiasPend && <NoticiasPendientes />}
         </div>
       </div>
     </div>

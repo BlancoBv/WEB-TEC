@@ -125,4 +125,31 @@ InputDate.defaultProps = {
   label: "Input fecha",
 };
 
+export const InputSelect = ({
+  label,
+  name,
+  handle,
+  value,
+  initialOption,
+  children,
+}) => {
+  return (
+    <div className="mb-3">
+      <label>{label}</label>
+      <select
+        name={name}
+        className="form-select"
+        value={value.hasOwnProperty(name) ? value[name] : ""}
+        onChange={handle}
+      >
+        <option value="">{`${initialOption}...`}</option>
+        {children}
+      </select>
+    </div>
+  );
+};
+InputSelect.defaultProps = {
+  initialOption: "Selecciona una opción",
+};
+
 export default Input;

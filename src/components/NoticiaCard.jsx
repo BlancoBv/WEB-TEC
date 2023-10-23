@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import { urlMain } from "../axios/Axios";
-import UseGetData from "../hooks/useGetData";
+import useGetData from "../hooks/useGetData";
 
 function NoticiaCard({ element }) {
   const [showViewer, setShowViewer] = useState({
@@ -35,7 +35,7 @@ function NoticiaCard({ element }) {
 const ModalNoticia = ({ viewerState }) => {
   const [showViewer, setShowViewer] = viewerState;
   console.log(showViewer);
-  const { data, isPending, error } = UseGetData(
+  const { data, isPending, error } = useGetData(
     `/blogs/obtenerxidblog/${showViewer.idNoticia}`
   );
 

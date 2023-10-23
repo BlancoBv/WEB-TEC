@@ -68,7 +68,7 @@ function Home() {
     "/banners/obtener?mostrar=vigentes"
   );
 
-  const blogs = useGetData("/blogs/obtener");
+  const blogs = useGetData("/blogs/obtener?estatus=aceptado");
   console.log(blogs);
 
   return (
