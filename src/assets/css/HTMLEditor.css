@@ -1,0 +1,32 @@
+.editor-container {
+  border: 1px solid #f1f1f1;
+  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.editor-container .editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+}
+.editor-container .editor-main {
+  display: flex;
+  flex-grow: 1;
+  border: 1px solid #f1f1f1;
+  border-radius: 5px;
+}
+
+.editor-toolbar-button {
+  border: 1px solid black;
+  border-radius: 1;
+}
+
+.rdw-dropdown-wrapper a {
+  text-decoration: none;
+  color: black;
+}
+.rdw-inline-wrapper .rdw-option-wrapper {
+  border-radius: 5px;
+}

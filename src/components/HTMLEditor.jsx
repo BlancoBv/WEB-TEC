@@ -43,12 +43,16 @@ function HTMLEditor({ setVariable, initialContent }) {
   };
 
   return (
-    <div className="d-flex w-100 h-50 ">
+    <div className="d-flex flex-grow-1">
       <Editor
-        editorClassName="customEditor"
-        wrapperClassName="customWrapper"
+        editorClassName="editor-main"
+        wrapperClassName="editor-container"
+        toolbarClassName="editor-toolbar"
         editorState={editorState}
         onEditorStateChange={/* setEditorState */ handleEditor}
+        localization={{
+          locale: "es",
+        }}
       />
     </div>
   );

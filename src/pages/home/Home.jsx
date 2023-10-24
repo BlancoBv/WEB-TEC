@@ -6,70 +6,10 @@ import SectionContainer from "../../components/SectionContainer";
 import useGetData from "../../hooks/useGetData";
 
 function Home() {
-  const Noticias = [
-    {
-      img: "https://placehold.co/600x400",
-      title: "Que ta chendo ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-    {
-      img: "https://placehold.co/600x400",
-      title: "Ola ramirez",
-      fecha: "2023-05-20",
-    },
-  ];
-
   const { data, isPending, error } = useGetData(
     "/banners/obtener?mostrar=vigentes"
   );
-
   const blogs = useGetData("/blogs/obtener?estatus=aceptado");
-  console.log(blogs);
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import useGetData from "../../../hooks/useGetData";
 import format from "../../../assets/format";
 import Modal from "../../../components/Modal";
-import { InputSelect } from "../../../components/Input";
+import { InputSelect, InputSwitchAction } from "../../../components/Input";
 import Axios from "../../../axios/Axios";
 import { useState, useContext } from "react";
 import { AlertsContexts } from "../IndexMenu";
@@ -11,21 +11,25 @@ function NoticiasPendientes() {
   const { data, isPending, error } = useGetData(
     "/blogs/obtener?estatus=pendiente"
   );
+
   return (
     <div className="h-100 w-100">
       NoticiasPendientes
       {!isPending && !error && (
-        <Success data={data.response} alerts={{ showSuccess, closeAlerts }} />
+        <Success datos={data.response} alerts={{ showSuccess, closeAlerts }} />
       )}
     </div>
   );
 }
 
-const Success = ({ data, alerts }) => {
+const Success = ({ datos, alerts }) => {
   const { showSuccess, closeAlerts } = alerts;
   const [blogData, setBlogData] = useState({});
   const [showSettings, setShowSettings] = useState(false);
   const [body, setBody] = useState({});
+  const [labels, setLabels] = useState([]);
+
+  const { data, isPending, error } = useGetData("/etiquetas/obtener");
 
   const saveChanges = async (e) => {
     e.preventDefault();
@@ -41,15 +45,41 @@ const Success = ({ data, alerts }) => {
   };
 
   const showAjustes = (element) => {
+    const { Etiquetas } = element;
+
+    const onlyIdLabels =
+      Etiquetas.length > 0 ? Etiquetas.map((el) => el.idetiqueta) : [];
+
     setBlogData(element);
     setShowSettings(true);
     setBody({ estatus: element.estatus });
+    setLabels(onlyIdLabels);
   };
   const handle = (e) => {
     const { value, name } = e.target;
     setBody({ ...body, [name]: value });
   };
-  console.log(body);
+  const updateLabels = async (data) => {
+    console.log(data);
+    try {
+      await Axios.put(`/blogs/actualizaretiquetasxidblog/${blogData.idblog}`, {
+        idsEtiquetas: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addEtiqueta = async (id) => {
+    const newLabels = [...labels, id];
+    setLabels(newLabels);
+    await updateLabels(newLabels);
+  };
+  const removeEtiqueta = async (id) => {
+    const newLabels = labels.filter((el) => el !== id);
+    setLabels(newLabels);
+    await updateLabels(newLabels);
+  };
 
   return (
     <>
@@ -58,7 +88,10 @@ const Success = ({ data, alerts }) => {
         title="Configurar noticia"
         close={() => setShowSettings(false)}
       >
-        <form className="d-flex flex-column" onSubmit={saveChanges}>
+        <form
+          className="d-flex align-items-center justify-content-center gap-2"
+          onSubmit={saveChanges}
+        >
           <InputSelect
             label="Estatus de la noticia"
             name="estatus"
@@ -70,9 +103,35 @@ const Success = ({ data, alerts }) => {
             {/* <option value="rechazado">Rechazado</option> */}
           </InputSelect>
           <div>
-            <button type="submit">Guardar ajustes</button>
+            <button
+              type="submit"
+              disabled={
+                blogData.hasOwnProperty("Etiquetas") &&
+                blogData.Etiquetas.length <= 0
+              }
+            >
+              Cambiar estatus
+            </button>
           </div>
         </form>
+        <div className="d-flex align-items-center justify-content-center gap-2">
+          {!isPending &&
+            !error &&
+            data.response.map((el) => (
+              <InputSwitchAction
+                label={el.etiqueta}
+                key={el.idetiqueta}
+                initialChecked={
+                  blogData.hasOwnProperty("Etiquetas") &&
+                  blogData.Etiquetas.some(
+                    (etiqueta) => etiqueta.idetiqueta === el.idetiqueta
+                  )
+                }
+                checkedAction={() => addEtiqueta(el.idetiqueta)}
+                uncheckedAction={() => removeEtiqueta(el.idetiqueta)}
+              />
+            ))}
+        </div>
       </Modal>
       <table className="w-100 table table-hover">
         <thead>
@@ -86,7 +145,7 @@ const Success = ({ data, alerts }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((el) => (
+          {datos.map((el) => (
             <tr key={el.idblog}>
               <td>{el.usuario}</td>
               <td>{format.formatFechaDB(el.updatedAt)}</td>

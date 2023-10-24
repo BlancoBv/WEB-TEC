@@ -77,8 +77,10 @@ export const InputSwitchAction = ({
   initialChecked,
   checkedAction,
   uncheckedAction,
+  label,
 }) => {
   const [value, setValue] = useState(initialChecked);
+  console.log(initialChecked);
 
   const handle = (e) => {
     const { checked } = e.target;
@@ -93,13 +95,26 @@ export const InputSwitchAction = ({
 
   return (
     <div className="form-check form-switch">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        role="switch"
-        checked={value}
-        onChange={handle}
-      />
+      {label ? (
+        <label>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            role="switch"
+            checked={value}
+            onChange={handle}
+          />
+          {label}
+        </label>
+      ) : (
+        <input
+          className="form-check-input"
+          type="checkbox"
+          role="switch"
+          checked={value}
+          onChange={handle}
+        />
+      )}
     </div>
   );
 };
