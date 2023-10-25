@@ -1,11 +1,12 @@
 import { useState, useContext, useEffect } from "react";
-import Input, { InputDate, InputImage } from "../../../components/Input";
-import HTMLEditor from "../../../components/HTMLEditor";
-import Modal from "../../../components/Modal";
-import Axios, { urlMain } from "../../../axios/Axios";
-import format from "../../../assets/format";
-import { AlertsContexts } from "../IndexMenu";
-import copyToClipboard from "../../../assets/copyToClipboard";
+import Input, { InputDate, InputImage } from "../../../../components/Input";
+import HTMLEditor from "../../../../components/HTMLEditor";
+import Modal from "../../../../components/Modal";
+import Axios, { urlMain } from "../../../../axios/Axios";
+import format from "../../../../assets/format";
+import { AlertsContexts } from "../../IndexMenu";
+import copyToClipboard from "../../../../assets/copyToClipboard";
+import { Scrollbar } from "react-scrollbars-custom";
 
 function AddNoticias() {
   const { showSuccess, closeAlerts } = useContext(AlertsContexts);
@@ -28,14 +29,14 @@ function AddNoticias() {
     setBody({ ...body, [name]: value });
   };
 
-  const saveBlog = async () => {
+  const saveBlog = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("imagenPrincipal", imagen.imagenPrincipal.file);
     formData.append(
       "contenido",
       JSON.stringify({ ...body, contenido: editorContent.html["__html"] })
     );
-    console.log(formData);
 
     try {
       await Axios.post("/blogs/crear", formData, {
@@ -68,20 +69,15 @@ function AddNoticias() {
       }, 800);
 
       setLocalImages([...localImages, response.data.response]);
-      /* console.log(localImages);
-      localStorage.setItem("localImages", JSON.stringify(localImages));
-      console.log(response.data.response); */
     } catch (error) {}
   };
-
-  console.log(localImages);
 
   useEffect(() => {
     localStorage.setItem("localImages", JSON.stringify(localImages));
   }, [localImages]);
 
   return (
-    <div className="d-flex flex-column h-100 w-100">
+    <div className="h-100 w-100">
       <Modal
         show={showModal}
         close={() => setShowModal(false)}
@@ -112,31 +108,40 @@ function AddNoticias() {
           </div>
         )}
       </Modal>
-      <div className="d-flex w-100 h-90">
-        <div className="h-90 d-flex flex-column w-75">
-          <div className="d-flex gap-2 align-items-center">
-            <div className="flex-grow-1">
-              <Input
-                label="Titulo de noticia"
-                value={body}
-                name="titulo"
+      <div className="d-flex w-100 h-100 gap-2">
+        <form
+          className="h-100 d-flex flex-column flex-grow-1 flex-shrink-2 rounded p-2 bg-dark-mode-base"
+          onSubmit={saveBlog}
+        >
+          <div className="h-90 d-flex flex-column">
+            <div className="d-flex gap-2 align-items-center">
+              <div className="flex-grow-1">
+                <Input
+                  label="Titulo de noticia"
+                  value={body}
+                  name="titulo"
+                  handle={handle}
+                  required={true}
+                />
+              </div>
+              <InputDate
+                label="Mostrar hasta"
                 handle={handle}
+                value={body}
+                name="fechaVigente"
+                required={true}
               />
             </div>
-            <InputDate
-              label="Mostrar hasta"
-              handle={handle}
-              value={body}
-              name="fechaVigente"
+            <InputImage
+              label="Imagen principal"
+              name="imagenPrincipal"
+              variable={imagen}
+              setVariable={setImagen}
+              required={true}
             />
+            <HTMLEditor setVariable={setEditorContent} />
           </div>
-          <InputImage
-            label="Imagen principal"
-            name="imagenPrincipal"
-            variable={imagen}
-            setVariable={setImagen}
-          />
-          <HTMLEditor setVariable={setEditorContent} />
+
           {/*         <InputImage
           label="Imagenes secundarias"
           name="imagenes"
@@ -144,35 +149,46 @@ function AddNoticias() {
           setVariable={setBody}
           multiple={true}
         /> */}
-        </div>
-        <div className="w-25 h-90 d-flex flex-column m-2 border-start p-2 overflow-y-auto">
+          <div className="d-flex justify-content-evenly align-items-center">
+            <button
+              type="submit"
+              disabled={!editorContent.hasOwnProperty("json")}
+            >
+              Guardar
+            </button>
+            <button type="button" onClick={() => setShowModal(true)}>
+              Previsualizar
+            </button>
+          </div>
+        </form>
+
+        <div className="w-25 h-100 d-flex flex-column p-2 overflow-y-hidden rounded bg-dark-mode-base">
           <h4 className="border-bottom">Imagenes</h4>
-          <form onSubmit={saveSecondaryImage}>
-            <InputImage
-              label="Selecciona la imagen"
-              variable={secondaryImage}
-              setVariable={setSecondaryImage}
-              name="imagen"
-            />
-            <button type="submit">Subir</button>
-          </form>
-          {localImages.length > 0 &&
-            localImages.map((el) => (
-              <div key={el.idimagen} className="d-flex flex-column mb-3">
-                <img alt={"XD"} src={`${urlMain}${el.imagen}`} />
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard(`${urlMain}${el.imagen}`)}
-                >
-                  Copiar enlace
-                </button>
-              </div>
-            ))}
+          <Scrollbar style={{ width: "100%", height: "100%" }}>
+            <form onSubmit={saveSecondaryImage}>
+              <InputImage
+                label="Selecciona la imagen"
+                variable={secondaryImage}
+                setVariable={setSecondaryImage}
+                name="imagen"
+                required={true}
+              />
+              <button type="submit">Subir</button>
+            </form>
+            {localImages.length > 0 &&
+              localImages.map((el) => (
+                <div key={el.idimagen} className="d-flex flex-column mb-3">
+                  <img alt={"XD"} src={`${urlMain}${el.imagen}`} width="100%" />
+                  <button
+                    type="button"
+                    onClick={() => copyToClipboard(`${urlMain}${el.imagen}`)}
+                  >
+                    Copiar enlace
+                  </button>
+                </div>
+              ))}
+          </Scrollbar>
         </div>
-      </div>
-      <div className="d-flex justify-content-evenly align-items-center">
-        <button onClick={saveBlog}>Guardar</button>
-        <button onClick={() => setShowModal(true)}>Previsualizar</button>
       </div>
     </div>
   );

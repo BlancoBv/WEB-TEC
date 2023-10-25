@@ -8,26 +8,35 @@ import { AlertsContexts } from "../IndexMenu";
 
 function NoticiasPendientes() {
   const { showSuccess, closeAlerts } = useContext(AlertsContexts);
+  const [actualizador, setActualizador] = useState(false);
   const { data, isPending, error } = useGetData(
-    "/blogs/obtener?estatus=pendiente"
+    "/blogs/obtener?estatus=pendiente",
+    actualizador
   );
 
   return (
     <div className="h-100 w-100">
       NoticiasPendientes
       {!isPending && !error && (
-        <Success datos={data.response} alerts={{ showSuccess, closeAlerts }} />
+        <Success
+          datos={data.response}
+          alerts={{ showSuccess, closeAlerts }}
+          stateActualizador={[actualizador, setActualizador]}
+        />
       )}
     </div>
   );
 }
 
-const Success = ({ datos, alerts }) => {
+const Success = ({ datos, alerts, stateActualizador }) => {
+  const [actualizador, setActualizador] = stateActualizador;
+
   const { showSuccess, closeAlerts } = alerts;
   const [blogData, setBlogData] = useState({});
   const [showSettings, setShowSettings] = useState(false);
   const [body, setBody] = useState({});
   const [labels, setLabels] = useState([]);
+  console.log(body);
 
   const { data, isPending, error } = useGetData("/etiquetas/obtener");
 
@@ -40,8 +49,12 @@ const Success = ({ datos, alerts }) => {
       showSuccess();
       setTimeout(() => {
         closeAlerts();
+        setShowSettings(false);
+        setActualizador(!actualizador);
       }, 800);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const showAjustes = (element) => {
@@ -60,25 +73,32 @@ const Success = ({ datos, alerts }) => {
     setBody({ ...body, [name]: value });
   };
   const updateLabels = async (data) => {
-    console.log(data);
     try {
       await Axios.put(`/blogs/actualizaretiquetasxidblog/${blogData.idblog}`, {
         idsEtiquetas: data,
       });
+      showSuccess();
+      setTimeout(() => {
+        closeAlerts();
+        setShowSettings(false);
+        setActualizador(!actualizador);
+      }, 800);
+      return true;
     } catch (error) {
       console.log(error);
+      return false;
     }
   };
 
   const addEtiqueta = async (id) => {
     const newLabels = [...labels, id];
     setLabels(newLabels);
-    await updateLabels(newLabels);
+    return await updateLabels(newLabels);
   };
   const removeEtiqueta = async (id) => {
     const newLabels = labels.filter((el) => el !== id);
     setLabels(newLabels);
-    await updateLabels(newLabels);
+    return await updateLabels(newLabels);
   };
 
   return (

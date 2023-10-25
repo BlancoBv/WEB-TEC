@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Input({ name, value, label, handle, placeholder, type }) {
+function Input({ name, value, label, handle, placeholder, type, required }) {
   return (
     <div className="mb-3">
       <label>{label}</label>
@@ -11,6 +11,7 @@ function Input({ name, value, label, handle, placeholder, type }) {
         placeholder={placeholder}
         onChange={handle}
         name={name}
+        required={required}
       />
     </div>
   );
@@ -20,6 +21,7 @@ Input.defaultProps = {
   placeholder: "Input de ejemplo",
   value: {},
   type: "text",
+  required: false,
 };
 
 export const InputImage = ({
@@ -78,18 +80,22 @@ export const InputSwitchAction = ({
   checkedAction,
   uncheckedAction,
   label,
+  required,
 }) => {
   const [value, setValue] = useState(initialChecked);
-  console.log(initialChecked);
 
   const handle = (e) => {
     const { checked } = e.target;
     if (checked) {
-      setValue(checked);
-      checkedAction();
+      const status = checkedAction();
+      if (status) {
+        setValue(status);
+      }
     } else {
-      setValue(checked);
-      uncheckedAction();
+      const status = uncheckedAction();
+      if (status) {
+        setValue(!status);
+      }
     }
   };
 
@@ -103,6 +109,7 @@ export const InputSwitchAction = ({
             role="switch"
             checked={value}
             onChange={handle}
+            required={required}
           />
           {label}
         </label>
@@ -113,6 +120,7 @@ export const InputSwitchAction = ({
           role="switch"
           checked={value}
           onChange={handle}
+          required={required}
         />
       )}
     </div>
@@ -120,9 +128,10 @@ export const InputSwitchAction = ({
 };
 InputSwitchAction.defaultProps = {
   initialChecked: false,
+  required: false,
 };
 
-export const InputDate = ({ label, name, handle, value }) => {
+export const InputDate = ({ label, name, handle, value, required }) => {
   return (
     <div className="mb-3">
       <label>{label}</label>
@@ -132,12 +141,14 @@ export const InputDate = ({ label, name, handle, value }) => {
         type="date"
         value={value.hasOwnProperty(name) ? value[name] : ""}
         onChange={handle}
+        required={required}
       />
     </div>
   );
 };
 InputDate.defaultProps = {
   label: "Input fecha",
+  required: false,
 };
 
 export const InputSelect = ({

@@ -1,0 +1,25 @@
+.nav-menu-tabs {
+  height: 45px;
+}
+
+.nav-menu-tabs a {
+  border-radius: 10px;
+  min-width: 100px;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+}
+.nav-menu-tabs a:hover {
+  background-color: #121212;
+  border-radius: 10px;
+  min-width: 100px;
+  padding: 5px;
+  transition: background-color 300ms ease-in;
+}
+.nav-menu-tabs a.active {
+  border: 1px solid #242424;
+  background-color: #121212;
+  border-radius: 10px;
+  min-width: 100px;
+  padding: 5px;
+}
