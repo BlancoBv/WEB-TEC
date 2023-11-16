@@ -18,7 +18,7 @@ function Home() {
       )}
 
       <SectionContainer title="Noticias">
-        <div className="w-100 h-100 d-flex overflow-x-auto">
+        <div className="w-100 h-100 d-flex justify-content-evenly p-2">
           {!blogs.isPending &&
             blogs.data.response.map((el, i) => (
               <NoticiaCard key={i} element={el} />

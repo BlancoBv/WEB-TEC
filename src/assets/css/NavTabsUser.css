@@ -4,17 +4,35 @@
 
 .nav-menu-tabs a {
   border-radius: 10px;
-  min-width: 100px;
+  min-width: 50px;
   padding: 5px;
   text-decoration: none;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 100ms ease-in;
 }
+
+.nav-menu-tabs a span {
+  visibility: hidden;
+  width: 0px;
+  opacity: 0%;
+  transition: all 100ms ease-in;
+}
+
+.nav-menu-tabs a.active span {
+  width: auto;
+  visibility: visible;
+  opacity: 100%;
+  transition: all 100ms ease-in;
+}
+
 .nav-menu-tabs a:hover {
   background-color: #121212;
   border-radius: 10px;
-  min-width: 100px;
   padding: 5px;
-  transition: background-color 300ms ease-in;
+  transition: background-color 100ms ease-in;
 }
 .nav-menu-tabs a.active {
   border: 1px solid #242424;
@@ -22,4 +40,7 @@
   border-radius: 10px;
   min-width: 100px;
   padding: 5px;
+  display: flex;
+  gap: 5px;
+  transition: width 100ms ease-in;
 }

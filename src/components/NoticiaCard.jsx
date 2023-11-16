@@ -2,8 +2,11 @@ import { useState } from "react";
 import Modal from "./Modal";
 import { urlMain } from "../axios/Axios";
 import useGetData from "../hooks/useGetData";
+import NoticiaContent from "./NoticiaContent";
+import format from "../assets/format";
 
 function NoticiaCard({ element }) {
+  console.log(element);
   const [showViewer, setShowViewer] = useState({
     status: false,
     idNoticia: "",
@@ -14,7 +17,7 @@ function NoticiaCard({ element }) {
       <div className="position-relative noticia-imagen">
         <img src={`${urlMain}${element.imagen}`} />
         <span className="position-absolute bottom-0 start-0 blueBackground text-white p-2">
-          {element.updatedAt}
+          {format.formatFecha(element.updatedAt, "full")}
         </span>
       </div>
       <h5>{element.titulo}</h5>
@@ -27,12 +30,32 @@ function NoticiaCard({ element }) {
           Leer más
         </button>
       </div>
-      <ModalNoticia viewerState={[showViewer, setShowViewer]} />
+      {/*   <ModalNoticia viewerState={[showViewer, setShowViewer]} /> */}
+      <Modal
+        show={showViewer.status}
+        close={() => setShowViewer({ status: false, idNoticia: "" })}
+        title={element.titulo}
+        size="md"
+      >
+        {/* <div className="d-flex flex-column w-100 align-items-center">
+          <img
+            src={`${urlMain}${element.imagen}`}
+            alt="Imagen principal"
+            width="75%"
+          />
+          <p className="text-start w-100">{element.updatedAt}</p>
+          <div
+            className="w-100"
+            dangerouslySetInnerHTML={{ __html: element.contenido }}
+          ></div>
+        </div> */}
+        <NoticiaContent data={element} />
+      </Modal>
     </div>
   );
 }
 
-const ModalNoticia = ({ viewerState }) => {
+/* const ModalNoticia = ({ viewerState }) => {
   const [showViewer, setShowViewer] = viewerState;
   console.log(showViewer);
   const { data, isPending, error } = useGetData(
@@ -51,15 +74,16 @@ const ModalNoticia = ({ viewerState }) => {
       )}
     </>
   );
-};
+}; */
 
-const Success = ({ data, setShowViewer, showViewer }) => {
+/* const Success = ({ data, setShowViewer, showViewer }) => {
   console.log(data, "ola");
   return (
     <Modal
       show={showViewer.status}
       close={() => setShowViewer({ status: false, idNoticia: "" })}
       title={data.titulo}
+      size="md"
     >
       <div className="d-flex flex-column w-100 align-items-center">
         <img
@@ -72,16 +96,8 @@ const Success = ({ data, setShowViewer, showViewer }) => {
           className="w-100"
           dangerouslySetInnerHTML={{ __html: data.contenido }}
         ></div>
-        {/*  {data.imagenes_blogs.map((el, i) => (
-          <img
-            key={i}
-            className="w-50 mb-2"
-            alt={`Imagen secundaria ${i}`}
-            src={`${urlMain}${el.imagen}`}
-          />
-        ))} */}
       </div>
     </Modal>
   );
-};
+}; */
 export default NoticiaCard;

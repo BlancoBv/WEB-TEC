@@ -6,7 +6,8 @@ import Axios, { urlMain } from "../../../../axios/Axios";
 import format from "../../../../assets/format";
 import { AlertsContexts } from "../../IndexMenu";
 import copyToClipboard from "../../../../assets/copyToClipboard";
-import { Scrollbar } from "react-scrollbars-custom";
+import ScrollbarCustom from "../../../../components/ScrollbarCustom";
+import NoticiaContent from "../../../../components/NoticiaContent";
 
 function AddNoticias() {
   const { showSuccess, closeAlerts } = useContext(AlertsContexts);
@@ -82,31 +83,36 @@ function AddNoticias() {
         show={showModal}
         close={() => setShowModal(false)}
         title={body.titulo}
+        size="md"
+        darkMode={true}
       >
-        <img
-          className="w-100 mb-3"
-          alt="Imagen principal"
-          src={imagen.imagenPrincipal.src}
-        />
+        <ScrollbarCustom>
+          <img
+            className="w-100 mb-3"
+            alt="Imagen principal"
+            src={imagen.imagenPrincipal.src}
+          />
+          <p className="text-start w-100"> {format.formatFechaDB(date)}</p>
 
-        <div
-          className="w-100"
-          dangerouslySetInnerHTML={
-            editorContent.html || { __html: "<p>Texto de ejemplo</p>" }
-          }
-        ></div>
-        {body.hasOwnProperty("imagenes") && (
-          <div className="d-flex flex-column w-100 align-items-center gap-4">
-            {body.imagenes.map((el, i) => (
-              <img
-                key={i}
-                className="w-50"
-                alt={`Imagen secundaria ${i}`}
-                src={el}
-              />
-            ))}
-          </div>
-        )}
+          <div
+            className="w-100"
+            dangerouslySetInnerHTML={
+              editorContent.html || { __html: "<p>Texto de ejemplo</p>" }
+            }
+          ></div>
+          {body.hasOwnProperty("imagenes") && (
+            <div className="d-flex flex-column w-100 align-items-center gap-4">
+              {body.imagenes.map((el, i) => (
+                <img
+                  key={i}
+                  className="w-50"
+                  alt={`Imagen secundaria ${i}`}
+                  src={el}
+                />
+              ))}
+            </div>
+          )}
+        </ScrollbarCustom>
       </Modal>
       <div className="d-flex w-100 h-100 gap-2">
         <form
@@ -164,7 +170,7 @@ function AddNoticias() {
 
         <div className="w-25 h-100 d-flex flex-column p-2 overflow-y-hidden rounded bg-dark-mode-base">
           <h4 className="border-bottom">Imagenes</h4>
-          <Scrollbar style={{ width: "100%", height: "100%" }}>
+          <ScrollbarCustom>
             <form onSubmit={saveSecondaryImage}>
               <InputImage
                 label="Selecciona la imagen"
@@ -187,7 +193,7 @@ function AddNoticias() {
                   </button>
                 </div>
               ))}
-          </Scrollbar>
+          </ScrollbarCustom>
         </div>
       </div>
     </div>

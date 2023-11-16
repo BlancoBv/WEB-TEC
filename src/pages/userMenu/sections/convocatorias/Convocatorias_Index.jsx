@@ -2,11 +2,10 @@ import React from "react";
 import { NavigationMenuUser } from "../../layout/Base";
 import { Outlet } from "react-router-dom";
 
-function Noticias_Index() {
+function Convocatorias_Index() {
   const tabs = [
     { name: "Lista", route: "", icon: "fa-solid fa-table-list" },
     { name: "Crear", route: "crear", icon: "fa-solid fa-square-plus" },
-    { name: "Pendientes", route: "pendientes", icon: "fa-solid fa-clock" },
   ];
 
   return (
@@ -19,4 +18,4 @@ function Noticias_Index() {
   );
 }
 
-export default Noticias_Index;
+export default Convocatorias_Index;

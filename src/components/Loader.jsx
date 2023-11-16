@@ -3,7 +3,7 @@ import { MutatingDots } from "react-loader-spinner";
 
 function Loader({ size, radius }) {
   return (
-    <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+    <div className="flex-grow-1 d-flex justify-content-center align-items-center">
       <MutatingDots
         color="rgb(27, 57, 106)"
         secondaryColor="rgb(27, 57, 106)"

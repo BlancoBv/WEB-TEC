@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import AddNoticias from "../sections/noticias/AddNoticias";
 import Banners from "../sections/Banners";
-import NoticiasPendientes from "../sections/NoticiasPendientes";
+import NoticiasPendientes from "../sections/noticias/NoticiasPendientes";
 import { Outlet, NavLink } from "react-router-dom";
 
 function Base() {
@@ -27,10 +27,21 @@ function Base() {
   };
   const configOptions = [
     {
-      name: "Añadir Noticia",
+      name: "Noticias",
+      icon: "fa-solid fa-newspaper",
       route: "noticias",
     },
-    { name: "Banners", activate: () => showBannersSection(), route: "banners" },
+    {
+      name: "Banners",
+      icon: "fa-solid fa-panorama",
+      activate: () => showBannersSection(),
+      route: "banners",
+    },
+    {
+      name: "Convocatorias",
+      icon: "fa-solid fa-newspaper",
+      route: "convocatorias",
+    },
   ];
 
   return (
@@ -49,7 +60,9 @@ function Base() {
               /* onClick={el.activate}  */ /* role="button" */ to={el.route}
               className="w-90 d-flex align-items-center justify-content-center"
             >
-              <span>{el.name}</span>
+              <span>
+                <i className={`${el.icon} fs-4`} /> {el.name}
+              </span>
             </NavLink>
           ))}
         </div>
@@ -73,7 +86,8 @@ export const NavigationMenuUser = ({ tabs, mainRoute }) => {
     <div className="d-flex w-100 d-flex pb-2 gap-2 nav-menu-tabs">
       {tabs.map((el) => (
         <NavLink to={`${el.route}`} end>
-          {el.name}
+          <i className={el.icon} />
+          <span>{el.name}</span>
         </NavLink>
       ))}
     </div>

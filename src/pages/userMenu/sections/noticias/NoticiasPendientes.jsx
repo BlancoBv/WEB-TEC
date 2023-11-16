@@ -1,45 +1,25 @@
-import useGetData from "../../../hooks/useGetData";
-import format from "../../../assets/format";
-import Modal from "../../../components/Modal";
-import { InputSelect, InputSwitchAction } from "../../../components/Input";
-import Axios from "../../../axios/Axios";
+import useGetData from "../../../../hooks/useGetData";
+import format from "../../../../assets/format";
+import Modal from "../../../../components/Modal";
+import { InputSelect, InputSwitchAction } from "../../../../components/Input";
+import Axios from "../../../../axios/Axios";
 import { useState, useContext } from "react";
-import { AlertsContexts } from "../IndexMenu";
+import { AlertsContexts } from "../../IndexMenu";
+import Loader from "../../../../components/Loader";
+import NoticiaContent from "../../../../components/NoticiaContent";
 
 function NoticiasPendientes() {
   const { showSuccess, closeAlerts } = useContext(AlertsContexts);
+  const [showSettings, setShowSettings] = useState(false);
   const [actualizador, setActualizador] = useState(false);
+  const [blogData, setBlogData] = useState({});
+  const [body, setBody] = useState({});
+  const [labels, setLabels] = useState([]);
   const { data, isPending, error } = useGetData(
     "/blogs/obtener?estatus=pendiente",
     actualizador
   );
-
-  return (
-    <div className="h-100 w-100">
-      NoticiasPendientes
-      {!isPending && !error && (
-        <Success
-          datos={data.response}
-          alerts={{ showSuccess, closeAlerts }}
-          stateActualizador={[actualizador, setActualizador]}
-        />
-      )}
-    </div>
-  );
-}
-
-const Success = ({ datos, alerts, stateActualizador }) => {
-  const [actualizador, setActualizador] = stateActualizador;
-
-  const { showSuccess, closeAlerts } = alerts;
-  const [blogData, setBlogData] = useState({});
-  const [showSettings, setShowSettings] = useState(false);
-  const [body, setBody] = useState({});
-  const [labels, setLabels] = useState([]);
-  console.log(body);
-
-  const { data, isPending, error } = useGetData("/etiquetas/obtener");
-
+  const etiquetas = useGetData("/etiquetas/obtener");
   const saveChanges = async (e) => {
     e.preventDefault();
     try {
@@ -56,17 +36,15 @@ const Success = ({ datos, alerts, stateActualizador }) => {
       console.log(error);
     }
   };
-
-  const showAjustes = (element) => {
-    const { Etiquetas } = element;
-
-    const onlyIdLabels =
-      Etiquetas.length > 0 ? Etiquetas.map((el) => el.idetiqueta) : [];
-
-    setBlogData(element);
-    setShowSettings(true);
-    setBody({ estatus: element.estatus });
-    setLabels(onlyIdLabels);
+  const addEtiqueta = async (id) => {
+    const newLabels = [...labels, id];
+    setLabels(newLabels);
+    return await updateLabels(newLabels);
+  };
+  const removeEtiqueta = async (id) => {
+    const newLabels = labels.filter((el) => el !== id);
+    setLabels(newLabels);
+    return await updateLabels(newLabels);
   };
   const handle = (e) => {
     const { value, name } = e.target;
@@ -80,7 +58,6 @@ const Success = ({ datos, alerts, stateActualizador }) => {
       showSuccess();
       setTimeout(() => {
         closeAlerts();
-        setShowSettings(false);
         setActualizador(!actualizador);
       }, 800);
       return true;
@@ -90,23 +67,15 @@ const Success = ({ datos, alerts, stateActualizador }) => {
     }
   };
 
-  const addEtiqueta = async (id) => {
-    const newLabels = [...labels, id];
-    setLabels(newLabels);
-    return await updateLabels(newLabels);
-  };
-  const removeEtiqueta = async (id) => {
-    const newLabels = labels.filter((el) => el !== id);
-    setLabels(newLabels);
-    return await updateLabels(newLabels);
-  };
-
+  console.log(blogData);
   return (
-    <>
+    <div className="h-100 w-100 bg-dark-mode-base p-2 rounded d-flex flex-column">
       <Modal
         show={showSettings}
         title="Configurar noticia"
         close={() => setShowSettings(false)}
+        darkMode={true}
+        size="md"
       >
         <form
           className="d-flex align-items-center justify-content-center gap-2"
@@ -135,9 +104,9 @@ const Success = ({ datos, alerts, stateActualizador }) => {
           </div>
         </form>
         <div className="d-flex align-items-center justify-content-center gap-2">
-          {!isPending &&
-            !error &&
-            data.response.map((el) => (
+          {!etiquetas.isPending &&
+            !etiquetas.error &&
+            etiquetas.data.response.map((el) => (
               <InputSwitchAction
                 label={el.etiqueta}
                 key={el.idetiqueta}
@@ -153,6 +122,59 @@ const Success = ({ datos, alerts, stateActualizador }) => {
             ))}
         </div>
       </Modal>
+      {!isPending && !error && (
+        <Success
+          datos={data.response}
+          alerts={{ showSuccess, closeAlerts }}
+          stateActualizador={[actualizador, setActualizador]}
+          setShowSettings={setShowSettings}
+          setBlogData={setBlogData}
+          setBody={setBody}
+          setLabels={setLabels}
+        />
+      )}
+      {isPending && <Loader />}
+    </div>
+  );
+}
+
+const Success = ({
+  datos,
+  setBlogData,
+  setBody,
+  setLabels,
+  setShowSettings,
+}) => {
+  const [showPreview, setShowPreview] = useState({ status: false, data: "" });
+
+  const showAjustes = (element, event) => {
+    event.stopPropagation();
+    const { Etiquetas } = element;
+
+    const onlyIdLabels =
+      Etiquetas.length > 0 ? Etiquetas.map((el) => el.idetiqueta) : [];
+
+    setBlogData(element);
+    setShowSettings(true);
+    setBody({ estatus: element.estatus });
+    setLabels(onlyIdLabels);
+  };
+
+  const preview = (event, element) => {
+    setShowPreview({ status: true, data: element });
+  };
+
+  return (
+    <>
+      <Modal
+        title={showPreview.data.titulo}
+        show={showPreview.status}
+        close={() => setShowPreview({ status: false, data: "" })}
+        darkMode={true}
+        size="md"
+      >
+        <NoticiaContent data={showPreview.data} />
+      </Modal>
       <table className="w-100 table table-hover">
         <thead>
           <tr>
@@ -166,7 +188,12 @@ const Success = ({ datos, alerts, stateActualizador }) => {
         </thead>
         <tbody>
           {datos.map((el) => (
-            <tr key={el.idblog}>
+            <tr
+              key={el.idblog}
+              onClick={(e) => preview(e, el)}
+              role="button"
+              title={`Previsualizar ${el.titulo}`}
+            >
               <td>{el.usuario}</td>
               <td>{format.formatFechaDB(el.updatedAt)}</td>
               <td>{format.formatTextoMayusPrimeraLetra(el.estatus)}</td>
@@ -178,15 +205,12 @@ const Success = ({ datos, alerts, stateActualizador }) => {
 
               <td>
                 <span className="w-100 h-100 d-flex justify-content-evenly">
-                  <button title="Previsualizar">
-                    <i className="fa-solid fa-eye" />
-                  </button>
-                  <button title="Editar">
+                  <button title="Editar" onClick={(e) => e.stopPropagation()}>
                     <i className="fa-solid fa-pen-to-square" />
                   </button>
                   <button
                     title="Más configuraciones"
-                    onClick={() => showAjustes(el)}
+                    onClick={(e) => showAjustes(el, e)}
                   >
                     <i className="fa-solid fa-gear" />
                   </button>

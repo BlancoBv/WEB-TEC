@@ -1,16 +1,18 @@
 const format = {
-  formatFechaLocale: (date) =>
-    new Date(new Date(date).getTime() + new Date().getTimezoneOffset() * 60000),
-
-  formatFecha: (date) =>
-    new Intl.DateTimeFormat("es-MX", {
-      day: "numeric",
-      month: "long",
-    }).format(
+  formatFecha: (date, type) => {
+    const dateType = {
+      full: { day: "numeric", month: "long", year: "numeric" },
+      numeric: { day: "2-digit", month: "2-digit", year: "numeric" },
+    };
+    return new Intl.DateTimeFormat(
+      "es-MX",
+      dateType[type ? type : "full"]
+    ).format(
       new Date(
         new Date(date).getTime() + new Date().getTimezoneOffset() * 60000
       )
-    ),
+    );
+  },
 
   formatDinero: (monto) =>
     Intl.NumberFormat("es-MX", {
@@ -47,18 +49,6 @@ const format = {
     return primeraLetra + textoEntero;
   },
 
-  formatFechaComplete: (date, convert = true) =>
-    new Intl.DateTimeFormat("es-MX", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }).format(
-      new Date(
-        convert
-          ? new Date(date).getTime() + new Date().getTimezoneOffset() * 60000
-          : date
-      )
-    ),
   formatHourMinute: (date, convert = true) =>
     new Intl.DateTimeFormat("es-MX", {
       hour: "2-digit",
