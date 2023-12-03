@@ -13,6 +13,8 @@ import Noticias_Index from "../pages/userMenu/sections/noticias/Noticias_Index";
 import NoticiasPendientes from "../pages/userMenu/sections/noticias/NoticiasPendientes";
 import ListaNoticias from "../pages/userMenu/sections/noticias/ListaNoticias";
 import Convocatorias_Index from "../pages/userMenu/sections/convocatorias/Convocatorias_Index";
+import ListaConvocatorias from "../pages/userMenu/sections/convocatorias/ListaConvocatorias";
+import AddConvocatoria from "../pages/userMenu/sections/convocatorias/AddConvocatoria";
 
 function Routes() {
   const rutas = Router([
@@ -45,10 +47,10 @@ function Routes() {
           path: "convocatorias",
           element: <Convocatorias_Index />,
           children: [
-            { index: true, element: <ListaNoticias /> },
+            { index: true, element: <ListaConvocatorias /> },
             {
               path: "crear",
-              element: <AddNoticias />,
+              element: <AddConvocatoria />,
             },
             { path: "pendientes", element: <NoticiasPendientes /> },
           ],

@@ -8,9 +8,10 @@ import { AlertsContexts } from "../../IndexMenu";
 import copyToClipboard from "../../../../assets/copyToClipboard";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
 import NoticiaContent from "../../../../components/NoticiaContent";
+import UploadImages from "../../../../components/UploadImages";
 
 function AddNoticias() {
-  const { showSuccess, closeAlerts } = useContext(AlertsContexts);
+  const { showSuccess, showError, closeAlerts } = useContext(AlertsContexts);
   const date = new Date(Date.now());
   const [showModal, setShowModal] = useState(false);
   const [editorContent, setEditorContent] = useState({ html: "" });
@@ -46,10 +47,9 @@ function AddNoticias() {
         },
       });
       showSuccess();
-      setTimeout(() => {
-        closeAlerts();
-      }, 800);
-    } catch (error) {}
+    } catch (error) {
+      showError();
+    }
   };
 
   const saveSecondaryImage = async (e) => {
@@ -63,14 +63,13 @@ function AddNoticias() {
         },
       });
       showSuccess();
-      setTimeout(() => {
-        closeAlerts();
-        setSecondaryImage({});
-        e.target.reset();
-      }, 800);
+      setSecondaryImage({});
+      e.target.reset();
 
       setLocalImages([...localImages, response.data.response]);
-    } catch (error) {}
+    } catch (error) {
+      showError();
+    }
   };
 
   useEffect(() => {
@@ -116,7 +115,7 @@ function AddNoticias() {
       </Modal>
       <div className="d-flex w-100 h-100 gap-2">
         <form
-          className="h-100 d-flex flex-column flex-grow-1 flex-shrink-2 rounded p-2 bg-dark-mode-base"
+          className="h-100 d-flex flex-column w-75 rounded p-2 bg-dark-mode-base overflow-hidden"
           onSubmit={saveBlog}
         >
           <div className="h-90 d-flex flex-column">
@@ -148,13 +147,6 @@ function AddNoticias() {
             <HTMLEditor setVariable={setEditorContent} />
           </div>
 
-          {/*         <InputImage
-          label="Imagenes secundarias"
-          name="imagenes"
-          variable={body}
-          setVariable={setBody}
-          multiple={true}
-        /> */}
           <div className="d-flex justify-content-evenly align-items-center">
             <button
               type="submit"
@@ -168,33 +160,12 @@ function AddNoticias() {
           </div>
         </form>
 
-        <div className="w-25 h-100 d-flex flex-column p-2 overflow-y-hidden rounded bg-dark-mode-base">
-          <h4 className="border-bottom">Imagenes</h4>
-          <ScrollbarCustom>
-            <form onSubmit={saveSecondaryImage}>
-              <InputImage
-                label="Selecciona la imagen"
-                variable={secondaryImage}
-                setVariable={setSecondaryImage}
-                name="imagen"
-                required={true}
-              />
-              <button type="submit">Subir</button>
-            </form>
-            {localImages.length > 0 &&
-              localImages.map((el) => (
-                <div key={el.idimagen} className="d-flex flex-column mb-3">
-                  <img alt={"XD"} src={`${urlMain}${el.imagen}`} width="100%" />
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard(`${urlMain}${el.imagen}`)}
-                  >
-                    Copiar enlace
-                  </button>
-                </div>
-              ))}
-          </ScrollbarCustom>
-        </div>
+        <UploadImages
+          variable={secondaryImage}
+          setVariable={setSecondaryImage}
+          imagesData={localImages}
+          save={saveSecondaryImage}
+        />
       </div>
     </div>
   );

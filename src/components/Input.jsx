@@ -45,7 +45,6 @@ export const InputImage = ({
           resultForMultiple.push(e.target.result);
         };
       });
-      console.log(resultForMultiple);
       setVariable({ ...variable, [name]: resultForMultiple });
     } else {
       const imgSrc = URL.createObjectURL(files[0]);
@@ -178,4 +177,52 @@ InputSelect.defaultProps = {
   initialOption: "Selecciona una opción",
 };
 
+export const InputFile = ({
+  label,
+  name,
+  required,
+  aceptar,
+  variable,
+  setVariable,
+  multiple,
+}) => {
+  const handle = (e) => {
+    e.preventDefault();
+    let resultForMultiple = [];
+
+    const { name, files } = e.target;
+    if (multiple && files.length > 1) {
+      Array.from(files).forEach((element) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(element);
+        reader.onload = (e) => {
+          resultForMultiple.push(e.target.result);
+        };
+      });
+      setVariable({ ...variable, [name]: resultForMultiple });
+    } else {
+      const imgSrc = URL.createObjectURL(files[0]);
+      setVariable({ ...variable, [name]: { file: files[0], src: imgSrc } });
+    }
+  };
+  return (
+    <div className="mb-3">
+      <label>{label}</label>
+      <input
+        className="form-control"
+        type="file"
+        //value={body.imagenPrincipal}
+        name={name}
+        onChange={handle}
+        accept={aceptar}
+        multiple={multiple}
+        required={required}
+      />
+    </div>
+  );
+};
+
+InputFile.defaultProps = {
+  aceptar: ".pdf",
+};
 export default Input;

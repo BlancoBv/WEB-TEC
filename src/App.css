@@ -119,3 +119,7 @@
 .footer-azul {
   padding: 30px 10px 30px 10px;
 }
+
+.image-fit {
+  object-fit: cover;
+}
