@@ -15,16 +15,18 @@ function ContextualMenu({ elements }) {
   const SEPARATOR = "separator";
   return (
     <Menu id="context-menu-options">
-      {/* <Item onClick={handleItemClick}>Item 1</Item>
-        <Item onClick={handleItemClick}>Item 2</Item> */}
-
-      {/*  <Separator />
-      <Item onClick={deleteData}>
-        <span className="text-danger">Eliminar</span>
-      </Item> */}
       {elements.map((el, i) => {
         if (el.content === SEPARATOR) {
           return <Separator key={i} />;
+        }
+        if (el.content === "submenu") {
+          return (
+            <Submenu label={el.label} key={i}>
+              {el.subOptions.map((option) => (
+                <Item key={option.content}>{option.content}</Item>
+              ))}
+            </Submenu>
+          );
         }
 
         return (

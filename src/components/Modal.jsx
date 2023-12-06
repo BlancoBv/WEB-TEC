@@ -1,7 +1,6 @@
 import { useTransition, animated } from "@react-spring/web";
 import { createPortal } from "react-dom";
 import { useHotkeys } from "react-hotkeys-hook";
-import ScrollbarCustom from "./ScrollbarCustom";
 
 function Modal({ show, close, title, children, darkMode, size }) {
   useHotkeys("esc", () => close());
@@ -109,6 +108,14 @@ export const ModalConfirm = ({ show, close, title, children, action }) => {
         )
     ),
     document.body
+  );
+};
+
+export const ModalBottom = ({ children }) => {
+  return (
+    <div className="d-flex justify-content-end align-items-center modal-bottom border-top w-100">
+      {children}
+    </div>
   );
 };
 

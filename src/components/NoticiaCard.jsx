@@ -30,7 +30,7 @@ function NoticiaCard({ element }) {
           Leer más
         </button>
       </div>
-      {/*   <ModalNoticia viewerState={[showViewer, setShowViewer]} /> */}
+
       <Modal
         show={showViewer.status}
         close={() => setShowViewer({ status: false, idNoticia: "" })}

@@ -3,7 +3,7 @@ import useGetData from "../../../../hooks/useGetData";
 import Axios from "../../../../axios/Axios";
 import { AlertsContexts } from "../../IndexMenu";
 import ContextualMenu, { show } from "../../../../components/ContextualMenu";
-import Modal from "../../../../components/Modal";
+import Modal, { ModalBottom } from "../../../../components/Modal";
 import Input, { InputTextArea } from "../../../../components/Input";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
 
@@ -49,7 +49,9 @@ function ListaConvocatorias() {
       );
       showSuccess();
       setActualizador(!actualizador);
-    } catch (error) {}
+    } catch (error) {
+      showError();
+    }
   };
 
   const handle = (e, setVariable, variable) => {
@@ -70,12 +72,13 @@ function ListaConvocatorias() {
       },
     },
     {
-      content: "Editar archivos",
-
-      action: () =>
-        setShowModal({ status: true, title: "Editar archivos", type: "files" }),
+      content: "submenu",
+      label: "Editar archivos",
+      subOptions: [{ content: "Imagen" }, { content: "PDF o enlace" }],
     },
+
     { content: "separator" },
+
     {
       content: "Eliminar",
       icon: "fa-trash-can",
@@ -99,28 +102,31 @@ function ListaConvocatorias() {
             className="w-100 h-100 d-flex flex-column justify-content-center align-items-center"
             onSubmit={updateTitles}
           >
-            <div className="w-75">
-              <Input
-                label="Titulo de la convocatoria"
-                name="titulo"
-                value={bodyTitles}
-                required={true}
-                handle={(e) => handle(e, setBodyTitles, bodyTitles)}
-              />
+            <div className="flex-grow-1 w-100">
+              <ScrollbarCustom>
+                <div className="w-100">
+                  <Input
+                    label="Titulo de la convocatoria"
+                    name="titulo"
+                    value={bodyTitles}
+                    required={true}
+                    handle={(e) => handle(e, setBodyTitles, bodyTitles)}
+                  />
+                </div>
+                <div className="w-100 h-50 mb-3">
+                  <InputTextArea
+                    label="Descripción de la convocatoria"
+                    name="descripcion"
+                    value={bodyTitles}
+                    required={true}
+                    handle={(e) => handle(e, setBodyTitles, bodyTitles)}
+                  />
+                </div>
+              </ScrollbarCustom>
             </div>
-            <div className="w-75 h-50 mb-3">
-              <InputTextArea
-                label="Descripción de la convocatoria"
-                name="descripcion"
-                value={bodyTitles}
-                required={true}
-                handle={(e) => handle(e, setBodyTitles, bodyTitles)}
-              />
-            </div>
-
-            <div className="w-100 d-flex justify-content-end border-top">
+            <ModalBottom>
               <button type="submit">Guardar</button>
-            </div>
+            </ModalBottom>
           </form>
         )}
       </Modal>

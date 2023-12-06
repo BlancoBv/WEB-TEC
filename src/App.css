@@ -5,6 +5,7 @@
 @import "../src//assets//css/NavTabsUser.css";
 @import "../src/assets/css/UserSideBar.css";
 @import "../src/assets/css/ConvocatoriaCard.css";
+@import "../src/assets/css/Scrollbar.css";
 
 .header {
   height: 45px;

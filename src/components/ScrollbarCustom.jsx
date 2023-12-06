@@ -3,7 +3,11 @@ import { Scrollbar } from "react-scrollbars-custom";
 
 function ScrollbarCustom({ children, width, height }) {
   return (
-    <Scrollbar style={{ width, height }} disableTracksWidthCompensation>
+    <Scrollbar
+      style={{ width, height }}
+      noDefaultStyles
+      disableTracksWidthCompensation
+    >
       {children}
     </Scrollbar>
   );
