@@ -96,7 +96,7 @@ function NoticiasPendientes() {
               type="submit"
               disabled={
                 blogData.hasOwnProperty("Etiquetas") &&
-                blogData.Etiquetas.length <= 0
+                blogData.etiquetas.length <= 0
               }
             >
               Cambiar estatus
@@ -149,10 +149,10 @@ const Success = ({
 
   const showAjustes = (element, event) => {
     event.stopPropagation();
-    const { Etiquetas } = element;
+    const { etiquetas } = element;
 
     const onlyIdLabels =
-      Etiquetas.length > 0 ? Etiquetas.map((el) => el.idetiqueta) : [];
+      etiquetas.length > 0 ? etiquetas.map((el) => el.idetiqueta) : [];
 
     setBlogData(element);
     setShowSettings(true);

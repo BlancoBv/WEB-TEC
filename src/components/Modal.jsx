@@ -1,12 +1,13 @@
 import { useTransition, animated } from "@react-spring/web";
 import { createPortal } from "react-dom";
 import { useHotkeys } from "react-hotkeys-hook";
+import ScrollbarCustom from "./ScrollbarCustom";
 
 function Modal({ show, close, title, children, darkMode, size }) {
   useHotkeys("esc", () => close());
 
   const modalSize = {
-    sm: { width: "20%", height: "30%" },
+    sm: { width: "30%", height: "60%" },
     md: { width: "50%", height: "90%" },
     lg: { width: "90%", height: "90%" },
   };
@@ -53,9 +54,7 @@ function Modal({ show, close, title, children, darkMode, size }) {
                         <i className="fa-solid fa-x fs-5" />
                       </span>
                     </div>
-                    <div className="flex-fill overflow-y-auto modal-cuerpo">
-                      {children}
-                    </div>
+                    <div className="flex-grow-1 modal-cuerpo">{children}</div>
                   </animated.div>
                 )
             )}

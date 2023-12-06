@@ -52,7 +52,17 @@ function Routes() {
               path: "crear",
               element: <AddConvocatoria />,
             },
-            { path: "pendientes", element: <NoticiasPendientes /> },
+          ],
+        },
+        {
+          path: "etiquetas",
+          element: <Convocatorias_Index />,
+          children: [
+            { index: true, element: <ListaConvocatorias /> },
+            {
+              path: "crear",
+              element: <AddConvocatoria />,
+            },
           ],
         },
       ],

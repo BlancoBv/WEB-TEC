@@ -1,5 +1,6 @@
 import Axios from "../../axios/Axios";
 import Carrousel from "../../components/Carrousel";
+import ConvocatoriaCard from "../../components/ConvocatoriaCard";
 import Mapa from "../../components/Mapa";
 import NoticiaCard from "../../components/NoticiaCard";
 import SectionContainer from "../../components/SectionContainer";
@@ -10,6 +11,7 @@ function Home() {
     "/banners/obtener?mostrar=vigentes"
   );
   const blogs = useGetData("/blogs/obtener?estatus=aceptado");
+  const convocatorias = useGetData("/convocatorias/obtener");
 
   return (
     <div>
@@ -26,8 +28,12 @@ function Home() {
         </div>
       </SectionContainer>
       <SectionContainer title="Convocatorias">
-        <p>Texto de ejemplo</p>
-        <p>Texto de ejemplo</p>
+        <div className="d-flex justify-content-evenly align-items-center flex-column flex-md-row">
+          {!convocatorias.isPending &&
+            convocatorias.data.response.map((el) => (
+              <ConvocatoriaCard element={el} />
+            ))}
+        </div>
       </SectionContainer>
       <SectionContainer title="Redes sociales">
         <div className="d-flex align-items-center justify-content-evenly p-2">

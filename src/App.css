@@ -4,6 +4,7 @@
 @import "../src/assets/css/HTMLEditor.css";
 @import "../src//assets//css/NavTabsUser.css";
 @import "../src/assets/css/UserSideBar.css";
+@import "../src/assets/css/ConvocatoriaCard.css";
 
 .header {
   height: 45px;
@@ -122,4 +123,7 @@
 
 .image-fit {
   object-fit: cover;
+}
+.no-resize {
+  resize: none;
 }

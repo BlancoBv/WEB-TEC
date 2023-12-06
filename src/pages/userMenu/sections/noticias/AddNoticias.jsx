@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import Input, { InputDate, InputImage } from "../../../../components/Input";
 import HTMLEditor from "../../../../components/HTMLEditor";
 import Modal from "../../../../components/Modal";
-import Axios, { urlMain } from "../../../../axios/Axios";
+import Axios, { multipartHeader, urlMain } from "../../../../axios/Axios";
 import format from "../../../../assets/format";
 import { AlertsContexts } from "../../IndexMenu";
 import copyToClipboard from "../../../../assets/copyToClipboard";
@@ -41,11 +41,7 @@ function AddNoticias() {
     );
 
     try {
-      await Axios.post("/blogs/crear", formData, {
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-      });
+      await Axios.post("/blogs/crear", formData, multipartHeader);
       showSuccess();
     } catch (error) {
       showError();

@@ -24,16 +24,12 @@ function IndexMenu() {
       setShowAlertError({ status: false, text: "" });
     }, 1000);
   };
-  const closeAlerts = () => {
-    setShowAlertSuccess(false);
-    setShowAlertError({ status: false, text: "" });
-  };
 
   return (
     <div>
       <AlertSuccess show={showAlertSuccess} />
       <AlertError show={showAlertError.status} text={showAlertError.text} />
-      <AlertsContexts.Provider value={{ showSuccess, showError, closeAlerts }}>
+      <AlertsContexts.Provider value={{ showSuccess, showError }}>
         <Base />
       </AlertsContexts.Provider>
     </div>

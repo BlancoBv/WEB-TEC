@@ -42,6 +42,11 @@ function Base() {
       icon: "fa-solid fa-newspaper",
       route: "convocatorias",
     },
+    {
+      name: "Etiquetas",
+      icon: "fa-solid fa-tag",
+      route: "etiquetas",
+    },
   ];
 
   return (

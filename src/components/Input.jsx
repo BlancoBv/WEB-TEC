@@ -225,4 +225,37 @@ export const InputFile = ({
 InputFile.defaultProps = {
   aceptar: ".pdf",
 };
+
+export const InputTextArea = ({
+  name,
+  value,
+  label,
+  handle,
+  placeholder,
+  type,
+  required,
+}) => {
+  return (
+    <div className="d-flex flex-column h-100 w-100">
+      <label>{label}</label>
+      <textarea
+        type={type}
+        className="form-control flex-grow-1 no-resize"
+        value={value.hasOwnProperty(name) ? value[name] : ""}
+        placeholder={placeholder}
+        onChange={handle}
+        name={name}
+        required={required}
+      />
+    </div>
+  );
+};
+InputTextArea.defaultProps = {
+  label: "Input de ejemplo",
+  placeholder: "Input de ejemplo",
+  value: {},
+  type: "text",
+  required: false,
+};
+
 export default Input;
