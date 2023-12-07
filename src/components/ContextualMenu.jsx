@@ -23,7 +23,9 @@ function ContextualMenu({ elements }) {
           return (
             <Submenu label={el.label} key={i}>
               {el.subOptions.map((option) => (
-                <Item key={option.content}>{option.content}</Item>
+                <Item key={option.content} onClick={option.action}>
+                  {option.content}
+                </Item>
               ))}
             </Submenu>
           );

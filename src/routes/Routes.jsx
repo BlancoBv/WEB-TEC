@@ -15,6 +15,7 @@ import ListaNoticias from "../pages/userMenu/sections/noticias/ListaNoticias";
 import Convocatorias_Index from "../pages/userMenu/sections/convocatorias/Convocatorias_Index";
 import ListaConvocatorias from "../pages/userMenu/sections/convocatorias/ListaConvocatorias";
 import AddConvocatoria from "../pages/userMenu/sections/convocatorias/AddConvocatoria";
+import SearchByLabel from "../pages/noticiaSearchByLabel/SearchByLabel";
 
 function Routes() {
   const rutas = Router([
@@ -24,6 +25,7 @@ function Routes() {
       children: [
         { index: true, element: <Home /> },
         { path: "antecedentes", element: <Antecedentes /> },
+        { path: "search/:label", element: <SearchByLabel /> },
       ],
     },
     {

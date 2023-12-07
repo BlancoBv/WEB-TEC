@@ -6,6 +6,7 @@
 @import "../src/assets/css/UserSideBar.css";
 @import "../src/assets/css/ConvocatoriaCard.css";
 @import "../src/assets/css/Scrollbar.css";
+@import "../src/assets/css/SearchByLabel.css";
 
 .header {
   height: 45px;

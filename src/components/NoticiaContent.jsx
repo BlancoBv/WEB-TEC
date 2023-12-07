@@ -1,6 +1,7 @@
 import ScrollbarCustom from "./ScrollbarCustom";
 import { urlMain } from "../axios/Axios";
 import format from "../assets/format";
+import { NavLink } from "react-router-dom";
 
 function NoticiaContent({ data }) {
   console.log(data);
@@ -19,6 +20,21 @@ function NoticiaContent({ data }) {
           className="w-100"
           dangerouslySetInnerHTML={{ __html: data.contenido }}
         ></div>
+        {data.etiquetas && (
+          <div className="border-top w-100 p-2">
+            {/* <span>
+            <i className="fa-solid fa-tags" /> Etiquetas
+          </span> */}
+            <div className="w-100 justify-content-evenly d-flex flex-wrap">
+              {data.etiquetas.map((etiqueta) => (
+                <NavLink to={`search/${etiqueta.etiqueta}`} reloadDocument>
+                  <i className="fa-solid fa-tag" />
+                  {etiqueta.etiqueta}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </ScrollbarCustom>
   );

@@ -6,6 +6,7 @@ import Modal from "../../../components/Modal";
 import { InputImage, InputSwitchAction } from "../../../components/Input";
 import { AlertsContexts } from "../IndexMenu";
 import Loader from "../../../components/Loader";
+import ScrollbarCustom from "../../../components/ScrollbarCustom";
 
 function Banners() {
   const { showSuccess, closeAlerts } = useContext(AlertsContexts);
@@ -147,11 +148,13 @@ const Success = ({ data, actualizarState, bannerState }) => {
         show={showImage.status}
         close={() => setShowImage({ status: false, idBanner: "", url: "" })}
       >
-        <img
-          src={showImage.url}
-          alt={`Previsualizacion imagen_${showImage.idBanner}`}
-          width="100%"
-        />
+        <ScrollbarCustom>
+          <img
+            src={showImage.url}
+            alt={`Previsualizacion imagen_${showImage.idBanner}`}
+            width="100%"
+          />
+        </ScrollbarCustom>
       </Modal>
       <Modal
         show={showChangeImage.status}

@@ -1,11 +1,17 @@
 import React, { useState, useContext } from "react";
 import useGetData from "../../../../hooks/useGetData";
-import Axios from "../../../../axios/Axios";
+import Axios, { multipartHeader, urlMain } from "../../../../axios/Axios";
 import { AlertsContexts } from "../../IndexMenu";
 import ContextualMenu, { show } from "../../../../components/ContextualMenu";
-import Modal, { ModalBottom } from "../../../../components/Modal";
-import Input, { InputTextArea } from "../../../../components/Input";
+import Modal, { ModalBottom, ModalConfirm } from "../../../../components/Modal";
+import Input, {
+  InputTextArea,
+  InputFile,
+  InputImage,
+} from "../../../../components/Input";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
+import PDFViewer from "../../../../components/PDFViewer";
+import Loader from "../../../../components/Loader";
 
 function ListaConvocatorias() {
   const [relativeData, setRelativeData] = useState({});
@@ -15,8 +21,10 @@ function ListaConvocatorias() {
     title: "",
     type: "",
   });
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const [bodyTitles, setBodyTitles] = useState({});
+  const [bodyFiles, setBodyFiles] = useState({});
 
   const { showSuccess, showError } = useContext(AlertsContexts);
   const { data, isPending } = useGetData(
@@ -54,6 +62,39 @@ function ListaConvocatorias() {
     }
   };
 
+  const updatePDF = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("pdf", bodyFiles.pdf.file);
+    try {
+      await Axios.put(
+        `/convocatorias/actualizarpdfxidconvocatoria/${relativeData.idconvocatoria}`,
+        formData,
+        multipartHeader
+      );
+      showSuccess();
+      setActualizador(!actualizador);
+    } catch (error) {
+      showError();
+    }
+  };
+  const updateImage = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("imagen", bodyFiles.imagen.file);
+
+    try {
+      await Axios.put(
+        `/convocatorias/actualizarimgxidconvocatoria/${relativeData.idconvocatoria}`,
+        formData,
+        multipartHeader
+      );
+      showSuccess();
+    } catch (error) {
+      showError();
+    }
+  };
+
   const handle = (e, setVariable, variable) => {
     const { name, value } = e.target;
     setVariable({ ...variable, [name]: value });
@@ -74,7 +115,34 @@ function ListaConvocatorias() {
     {
       content: "submenu",
       label: "Editar archivos",
-      subOptions: [{ content: "Imagen" }, { content: "PDF o enlace" }],
+      subOptions: [
+        {
+          content: "Imagen",
+          action: () => {
+            setBodyFiles({
+              srcActual: `${urlMain}${relativeData.imagen}`,
+            });
+            setShowModal({
+              status: true,
+              title: "Editar imagen",
+              type: "image",
+            });
+          },
+        },
+        {
+          content: "PDF o enlace",
+          action: () => {
+            setBodyFiles({
+              srcActual: `${urlMain}${relativeData.pdf}`,
+            });
+            setShowModal({
+              status: true,
+              title: "Editar pdf o enlace",
+              type: "pdf",
+            });
+          },
+        },
+      ],
     },
 
     { content: "separator" },
@@ -83,17 +151,27 @@ function ListaConvocatorias() {
       content: "Eliminar",
       icon: "fa-trash-can",
       style: "text-danger",
-      action: deleteData,
+      action: () => {
+        setShowConfirm(true);
+      },
     },
   ];
-
+  console.log(bodyFiles);
   return (
-    <div>
+    <div className="h-100 w-100 bg-dark-mode-base p-2 rounded">
       <ContextualMenu elements={contextMenuOptions} />
+      <ModalConfirm
+        darkMode={true}
+        show={showConfirm}
+        close={() => setShowConfirm(false)}
+        action={deleteData}
+      >
+        <p>¿Realmente desea eliminar este elemento?</p>
+      </ModalConfirm>
       <Modal
         title={showModal.title}
         darkMode={true}
-        size="sm"
+        size={showModal.type === "titles" ? "sm" : "lg"}
         show={showModal.title}
         close={() => setShowModal({ status: false, title: "" })}
       >
@@ -129,8 +207,94 @@ function ListaConvocatorias() {
             </ModalBottom>
           </form>
         )}
+        {showModal.type === "pdf" && (
+          <form className="w-100 h-100 d-flex flex-column" onSubmit={updatePDF}>
+            <InputFile
+              label="Seleccionar archivo nuevo"
+              name="pdf"
+              variable={bodyFiles}
+              setVariable={setBodyFiles}
+              required={true}
+            />
+            <div className="flex-grow-1 d-flex gap-2">
+              <div className="h-100 w-50 d-flex flex-column">
+                <h3>Archivo actual</h3>
+                <div className="flex-grow-1">
+                  <ScrollbarCustom>
+                    <PDFViewer url={bodyFiles.srcActual} />
+                  </ScrollbarCustom>
+                </div>
+              </div>
+              <div className="h-100 w-50 d-flex flex-column">
+                <h3>Archivo Nuevo</h3>
+                <div className="flex-grow-1">
+                  <ScrollbarCustom>
+                    {bodyFiles.hasOwnProperty("pdf") && (
+                      <PDFViewer url={bodyFiles.pdf.src} />
+                    )}
+                  </ScrollbarCustom>
+                </div>
+              </div>
+            </div>
+            <ModalBottom>
+              <button type="submit">Guardar</button>
+            </ModalBottom>
+          </form>
+        )}
+        {showModal.type === "image" && (
+          <form
+            className="w-100 h-100 d-flex flex-column"
+            onSubmit={updateImage}
+          >
+            <InputImage
+              label="Seleccionar archivo nuevo"
+              name="imagen"
+              variable={bodyFiles}
+              setVariable={setBodyFiles}
+              required={true}
+            />
+            <div className="flex-grow-1">
+              <ScrollbarCustom>
+                <div className=" d-flex gap-2">
+                  <div className="h-100 w-50 d-flex flex-column">
+                    <h3>Imagen actual</h3>
+                    <div className="flex-grow-1">
+                      <img
+                        src={bodyFiles.srcActual}
+                        className="image-fit"
+                        width="350px"
+                        height="400px"
+                      />{" "}
+                    </div>
+                  </div>
+                  <div className="h-100 w-50 d-flex flex-column">
+                    <h3>Imagen nueva</h3>
+                    <div className="flex-grow-1">
+                      {bodyFiles.hasOwnProperty("imagen") && (
+                        <img
+                          src={bodyFiles.imagen.src}
+                          className="image-fit"
+                          width="350px"
+                          height="400px"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </ScrollbarCustom>
+            </div>
+            <ModalBottom>
+              <button type="submit">Guardar</button>
+            </ModalBottom>
+          </form>
+        )}
       </Modal>
       {!isPending && <Success data={data.response} display={display} />}
+      {isPending && (
+        <div className="d-flex w-100 h-100 align-items-center justify-content-center">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }

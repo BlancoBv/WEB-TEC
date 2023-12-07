@@ -16,7 +16,7 @@ function NoticiasPendientes() {
   const [body, setBody] = useState({});
   const [labels, setLabels] = useState([]);
   const { data, isPending, error } = useGetData(
-    "/blogs/obtener?estatus=pendiente",
+    "/blogs/obtener?estatus=pendiente&mostrarSinVigencia=true",
     actualizador
   );
   const etiquetas = useGetData("/etiquetas/obtener");
@@ -201,7 +201,7 @@ const Success = ({
               <td>
                 <b>{el.titulo}</b>
               </td>
-              <td>{el.etiquetas}</td>
+              <td>{el.etiquetas.map((label) => label.etiqueta).join(", ")}</td>
 
               <td>
                 <span className="w-100 h-100 d-flex justify-content-evenly">
