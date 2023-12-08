@@ -14,7 +14,7 @@ export const AlertSuccess = ({ show }) => {
         item && (
           <animated.div
             style={{ ...style, transform: "translate(-50%,0)" }}
-            className="alert alert-success position-fixed top-0 start-50 translate-middle-x user-select-none mt-1 z-3"
+            className="alert alert-success position-fixed top-0 start-50 user-select-none mt-1 z-3"
             role="alert"
           >
             Datos guardados correctamente.

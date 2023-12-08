@@ -25,6 +25,10 @@
   opacity: 0.7;
   background-color: #f6f6f6;
 }
+
+.fit-content-width {
+  width: fit-content;
+}
 .h-5 {
   height: 5%;
 }

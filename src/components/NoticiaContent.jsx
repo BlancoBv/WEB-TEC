@@ -27,7 +27,7 @@ function NoticiaContent({ data }) {
           </span> */}
             <div className="w-100 justify-content-evenly d-flex flex-wrap">
               {data.etiquetas.map((etiqueta) => (
-                <NavLink to={`search/${etiqueta.etiqueta}`} reloadDocument>
+                <NavLink to={`/search/${etiqueta.etiqueta}`} reloadDocument>
                   <i className="fa-solid fa-tag" />
                   {etiqueta.etiqueta}
                 </NavLink>

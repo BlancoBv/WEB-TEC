@@ -32,6 +32,7 @@ function Modal({ show, close, title, children, darkMode, size }) {
             style={style}
             className="modal-container d-flex align-items-center justify-content-center"
             /*  onClick={close} */
+            data-bs-theme={darkMode ? "dark" : ""}
           >
             {modalBoxTransition(
               (styleBox, itemBox) =>
@@ -42,7 +43,10 @@ function Modal({ show, close, title, children, darkMode, size }) {
                     } d-flex flex-column`}
                     style={{ ...styleBox, ...modalSize[size] }}
                   >
-                    <div className="modal-title border-bottom">
+                    <div
+                      className="modal-title border-bottom"
+                      style={{ height: size === "sm" ? "15%" : "" }}
+                    >
                       <h3>{title}</h3>
                       <span
                         className="modal-button-close p-2 d-flex justify-content-center align-items-center"
@@ -111,6 +115,7 @@ export const ModalConfirm = ({
           <animated.div
             style={style}
             className="modal-container d-flex align-items-center justify-content-center"
+            data-bs-theme={darkMode ? "dark" : ""}
             /*  onClick={close} */
           >
             {modalBoxTransition(
@@ -161,6 +166,7 @@ export const ModalConfirm = ({
 ModalConfirm.defaultProps = {
   darkMode: false,
   size: "lg",
+  children: <p>¿Realmente desea eliminar este elemento?</p>,
 };
 
 export const ModalBottom = ({ children }) => {

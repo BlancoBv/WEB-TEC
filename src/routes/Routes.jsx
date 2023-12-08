@@ -16,6 +16,8 @@ import Convocatorias_Index from "../pages/userMenu/sections/convocatorias/Convoc
 import ListaConvocatorias from "../pages/userMenu/sections/convocatorias/ListaConvocatorias";
 import AddConvocatoria from "../pages/userMenu/sections/convocatorias/AddConvocatoria";
 import SearchByLabel from "../pages/noticiaSearchByLabel/SearchByLabel";
+import Labels_Index from "../pages/userMenu/sections/etiquetas/Labels_Index";
+import ManageLabels from "../pages/userMenu/sections/etiquetas/ManageLabels";
 
 function Routes() {
   const rutas = Router([
@@ -58,14 +60,8 @@ function Routes() {
         },
         {
           path: "etiquetas",
-          element: <Convocatorias_Index />,
-          children: [
-            { index: true, element: <ListaConvocatorias /> },
-            {
-              path: "crear",
-              element: <AddConvocatoria />,
-            },
-          ],
+          element: <Labels_Index />,
+          children: [{ index: true, element: <ManageLabels /> }],
         },
       ],
     },

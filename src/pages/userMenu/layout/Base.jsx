@@ -86,11 +86,10 @@ function Base() {
 }
 
 export const NavigationMenuUser = ({ tabs, mainRoute }) => {
-  console.log();
   return (
     <div className="d-flex w-100 d-flex pb-2 gap-2 nav-menu-tabs">
       {tabs.map((el) => (
-        <NavLink to={`${el.route}`} end>
+        <NavLink to={`${el.route}`} key={el.name} end>
           <i className={el.icon} />
           <span>{el.name}</span>
         </NavLink>
