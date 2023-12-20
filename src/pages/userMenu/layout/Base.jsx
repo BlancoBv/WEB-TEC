@@ -47,6 +47,11 @@ function Base() {
       icon: "fa-solid fa-tag",
       route: "etiquetas",
     },
+    {
+      name: "Menus",
+      icon: "fa-solid fa-bookmark",
+      route: "menus-control",
+    },
   ];
 
   return (
