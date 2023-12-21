@@ -19,6 +19,8 @@ import SearchByLabel from "../pages/noticiaSearchByLabel/SearchByLabel";
 import Labels_Index from "../pages/userMenu/sections/etiquetas/Labels_Index";
 import ManageLabels from "../pages/userMenu/sections/etiquetas/ManageLabels";
 import Menus_Index from "../pages/userMenu/sections/menus/Menus_Index";
+import ListaMenus from "../pages/userMenu/sections/menus/ListaMenus";
+import AddMenu from "../pages/userMenu/sections/menus/AddMenu";
 
 function Routes() {
   const rutas = Router([
@@ -67,7 +69,10 @@ function Routes() {
         {
           path: "menus-control",
           element: <Menus_Index />,
-          children: [{ index: true, element: <ManageLabels /> }],
+          children: [
+            { index: true, element: <ListaMenus /> },
+            { path: "crear", element: <AddMenu /> },
+          ],
         },
       ],
     },

@@ -45,6 +45,9 @@
 .h-30 {
   height: 30%;
 }
+.h-60 {
+  height: 60%;
+}
 .h-80 {
   height: 80%;
 }
@@ -69,6 +72,9 @@
 }
 .w-200px {
   width: 200px;
+}
+.w-0 {
+  width: 0px;
 }
 
 .imageOpacity img:hover {

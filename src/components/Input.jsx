@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 
-function Input({ name, value, label, handle, placeholder, type, required }) {
+function Input({
+  name,
+  value,
+  label,
+  handle,
+  placeholder,
+  type,
+  required,
+  id,
+  disabled,
+}) {
   return (
     <div className="mb-3">
       <label>{label}</label>
@@ -12,6 +22,8 @@ function Input({ name, value, label, handle, placeholder, type, required }) {
         onChange={handle}
         name={name}
         required={required}
+        id={id}
+        disabled={disabled}
       />
     </div>
   );
@@ -22,6 +34,7 @@ Input.defaultProps = {
   value: {},
   type: "text",
   required: false,
+  disabled: false,
 };
 
 export const InputImage = ({
