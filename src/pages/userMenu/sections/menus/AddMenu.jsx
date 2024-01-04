@@ -1,24 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input, {
   InputSwitchAction,
   InputTextArea,
 } from "../../../../components/Input";
+import Axios from "../../../../axios/Axios";
+import { AlertsContexts } from "../../IndexMenu";
 
 function AddMenu() {
   const [body, setBody] = useState({});
   const [submenus, setSubmenus] = useState(false);
   const [autoMainRoute, setAutoMainRoute] = useState(true);
+  const { showSuccess, showError } = useContext(AlertsContexts);
 
   const handle = (e) => {
     const { name, value } = e.target;
     setBody({ ...body, [name]: value });
     if (document.activeElement === document.getElementById("categoria")) {
       const newValue = value
+        .replace(/\s+$/g, "")
         .replace(/\s/g, "-")
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
-
+      console.log(
+        value
+          .replace(/\s+$/g, "")
+          .replace(/\s/g, "-")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+      );
       setBody((prev) => ({ ...prev, ruta: newValue }));
     }
   };
@@ -33,14 +44,21 @@ function AddMenu() {
     setBody({ ...body, [name]: newValue });
   };
   console.log(body);
+  const save = async (e) => {
+    e.preventDefault();
+    try {
+      await Axios.post("/categorias/crear", body);
+      showSuccess();
+    } catch (error) {
+      showError();
+    }
+  };
 
   return (
     <div className="w-100 h-100 d-flex gap-2">
       <form
-        className={`bg-dark-mode-base rounded p-2 ${
-          submenus ? "w-75" : "w-100"
-        } h-100 d-flex flex-column`}
-        style={{ transition: "all 300ms ease-in-out " }}
+        className="bg-dark-mode-base rounded p-2 h-100 w-100 d-flex flex-column"
+        onSubmit={save}
       >
         <h3 className="border-bottom">Crear menú</h3>
         <Input
@@ -50,6 +68,7 @@ function AddMenu() {
           name="categoria"
           value={body}
           id="categoria"
+          required={true}
         />
         <div className="flex-grow-1">
           <InputTextArea
@@ -58,6 +77,7 @@ function AddMenu() {
             handle={handle}
             name="descripcion"
             value={body}
+            required={true}
           />
         </div>
         <div className="d-flex align-items-center gap-2">
@@ -72,7 +92,7 @@ function AddMenu() {
             />
           </div>
           <InputSwitchAction
-            label="¿Establecer ruta automaticamente?"
+            label="Ruta automatica"
             initialChecked={autoMainRoute}
             checkedAction={() => {
               setAutoMainRoute(true);
@@ -96,61 +116,10 @@ function AddMenu() {
             return true;
           }}
         />
+        <button className="mx-auto" type="submit">
+          Guardar
+        </button>
       </form>
-      {submenus && (
-        <div
-          className="flex-grow-1 h-100 d-flex flex-column"
-          /* style={{
-            transition: "all 300ms ease-in-out",
-          }} */
-        >
-          <form
-            className="bg-dark-mode-base rounded p-2 
-           d-flex flex-column h-60 w-100"
-          >
-            <h4 className="border-bottom">Añadir submenus</h4>
-            <Input
-              label="Titulo del submenú"
-              placeholder="Titulo"
-              handle={handle}
-              name="categoria"
-              value={body}
-              id="categoria"
-            />
-            <div className="flex-grow-1 mb-3">
-              <InputTextArea
-                label="Descripción"
-                placeholder="Descripción"
-                handle={handle}
-                name="descripcion"
-                value={body}
-              />
-            </div>
-
-            <Input
-              label="Ruta"
-              placeholder="Ruta"
-              handle={handleRuta}
-              name="ruta"
-              value={body}
-              disabled={autoMainRoute}
-            />
-
-            <InputSwitchAction
-              label="Ruta automatica"
-              initialChecked={autoMainRoute}
-              checkedAction={() => {
-                setAutoMainRoute(true);
-                return true;
-              }}
-              uncheckedAction={() => {
-                setAutoMainRoute(false);
-                return true;
-              }}
-            />
-          </form>
-        </div>
-      )}
     </div>
   );
 }
