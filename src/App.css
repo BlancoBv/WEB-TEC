@@ -7,6 +7,8 @@
 @import "../src/assets/css/ConvocatoriaCard.css";
 @import "../src/assets/css/Scrollbar.css";
 @import "../src/assets/css/SearchByLabel.css";
+@import "../src/assets/css/Accordion.css";
+@import "../src/assets/css/Tabla.css";
 
 .header {
   height: 45px;

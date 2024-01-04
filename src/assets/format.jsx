@@ -120,5 +120,13 @@ const format = {
 
     return numberOfWeeks;
   },
+  formatRoute: (text) => {
+    return text
+      .replace(/\s+$/g, "")
+      .replace(/\s/g, "-")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  },
 };
 export default format;

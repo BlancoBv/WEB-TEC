@@ -1,0 +1,10 @@
+.tabla {
+  background-attachment: fixed;
+}
+.tabla tr {
+  border-bottom: 2px solid #242424;
+  height: 50px;
+}
+.tabla tbody tr:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}

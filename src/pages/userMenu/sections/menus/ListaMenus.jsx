@@ -5,37 +5,66 @@ import Modal from "../../../../components/Modal";
 import { urlMain } from "../../../../axios/Axios";
 import { Scrollbar } from "react-scrollbars-custom";
 import NoticiaContent from "../../../../components/NoticiaContent";
+import ContextualMenu, { show } from "../../../../components/ContextualMenu";
+import { AccordionTableMenus } from "../../../../components/Accordion";
 
 function ListaMenus() {
   const [filter, setFilter] = useState({
     estatus: "aceptado",
     vigencia: "true",
   });
+  const [relativeData, setRelativeData] = useState({});
   const [showModal, setShowModal] = useState({ status: false, data: "" });
 
   const { data, isPending, error } = useGetData("/categorias/obtener");
 
-  const handle = (e) => {
-    const { value, name } = e.target;
-    setFilter({ ...filter, [name]: value });
+  const display = (event, element) => {
+    setRelativeData(element);
+    show({ event });
   };
-  console.log(data);
+  const contextMenuOptions = [
+    {
+      content: "Editar",
+      icon: "fa-pen-to-square",
+      action: () => {
+        setShowModal({ status: true, title: "Editar etiqueta", type: "edit" });
+      },
+    },
+    {
+      content: "Añadir subcategoria",
+      icon: "fa-pen-to-square",
+      action: () => {
+        setShowModal({ status: true, title: "Editar etiqueta", type: "edit" });
+      },
+      disabled:
+        relativeData.hasOwnProperty("dropcollapse") &&
+        !relativeData.dropcollapse,
+    },
+    { content: "separator" },
+    {
+      content: "Eliminar",
+      style: "text-danger",
+      icon: "fa-trash-can",
+      action: () => setShowConfirm(true),
+    },
+  ];
+
   return (
     <div className="h-100 w-100 d-flex flex-column gap-2">
+      <ContextualMenu elements={contextMenuOptions} />
       <Modal
         show={showModal.status}
         close={() => setShowModal({ status: false, data: "" })}
-        title={showModal.data.titulo}
+        title={"editando"}
         darkMode={true}
         size="md"
-      >
-        <NoticiaContent data={showModal.data} />
-      </Modal>
+      ></Modal>
       <div className="flex-grow-1 bg-dark-mode-base rounded p-2 d-flex">
         {!isPending && (
           <Success
             data={data.response}
             modalState={{ showModal, setShowModal }}
+            showContextMenu={display}
           />
         )}
         {isPending && <Loader />}
@@ -44,15 +73,11 @@ function ListaMenus() {
   );
 }
 
-const Success = ({ data, modalState }) => {
-  const { showModal, setShowModal } = modalState;
-  const setRelativeData = (element) => {
-    setShowModal({ status: true, data: element });
-  };
+const Success = ({ data, showContextMenu }) => {
   return (
     <>
       <div className="w-100">
-        <table className="w-100 table table-hover">
+        <table className="w-100 tabla">
           <thead>
             <tr>
               <th>Ultima actualización</th>
@@ -61,47 +86,29 @@ const Success = ({ data, modalState }) => {
             </tr>
           </thead>
           <tbody>
-            {/*  {datos.map((el) => (
-            <tr key={el.idblog}>
-              <td>{el.usuario}</td>
-              <td>{format.formatFechaDB(el.updatedAt)}</td>
-              <td>{format.formatTextoMayusPrimeraLetra(el.estatus)}</td>
-
-              <td>
-                <b>{el.titulo}</b>
-              </td>
-              <td>{el.etiquetas}</td>
-
-              <td>
-                <span className="w-100 h-100 d-flex justify-content-evenly">
-                  <button title="Previsualizar">
-                    <i className="fa-solid fa-eye" />
-                  </button>
-                  <button title="Editar">
-                    <i className="fa-solid fa-pen-to-square" />
-                  </button>
-                  <button
-                    title="Más configuraciones"
-                    onClick={() => showAjustes(el)}
-                  >
-                    <i className="fa-solid fa-gear" />
-                  </button>
-                </span>
-              </td>
-            </tr>
-          ))} */}
-            {data.map((el) => (
-              <tr
-                key={el.idblog}
-                title={el.titulo}
-                role="button"
-                //onClick={() => setRelativeData(el)}
-              >
-                <td>{el.updatedAt}</td>
-                <td>{el.categoria}</td>
-                <td>{el.ruta || "---"}</td>
-              </tr>
-            ))}
+            {data.map((el) => {
+              if (el.dropcollapse) {
+                return (
+                  <AccordionTableMenus
+                    element={el}
+                    targets={["updatedAt", "categoria", "ruta"]}
+                    subcategoriaTargets={["updatedAt", "subcategoria", "ruta"]}
+                    showContextMenu={showContextMenu}
+                  />
+                );
+              }
+              return (
+                <tr
+                  key={el.idcategoria}
+                  title={el.titulo}
+                  onContextMenu={(e) => showContextMenu(e, el)}
+                >
+                  <td>{el.updatedAt}</td>
+                  <td>{el.categoria}</td>
+                  <td>{el.ruta || "---"}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

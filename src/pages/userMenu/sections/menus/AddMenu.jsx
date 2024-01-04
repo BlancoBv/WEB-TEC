@@ -5,6 +5,7 @@ import Input, {
 } from "../../../../components/Input";
 import Axios from "../../../../axios/Axios";
 import { AlertsContexts } from "../../IndexMenu";
+import format from "../../../../assets/format";
 
 function AddMenu() {
   const [body, setBody] = useState({});
@@ -15,21 +16,11 @@ function AddMenu() {
   const handle = (e) => {
     const { name, value } = e.target;
     setBody({ ...body, [name]: value });
-    if (document.activeElement === document.getElementById("categoria")) {
-      const newValue = value
-        .replace(/\s+$/g, "")
-        .replace(/\s/g, "-")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
-      console.log(
-        value
-          .replace(/\s+$/g, "")
-          .replace(/\s/g, "-")
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .toLowerCase()
-      );
+    if (
+      document.activeElement === document.getElementById("categoria") &&
+      !submenus
+    ) {
+      const newValue = format.formatRoute(value);
       setBody((prev) => ({ ...prev, ruta: newValue }));
     }
   };
@@ -109,10 +100,18 @@ function AddMenu() {
           initialChecked={submenus}
           checkedAction={() => {
             setSubmenus(true);
+            setBody((prev) => {
+              delete prev.ruta;
+              return prev;
+            });
             return true;
           }}
           uncheckedAction={() => {
             setSubmenus(false);
+            setBody((prev) => ({
+              ...prev,
+              ruta: format.formatRoute(prev.categoria),
+            }));
             return true;
           }}
         />

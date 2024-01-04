@@ -33,7 +33,7 @@ function ContextualMenu({ elements }) {
         }
 
         return (
-          <Item onClick={el.action} key={i}>
+          <Item onClick={el.action} key={i} disabled={el.disabled}>
             <span className={el.style}>
               <i className={`fa-solid ${el.icon}`} /> {el.content}
             </span>

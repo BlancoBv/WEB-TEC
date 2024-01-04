@@ -1,0 +1,10 @@
+.accordion-custom {
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+}
+
+.panel {
+  display: none;
+  background-color: #212529;
+}

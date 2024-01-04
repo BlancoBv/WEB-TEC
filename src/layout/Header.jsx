@@ -5,6 +5,7 @@ import LogoSep from "../assets/img/placa-gob2.png";
 import LogoTec from "../assets/img/placa_tecnm.jpg";
 import Dropdown from "../components/Dropdown";
 import { Link } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 const Header = () => {
   const [showWhiteMenu, setShowWhiteMenu] = useState(true);
@@ -99,7 +100,8 @@ const Header = () => {
         </div>
       </div>
       {/* Barra azul */}
-      <div className="blueBackground text-white blueMenu d-flex justify-content-evenly align-items-center">
+      <NavBar />
+      {/* <div className="blueBackground text-white blueMenu d-flex justify-content-evenly align-items-center">
         <Link className="text-decoration-none text-white" to="/">
           <i className="fa-solid fa-house" />
         </Link>
@@ -160,7 +162,7 @@ const Header = () => {
         <a className="text-white text-decoration-none" href="">
           H. Junta Directiva
         </a>
-      </div>
+      </div> */}
     </header>
   );
 };
