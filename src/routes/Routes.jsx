@@ -21,9 +21,14 @@ import ManageLabels from "../pages/userMenu/sections/etiquetas/ManageLabels";
 import Menus_Index from "../pages/userMenu/sections/menus/Menus_Index";
 import ListaMenus from "../pages/userMenu/sections/menus/ListaMenus";
 import AddMenu from "../pages/userMenu/sections/menus/AddMenu";
+import useGetData from "../hooks/useGetData";
+import Article from "../components/Article";
+import Loader from "../components/Loader";
+import { useEffect } from "react";
 
 function Routes() {
-  const rutas = Router([
+  const { data, isPending } = useGetData("/categorias/obtener");
+  const rutas = [
     {
       path: "/",
       element: <IndexLayout />,
@@ -76,8 +81,29 @@ function Routes() {
         },
       ],
     },
-  ]);
-  return <RouterProvider router={rutas} />;
+  ];
+
+  !isPending &&
+    data.response.forEach((ruta) => {
+      if (ruta.dropcollapse) {
+        rutas.push({
+          path: ruta.categoria,
+          children: ruta.subcategorias.map((el) => ({ path: el.ruta })),
+        });
+      } else {
+        rutas.push({
+          path: ruta.ruta,
+          element: <IndexLayout />,
+          children: [{ index: true, element: <Article ruta={ruta.ruta} /> }],
+        });
+      }
+    });
+
+  return (
+    !isPending && (
+      <RouterProvider router={Router(rutas)} fallbackElement={<Loader />} />
+    )
+  );
 }
 
 export default Routes;

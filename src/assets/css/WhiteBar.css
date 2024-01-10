@@ -1,0 +1,22 @@
+.white-bar {
+  width: 100%;
+  display: flex;
+  min-height: 40px;
+}
+.images-container {
+  display: flex;
+  width: 50%;
+  a {
+    flex-grow: 1;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 682px) {
+  .white-bar {
+    display: flex;
+    min-height: 40px;
+  }
+}

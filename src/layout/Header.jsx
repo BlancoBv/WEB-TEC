@@ -8,17 +8,17 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 
 const Header = () => {
-  const [showWhiteMenu, setShowWhiteMenu] = useState(true);
   /* Funcion usada para esconder la barra blanca en el header al desplazarse en el contenedor principal */
   useEffect(() => {
     const element = document.getElementById("main");
-    element.addEventListener("scroll", (e) => {
+    element.addEventListener("scroll", () => {
       const currentScroll = element.scrollTop;
+      const whiteBar = document.getElementById("white-bar");
 
       if (currentScroll >= 100) {
-        setShowWhiteMenu((prev) => (prev = false));
+        whiteBar.style.display = "none";
       } else {
-        setShowWhiteMenu((prev) => (prev = true));
+        whiteBar.style.display = "";
       }
     });
   }, []);
@@ -26,14 +26,11 @@ const Header = () => {
   return (
     <header className="w-100">
       {/* Barra gobierno */}
-      <div className="header w-100 d-flex justify-content-end position-relative">
-        <a
-          className="h-100 d-flex align-items-center position-absolute start-0 ms-2"
-          href="https://www.gob.mx/"
-        >
+      <div className="gob-bar">
+        <a className="gob-image" href="https://www.gob.mx/">
           <img src={LogoGob} width="100px" />
         </a>
-        <div className="d-flex justify-content-evenly w-25">
+        <div className="gob-links">
           <a
             className="text-white  h-100 enlacesGob px-3 text-decoration-none "
             href="https://www.gob.mx/gobierno"
@@ -66,11 +63,8 @@ const Header = () => {
         </div>
       </div>
       {/* Barra blanca */}
-      <div
-        className={`bg-white ${!showWhiteMenu && "hideWhiteMenu"} d-flex`}
-        style={{ transition: "all ease-in-out 0.3s" }}
-      >
-        <div className="w-75">
+      <div className="white-bar" id="white-bar">
+        <div className="images-container">
           <a className="imageOpacity" href="https://www.gob.mx">
             <img src={LogoGobMx} />
           </a>
@@ -81,7 +75,7 @@ const Header = () => {
             <img src={LogoTec} />
           </a>
         </div>
-        <div className="w-25 d-flex flex-column">
+        {/* <div className="w-25 d-flex flex-column">
           <div className="h-50"></div>
           <div className="h-50">
             <Dropdown
@@ -94,10 +88,8 @@ const Header = () => {
                 },
               ]}
             />
-            {/*    <a href="">Transparencia TecNM</a>
-          <a href="">Control Escolar</a> */}
           </div>
-        </div>
+        </div> */}
       </div>
       {/* Barra azul */}
       <NavBar />

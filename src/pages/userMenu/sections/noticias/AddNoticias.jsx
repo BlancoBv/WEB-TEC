@@ -67,6 +67,7 @@ function AddNoticias() {
       showError();
     }
   };
+  console.log(editorContent);
 
   useEffect(() => {
     localStorage.setItem("localImages", JSON.stringify(localImages));

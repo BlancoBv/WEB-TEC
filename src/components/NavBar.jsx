@@ -5,33 +5,57 @@ import Dropdown from "./Dropdown";
 
 function NavBar() {
   const { data, isPending } = useGetData("/categorias/obtener");
-  console.log(isPending);
+  const element = document.getElementById("nav-menu-content");
+  const showOffCanvas = () => {
+    console.log(element);
+    element.style.display = "flex";
+    element.classList.add("active");
+  };
+  const closeOffCanvas = () => {
+    element.style.display = "";
+    element.classList.remove("active");
+  };
   return (
-    <div className="blueBackground text-white blueMenu d-flex justify-content-evenly align-items-center">
-      <NavLink className="text-decoration-none text-white" to="/" end>
-        <i className="fa-solid fa-house" />
-      </NavLink>
-      {!isPending &&
-        data.response.map((el) => {
-          if (el.dropcollapse) {
-            return (
-              <Dropdown
-                key={el.idcategoria}
-                title={el.categoria}
-                items={el.subcategorias}
-              />
-            );
-          }
-          return (
-            <NavLink key={el.idcategoria} to={el.ruta}>
-              {el.categoria}
-            </NavLink>
-          );
-        })}
-      <div className="placeholder-glow">
-        <div className="placeholder">XX</div>
+    <>
+      <div
+        className="nav-menu-container" /* "blueBackground text-white blueMenu d-flex justify-content-evenly align-items-center" */
+      >
+        <button
+          type="button"
+          className="nav-menu-button"
+          onClick={showOffCanvas}
+        >
+          Menu
+        </button>
+        <div className="nav-menu-items" id="nav-menu-content">
+          <button type="button" onClick={closeOffCanvas}>
+            close
+          </button>
+          <NavLink className="text-decoration-none text-white" to="/" end>
+            <i className="fa-solid fa-house" />
+          </NavLink>
+          {!isPending &&
+            data.response.map((el) => {
+              if (el.dropcollapse) {
+                return (
+                  <Dropdown
+                    key={el.idcategoria}
+                    title={el.categoria}
+                    items={el.subcategorias}
+                    responsive={true}
+                    index={true}
+                  />
+                );
+              }
+              return (
+                <NavLink key={el.idcategoria} to={"/" + el.ruta}>
+                  {el.categoria}
+                </NavLink>
+              );
+            })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
