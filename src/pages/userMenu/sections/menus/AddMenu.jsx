@@ -8,7 +8,9 @@ import { AlertsContexts } from "../../IndexMenu";
 import format from "../../../../assets/format";
 
 function AddMenu() {
-  const [body, setBody] = useState({});
+  const [body, setBody] = useState({
+    dropcollapse: false,
+  });
   const [submenus, setSubmenus] = useState(false);
   const [autoMainRoute, setAutoMainRoute] = useState(true);
   const { showSuccess, showError } = useContext(AlertsContexts);
@@ -101,8 +103,7 @@ function AddMenu() {
           checkedAction={() => {
             setSubmenus(true);
             setBody((prev) => {
-              delete prev.ruta;
-              return prev;
+              return { ...prev, dropcollapse: true };
             });
             return true;
           }}
@@ -110,7 +111,7 @@ function AddMenu() {
             setSubmenus(false);
             setBody((prev) => ({
               ...prev,
-              ruta: format.formatRoute(prev.categoria),
+              dropcollapse: false,
             }));
             return true;
           }}

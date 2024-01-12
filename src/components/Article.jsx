@@ -6,11 +6,13 @@ function Article({ ruta }) {
 
   return (
     <>
-      {!isPending && (
+      {!isPending && data.response ? (
         <div>
           <h1>{data.response.titulo}</h1>
           <div dangerouslySetInnerHTML={{ __html: data.response.contenido }} />
         </div>
+      ) : (
+        <div>Sin contenido</div>
       )}{" "}
     </>
   );

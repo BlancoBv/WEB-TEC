@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Dropdown({ items, title, background, responsive, index }) {
+function Dropdown({
+  items,
+  title,
+  background,
+  responsive,
+  includeMainRoute,
+  mainRoute,
+}) {
   return (
     <div className="dropdown">
       {title} <i className="fa-solid fa-caret-down" />
@@ -13,7 +20,7 @@ function Dropdown({ items, title, background, responsive, index }) {
           <Link
             key={i}
             className="dropdown-item"
-            to={index ? "/" + el.ruta : el.ruta}
+            to={includeMainRoute ? `${mainRoute}/${el.ruta}` : el.ruta}
           >
             {el.subcategoria}
           </Link>
@@ -30,7 +37,7 @@ Dropdown.defaultProps = {
   ],
   background: "rgba(27, 57, 106, 0.98)",
   responsive: false,
-  index: false,
+  includeMainRoute: false,
 };
 
 export const DropdownActions = ({ items, title, background }) => {

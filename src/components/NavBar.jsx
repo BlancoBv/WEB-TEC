@@ -43,16 +43,24 @@ function NavBar() {
                     title={el.categoria}
                     items={el.subcategorias}
                     responsive={true}
-                    index={true}
+                    includeMainRoute={true}
+                    mainRoute={el.ruta}
                   />
                 );
               }
               return (
-                <NavLink key={el.idcategoria} to={"/" + el.ruta}>
+                <NavLink key={el.idcategoria} to={el.ruta}>
                   {el.categoria}
                 </NavLink>
               );
             })}
+          <NavLink
+            className="text-decoration-none text-white"
+            to="/panel"
+            target="_blank"
+          >
+            Identificate <i className="fa-solid fa-user" />
+          </NavLink>
         </div>
       </div>
     </>

@@ -11,11 +11,11 @@ export const { show } = useContextMenu({
   id: "context-menu-options",
 });
 
-function ContextualMenu({ elements }) {
+function ContextualMenu({ elements, id }) {
   const SEPARATOR = "separator";
   const SUBMENU = "submenu";
   return (
-    <Menu id="context-menu-options">
+    <Menu id={id}>
       {elements.map((el, i) => {
         if (el.content === SEPARATOR) {
           return <Separator key={i} />;
@@ -49,6 +49,7 @@ function ContextualMenu({ elements }) {
   );
 }
 ContextualMenu.defaultProps = {
+  id: "context-menu-options",
   elements: [
     { content: "Elemento de ejemplo" },
     {

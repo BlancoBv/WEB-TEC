@@ -16,6 +16,7 @@ export const AccordionTableMenus = ({
   targets,
   subcategoriaTargets,
   showContextMenu,
+  showContextMenuSecondary,
 }) => {
   const [isShow, setIsShow] = useState(false);
   const activatePanel = (e) => {
@@ -56,7 +57,11 @@ export const AccordionTableMenus = ({
           <table className="w-100">
             <tbody>
               {element.subcategorias.map((subcategoia) => (
-                <tr onContextMenu={(e) => showContextMenu(e, subcategoia)}>
+                <tr
+                  onContextMenu={(e) =>
+                    showContextMenuSecondary(e, subcategoia)
+                  }
+                >
                   {subcategoriaTargets.map((el, i) => (
                     <td key={i}>{subcategoia[el]}</td>
                   ))}{" "}

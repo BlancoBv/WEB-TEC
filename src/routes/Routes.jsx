@@ -24,22 +24,22 @@ import AddMenu from "../pages/userMenu/sections/menus/AddMenu";
 import useGetData from "../hooks/useGetData";
 import Article from "../components/Article";
 import Loader from "../components/Loader";
-import { useEffect } from "react";
 
 function Routes() {
   const { data, isPending } = useGetData("/categorias/obtener");
+  const rutasIndex = [
+    { index: true, element: <Home /> },
+    { path: "antecedentes", element: <Antecedentes /> },
+    { path: "search/:label", element: <SearchByLabel /> },
+  ];
   const rutas = [
     {
       path: "/",
       element: <IndexLayout />,
-      children: [
-        { index: true, element: <Home /> },
-        { path: "antecedentes", element: <Antecedentes /> },
-        { path: "search/:label", element: <SearchByLabel /> },
-      ],
+      children: rutasIndex,
     },
     {
-      path: "menu",
+      path: "panel",
       element: <IndexMenu />,
       children: [
         {
@@ -83,17 +83,21 @@ function Routes() {
     },
   ];
 
+  console.log(rutasIndex);
+
   !isPending &&
     data.response.forEach((ruta) => {
       if (ruta.dropcollapse) {
-        rutas.push({
-          path: ruta.categoria,
-          children: ruta.subcategorias.map((el) => ({ path: el.ruta })),
+        rutasIndex.push({
+          path: ruta.ruta,
+          children: ruta.subcategorias.map((el) => ({
+            path: el.ruta,
+            element: <Article ruta={el.ruta} />,
+          })),
         });
       } else {
-        rutas.push({
+        rutasIndex.push({
           path: ruta.ruta,
-          element: <IndexLayout />,
           children: [{ index: true, element: <Article ruta={ruta.ruta} /> }],
         });
       }

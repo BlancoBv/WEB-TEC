@@ -93,6 +93,7 @@ export const InputSwitchAction = ({
   uncheckedAction,
   label,
   required,
+  disabled,
 }) => {
   const [value, setValue] = useState(initialChecked);
 
@@ -122,6 +123,7 @@ export const InputSwitchAction = ({
             checked={value}
             onChange={handle}
             required={required}
+            disabled={disabled}
           />
           {label}
         </label>
@@ -141,6 +143,7 @@ export const InputSwitchAction = ({
 InputSwitchAction.defaultProps = {
   initialChecked: false,
   required: false,
+  disabled: false,
 };
 
 export const InputDate = ({ label, name, handle, value, required }) => {
