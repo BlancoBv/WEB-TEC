@@ -7,12 +7,12 @@ function Article({ ruta }) {
   return (
     <>
       {!isPending && data.response ? (
-        <div>
+        <div className="article-container">
           <h1>{data.response.titulo}</h1>
           <div dangerouslySetInnerHTML={{ __html: data.response.contenido }} />
         </div>
       ) : (
-        <div>Sin contenido</div>
+        <div className="article-container">Sin contenido</div>
       )}{" "}
     </>
   );

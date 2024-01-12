@@ -1,8 +1,4 @@
 import { useState } from "react";
-
-import AddNoticias from "../sections/noticias/AddNoticias";
-import Banners from "../sections/Banners";
-import NoticiasPendientes from "../sections/noticias/NoticiasPendientes";
 import { Outlet, NavLink } from "react-router-dom";
 
 function Base() {
@@ -77,12 +73,6 @@ function Base() {
           ))}
         </div>
         <div className="w-85 h-100">
-          {/* {showAddNotice && <AddNoticias />}
-          {showBanners && <Banners />}
-          {showNoticiasPend && <NoticiasPendientes />} */}
-          {/* <div className="h-90 w-100">
-            <Outlet />
-          </div> */}
           <Outlet />
         </div>
       </div>

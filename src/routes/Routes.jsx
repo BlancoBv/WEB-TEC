@@ -1,4 +1,5 @@
 import {
+  Outlet,
   createBrowserRouter as Router,
   RouterProvider,
 } from "react-router-dom";
@@ -24,6 +25,7 @@ import AddMenu from "../pages/userMenu/sections/menus/AddMenu";
 import useGetData from "../hooks/useGetData";
 import Article from "../components/Article";
 import Loader from "../components/Loader";
+import EditArticulos from "../pages/userMenu/sections/articulos/EditArticulos";
 
 function Routes() {
   const { data, isPending } = useGetData("/categorias/obtener");
@@ -80,6 +82,10 @@ function Routes() {
           ],
         },
       ],
+    },
+    {
+      path: "article/:ruta",
+      element: <EditArticulos />,
     },
   ];
 

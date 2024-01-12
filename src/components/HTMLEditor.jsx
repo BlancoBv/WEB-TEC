@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  convertFromRaw,
+  convertToRaw,
+  ContentState,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
 
 function HTMLEditor({ setVariable, initialContent }) {
@@ -26,7 +31,9 @@ function HTMLEditor({ setVariable, initialContent }) {
   };
   const [editorState, setEditorState] = useState(() =>
     initialContent
-      ? EditorState.createWithContent(convertFromRaw(initialContent))
+      ? EditorState.createWithContent(
+          ContentState.createFromBlockArray(initialContent)
+        )
       : EditorState.createWithContent(convertFromRaw(intialValue))
   );
 

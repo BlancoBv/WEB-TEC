@@ -64,7 +64,7 @@ function ListaMenus() {
     },
     {
       content: "Añadir subcategoria",
-      icon: "fa-pen-to-square",
+      icon: "fa-plus",
       action: () => {
         setShowModal({
           status: true,
@@ -75,6 +75,17 @@ function ListaMenus() {
       disabled:
         relativeData.hasOwnProperty("dropcollapse") &&
         !relativeData.dropcollapse,
+    },
+    { content: "separator" },
+    {
+      content: "Editar articulo",
+      icon: "fa-file-code",
+      action: () => {
+        window.open(`/article/${relativeData["ruta"]}`);
+      },
+      disabled:
+        relativeData.hasOwnProperty("dropcollapse") &&
+        relativeData.dropcollapse,
     },
     { content: "separator" },
     {
@@ -178,7 +189,7 @@ function ListaMenus() {
       showError();
     }
   };
-  console.log(showModal);
+  console.log(urlMain);
 
   return (
     <div className="h-100 w-100 d-flex flex-column gap-2">

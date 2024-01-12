@@ -13,6 +13,7 @@
 @import "../src/assets/css/NavBar.css";
 @import "../src/assets/css/WhiteBar.css";
 @import "../src/assets/css/GobBar.css";
+@import "../src/assets/css/Article.css";
 
 .bg-dark-mode {
   background-color: #000;
