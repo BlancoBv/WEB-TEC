@@ -1,3 +1,28 @@
 .article-container {
   min-height: 800px;
+  padding: 10px;
+}
+
+.article-items p,
+h3,
+span,
+ul,
+li,
+br,
+img {
+  view-timeline-name: --text;
+  view-timeline-axis: block;
+  animation-timeline: --text;
+  animation-name: resize;
+  animation-range: entry 25% cover 50%;
+  animation-fill-mode: both;
+}
+
+@keyframes resize {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 1;
+  }
 }

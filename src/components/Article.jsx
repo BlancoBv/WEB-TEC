@@ -9,7 +9,10 @@ function Article({ ruta }) {
       {!isPending && data.response ? (
         <div className="article-container">
           <h1>{data.response.titulo}</h1>
-          <div dangerouslySetInnerHTML={{ __html: data.response.contenido }} />
+          <div
+            className="article-items"
+            dangerouslySetInnerHTML={{ __html: data.response.contenido }}
+          />
         </div>
       ) : (
         <div className="article-container">Sin contenido</div>
