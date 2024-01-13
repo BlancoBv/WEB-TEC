@@ -4,23 +4,24 @@ import Mapa from "../components/Mapa";
 
 function Footer() {
   return (
-    <div>
+    <footer className="footer-container">
       <SectionContainer title="Sitios locales"></SectionContainer>
       <SectionContainer title="Sitios de interés"></SectionContainer>
       {/* Footer azul */}
-      <div className="blueBackground text-white d-flex flex-column footer-azul">
-        <div className="d-flex ">
-          <div className="w-25 d-flex flex-column p-2">
+      <div className="footer-azul">
+        <div className="info-container">
+          <div className="contacto">
             <h4>Dirección</h4>
             <p>
               Km. 3 Carr. Balancán - Villahermosa, Balancán, Tabasco. C.P. 86930
             </p>
             <h4>Contacto</h4>
             <p>
-              Km. 3 Carr. Balancán - Villahermosa, Balancán, Tabasco. C.P. 86930
+              Email: cyd_drios@tecnm.mx <br />
+              Conmutador: (934)-34-49000
             </p>
           </div>
-          <div className="w-25 p-2 d-flex flex-column">
+          <div className="enlaces">
             <h4>Enlaces</h4>
             <a href="http://portaltransparencia.gob.mx/buscador/search/search.do?method=begin">
               Portal de transparencia
@@ -28,7 +29,7 @@ function Footer() {
             <a href="http://inicio.ifai.org.mx/SitePages/ifai.aspx">INAI</a>
             <a href="https://rios.tecnm.mx/rios/#">Buzón de sugerencias</a>
           </div>
-          <div className="w-50">
+          <div className="mapa">
             <Mapa />
           </div>
         </div>
@@ -38,7 +39,7 @@ function Footer() {
         </div>
       </div>
       {/* Footer verde */}
-      <div className="footer-verde d-flex justify-content-evenly text-white p-4 w-100">
+      <div className="footer-verde">
         <div className="w-25 p-2">
           <img src={LogoGob} alt="Logo GOB MX" width="200px" />
         </div>
@@ -90,7 +91,7 @@ function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 

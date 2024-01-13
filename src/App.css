@@ -14,6 +14,7 @@
 @import "../src/assets/css/WhiteBar.css";
 @import "../src/assets/css/GobBar.css";
 @import "../src/assets/css/Article.css";
+@import "../src/assets/css/Footer.css";
 
 .bg-dark-mode {
   background-color: #000;
@@ -91,13 +92,6 @@
 }
 .customEditor {
   flex-grow: 1;
-}
-
-.footer-verde {
-  background-image: url(assets/img/fondofooter.jpg);
-}
-.footer-azul {
-  padding: 30px 10px 30px 10px;
 }
 
 .image-fit {

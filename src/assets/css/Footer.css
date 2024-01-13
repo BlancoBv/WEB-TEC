@@ -1,0 +1,62 @@
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  .footer-azul {
+    background-color: var(--blue-color);
+    color: white;
+    padding: 30px 10px 30px 10px;
+    .info-container {
+      display: flex;
+      flex-direction: row;
+      div {
+        width: 25%;
+      }
+      .contacto,
+      .enlaces {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        padding: 5px;
+        a {
+          text-decoration: none;
+          color: white;
+        }
+        a:hover {
+          color: grey;
+        }
+      }
+      .mapa {
+        width: 50%;
+      }
+    }
+    @media (max-width: 862px) {
+      .info-container {
+        flex-direction: column;
+        div {
+          width: 100%;
+          text-align: center;
+        }
+        .enlaces {
+          display: flex;
+          flex-direction: column;
+        }
+        .mapa {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .footer-verde {
+    display: flex;
+    background-image: url(/src/assets/img/fondofooter.jpg);
+    color: white;
+    justify-content: space-evenly;
+    padding: 10px;
+  }
+  @media (max-width: 862px) {
+    .footer-verde {
+      flex-direction: column;
+    }
+  }
+}

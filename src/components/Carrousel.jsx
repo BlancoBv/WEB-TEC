@@ -32,7 +32,6 @@ function Carrousel({ images }) {
         set((state) => (state + 1) % images.length);
       }
     },
-
     exitBeforeEnter: true,
   });
 
@@ -58,13 +57,15 @@ function Carrousel({ images }) {
           <animated.div
             style={{
               ...style,
-              backgroundImage: `url(${images[i].imagen})`,
               width: "100%",
               height: "100%",
             }}
-          />
+          >
+            <img src={`${images[i].imagen}`} width="100%" />
+          </animated.div>
         ))}
       </div>
+
       {/*  <div className="d-flex justify-content-center gap-3 p-2">
         {images.map((el, i) => (
           <i
