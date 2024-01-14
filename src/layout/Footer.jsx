@@ -40,10 +40,10 @@ function Footer() {
       </div>
       {/* Footer verde */}
       <div className="footer-verde">
-        <div className="w-25 p-2">
+        <div className="logo-gob">
           <img src={LogoGob} alt="Logo GOB MX" width="200px" />
         </div>
-        <div className="d-flex flex-column w-25 p-2">
+        <div>
           <h5>Enlaces</h5>
           <a href="https://participa.gob.mx/">Paticipa</a>
           <a href="https://www.gob.mx/publicaciones">Publicaciones Oficiales</a>
@@ -52,7 +52,7 @@ function Footer() {
             Plataforma Nacional de Trasparencia
           </a>
         </div>
-        <div className="d-flex flex-column w-25 p-2">
+        <div>
           <h5>¿Qué es gob.mx?</h5>
           <p>
             Es el portal único de trámites, información y participación
@@ -74,13 +74,13 @@ function Footer() {
           </a>
           <a href="https://www.gob.mx/sitemap">Mapa de sitio</a>
         </div>
-        <div className="d-flex flex-column w-25 p-2">
+        <div className="social">
           <a href="https://www.gob.mx/tramites/ficha/presentacion-de-quejas-y-denuncias-en-la-sfp/SFP54">
             Denuncia contra servidores públicos
           </a>
           <div>
             <p>Siguenos en</p>
-            <div className="d-flex gap-4">
+            <div>
               <a href="https://www.facebook.com/gobmexico">
                 <i class="fa-brands fa-facebook-f" />
               </a>

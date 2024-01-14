@@ -5,13 +5,12 @@ import Modal from "../../../../components/Modal";
 import Axios, { multipartHeader, urlMain } from "../../../../axios/Axios";
 import format from "../../../../assets/format";
 import { AlertsContexts } from "../../IndexMenu";
-import copyToClipboard from "../../../../assets/copyToClipboard";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
 import NoticiaContent from "../../../../components/NoticiaContent";
 import UploadImages from "../../../../components/UploadImages";
 
 function AddNoticias() {
-  const { showSuccess, showError, closeAlerts } = useContext(AlertsContexts);
+  const { showSuccess, showError } = useContext(AlertsContexts);
   const date = new Date(Date.now());
   const [showModal, setShowModal] = useState(false);
   const [editorContent, setEditorContent] = useState({ html: "" });
@@ -19,11 +18,6 @@ function AddNoticias() {
     fecha: format.formatFechaDB(date),
   });
   const [imagen, setImagen] = useState({ imagenPrincipal: "" });
-  const [localImages, setLocalImages] = useState(
-    JSON.parse(localStorage.getItem("localImages")) || []
-  );
-
-  const [secondaryImage, setSecondaryImage] = useState({});
 
   const handle = (e) => {
     e.preventDefault();
@@ -47,31 +41,6 @@ function AddNoticias() {
       showError();
     }
   };
-
-  const saveSecondaryImage = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("imagen", secondaryImage.imagen.file);
-    try {
-      const response = await Axios.post("/blogs/nuevaimagen", formData, {
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-      });
-      showSuccess();
-      setSecondaryImage({});
-      e.target.reset();
-
-      setLocalImages([...localImages, response.data.response]);
-    } catch (error) {
-      showError();
-    }
-  };
-  console.log(editorContent);
-
-  useEffect(() => {
-    localStorage.setItem("localImages", JSON.stringify(localImages));
-  }, [localImages]);
 
   return (
     <div className="h-100 w-100">
@@ -157,12 +126,7 @@ function AddNoticias() {
           </div>
         </form>
 
-        <UploadImages
-          variable={secondaryImage}
-          setVariable={setSecondaryImage}
-          imagesData={localImages}
-          save={saveSecondaryImage}
-        />
+        <UploadImages />
       </div>
     </div>
   );

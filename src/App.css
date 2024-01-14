@@ -100,3 +100,10 @@
 .no-resize {
   resize: none;
 }
+.main-container {
+  overflow-y: auto;
+  flex-grow: 1;
+  width: 100%;
+  perspective: 10px;
+  overflow-x: hidden;
+}

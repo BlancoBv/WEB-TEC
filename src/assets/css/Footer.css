@@ -53,10 +53,56 @@
     color: white;
     justify-content: space-evenly;
     padding: 10px;
+    div {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      padding: 5px;
+    }
+    div a {
+      color: var(--link-base);
+    }
+    div a:hover {
+      color: var(--link-hover);
+    }
+    .logo-gob {
+      width: 25%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .social {
+      div {
+        width: 100%;
+        div {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+        }
+      }
+    }
   }
   @media (max-width: 862px) {
     .footer-verde {
       flex-direction: column;
+      div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 5px;
+      }
+      .logo-gob {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }

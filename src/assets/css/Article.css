@@ -1,23 +1,37 @@
-.article-container {
-  min-height: 800px;
-  padding: 10px;
+.article-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 800px;
+  transform-style: preserve-3d;
+  z-index: -1;
+  width: 100%;
+  h1 {
+    color: white;
+    font-weight: bold;
+    text-shadow: 0px 5px 0px black;
+    font-size: 3rem;
+  }
 }
 
-.article-items p,
-h3,
-span,
-ul,
-li,
-br,
-img {
-  view-timeline-name: --text;
-  view-timeline-axis: block;
-  animation-timeline: --text;
-  animation-name: resize;
-  animation-range: entry 25% cover 50%;
-  animation-fill-mode: both;
+.article-background {
+  transform: translateZ(-10px) scale(2);
 }
-
+.article-foreground {
+  transform: translateZ(-5px) scale(1.5);
+}
+.article-items {
+  background-color: white;
+}
+.article-background,
+.article-foreground {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
 @keyframes resize {
   from {
     opacity: 0.1;

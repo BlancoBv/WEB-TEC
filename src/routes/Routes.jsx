@@ -45,6 +45,11 @@ function Routes() {
       element: <IndexMenu />,
       children: [
         {
+          path: "article/:ruta",
+          element: <EditArticulos />,
+        },
+        ,
+        {
           path: "noticias",
           element: <Noticias_Index />,
           children: [
@@ -82,10 +87,6 @@ function Routes() {
           ],
         },
       ],
-    },
-    {
-      path: "article/:ruta",
-      element: <EditArticulos />,
     },
   ];
 

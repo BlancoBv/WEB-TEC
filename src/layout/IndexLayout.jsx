@@ -6,7 +6,7 @@ function IndexLayout() {
   return (
     <>
       <Header />
-      <div className="overflow-y-auto flex-fill w-100" id="main">
+      <div className="main-container" id="main">
         <Outlet />
         <Footer />
       </div>

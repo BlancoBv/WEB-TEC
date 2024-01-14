@@ -15,8 +15,10 @@ import Input, {
   InputTextArea,
 } from "../../../../components/Input";
 import format from "../../../../assets/format";
+import { useNavigate } from "react-router-dom";
 
 function ListaMenus() {
+  const navigate = useNavigate();
   const { showSuccess, showError } = useContext(AlertsContexts);
   const [body, setBody] = useState({});
   const [autoRoute, setAutoRoute] = useState(true);
@@ -81,7 +83,7 @@ function ListaMenus() {
       content: "Editar articulo",
       icon: "fa-file-code",
       action: () => {
-        window.open(`/article/${relativeData["ruta"]}`);
+        navigate(`/panel/article/${relativeData["ruta"]}`);
       },
       disabled:
         relativeData.hasOwnProperty("dropcollapse") &&

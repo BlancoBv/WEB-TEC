@@ -1,6 +1,9 @@
 :root {
   --blue-color: rgb(27, 57, 106);
   --max-break: (min-width: 862px);
+  --link-base: #ffff;
+  --link-hover: rgb(150, 150, 150);
+  --link-active: rgb(150, 150, 150);
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
