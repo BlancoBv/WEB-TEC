@@ -83,22 +83,6 @@ const format = {
     return now;
   },
 
-  formatFechaPractica: (date) =>
-    new Date(date).getTime() + new Date().getTimezoneOffset() * 60000,
-
-  zFill: (cantidad) => {
-    // const longitud = [0, 0, 0, 0, 0, 0];
-    // const textoArr = String(cantidad).split("");
-    // const textoCrudo = [...longitud, ...textoArr];
-    // textoCrudo.reverse();
-    // textoCrudo.splice(7);
-    // const textFinal = textoCrudo.reverse().join("");
-    // return textFinal;
-
-    const a = pad(Number(cantidad), 7);
-    const b = a.split("").slice(0, 7).join("");
-    return b;
-  },
   numeroSemanaMes: (date) => {
     const month = date.getMonth();
     const year = date.getFullYear();

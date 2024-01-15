@@ -1,0 +1,34 @@
+.no-content-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  .icon-container {
+    position: relative;
+  }
+  .primary-icon {
+    font-size: 200px;
+  }
+  .secondary-icon {
+    font-size: 100px;
+    color: red;
+    position: absolute;
+    bottom: 0px;
+    right: 5px;
+    animation: scale-bounce 2s ease-in-out infinite;
+  }
+}
+
+@keyframes scale-bounce {
+  0% {
+    scale: 0.7;
+  }
+  50% {
+    scale: 1;
+  }
+  100% {
+    scale: 0.7;
+  }
+}

@@ -81,7 +81,7 @@ function AddNoticias() {
       </Modal>
       <div className="d-flex w-100 h-100 gap-2">
         <form
-          className="h-100 d-flex flex-column w-75 rounded p-2 bg-dark-mode-base overflow-hidden"
+          className="h-100 d-flex flex-column w-75 rounded p-2 bg-dark-mode-base"
           onSubmit={saveBlog}
         >
           <div className="h-90 d-flex flex-column">
@@ -110,7 +110,9 @@ function AddNoticias() {
               setVariable={setImagen}
               required={true}
             />
-            <HTMLEditor setVariable={setEditorContent} />
+            <div className="d-flex flex-grow-1 overflow-y-auto">
+              <HTMLEditor setVariable={setEditorContent} />
+            </div>
           </div>
 
           <div className="d-flex justify-content-evenly align-items-center">

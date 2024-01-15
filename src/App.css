@@ -15,6 +15,7 @@
 @import "../src/assets/css/GobBar.css";
 @import "../src/assets/css/Article.css";
 @import "../src/assets/css/Footer.css";
+@import "../src/assets/css/NoContent.css";
 
 .bg-dark-mode {
   background-color: #000;

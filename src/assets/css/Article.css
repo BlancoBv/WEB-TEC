@@ -7,6 +7,7 @@
   transform-style: preserve-3d;
   z-index: -1;
   width: 100%;
+  overflow: hidden;
   h1 {
     color: white;
     font-weight: bold;
@@ -32,11 +33,6 @@
   object-fit: cover;
   z-index: -1;
 }
-@keyframes resize {
-  from {
-    opacity: 0.1;
-  }
-  to {
-    opacity: 1;
-  }
+.article-no-content {
+  height: 800px;
 }

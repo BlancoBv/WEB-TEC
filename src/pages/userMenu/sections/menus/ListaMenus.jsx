@@ -127,6 +127,17 @@ function ListaMenus() {
     },
     { content: "separator" },
     {
+      content: "Editar articulo",
+      icon: "fa-file-code",
+      action: () => {
+        navigate(`/panel/article/${relativeData["ruta"]}`);
+      },
+      disabled:
+        relativeData.hasOwnProperty("dropcollapse") &&
+        relativeData.dropcollapse,
+    },
+    { content: "separator" },
+    {
       content: "Eliminar",
       style: "text-danger",
       icon: "fa-trash-can",

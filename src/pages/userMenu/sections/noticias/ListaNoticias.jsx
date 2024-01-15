@@ -5,6 +5,8 @@ import Modal from "../../../../components/Modal";
 import { urlMain } from "../../../../axios/Axios";
 import { Scrollbar } from "react-scrollbars-custom";
 import NoticiaContent from "../../../../components/NoticiaContent";
+import Tabla from "../../../../components/Tabla";
+import format from "../../../../assets/format";
 
 function ListaNoticias() {
   const [filter, setFilter] = useState({
@@ -74,63 +76,28 @@ const Success = ({ data, modalState }) => {
   const setRelativeData = (element) => {
     setShowModal({ status: true, data: element });
   };
+
+  const columnas = [
+    {
+      name: "Ultima vez actualizado",
+      selector: (row) => format.formatFecha(row.updatedAt, "numeric"),
+    },
+    { name: "Titulo", selector: (row) => row.titulo },
+    { name: "Estatus", selector: (row) => row.estatus },
+    {
+      name: "Etiquetas",
+      selector: (row) => row.etiquetas.map((el) => el.etiqueta).join(", "),
+    },
+  ];
+
   return (
     <>
       <div className="w-100">
-        <table className="w-100 table table-hover">
-          <thead>
-            <tr>
-              <th>Ultima actualización</th>
-              <th>Titulo</th>
-              <th>Estatus</th>
-              <th>Etiquetas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/*  {datos.map((el) => (
-            <tr key={el.idblog}>
-              <td>{el.usuario}</td>
-              <td>{format.formatFechaDB(el.updatedAt)}</td>
-              <td>{format.formatTextoMayusPrimeraLetra(el.estatus)}</td>
-
-              <td>
-                <b>{el.titulo}</b>
-              </td>
-              <td>{el.etiquetas}</td>
-
-              <td>
-                <span className="w-100 h-100 d-flex justify-content-evenly">
-                  <button title="Previsualizar">
-                    <i className="fa-solid fa-eye" />
-                  </button>
-                  <button title="Editar">
-                    <i className="fa-solid fa-pen-to-square" />
-                  </button>
-                  <button
-                    title="Más configuraciones"
-                    onClick={() => showAjustes(el)}
-                  >
-                    <i className="fa-solid fa-gear" />
-                  </button>
-                </span>
-              </td>
-            </tr>
-          ))} */}
-            {data.map((el) => (
-              <tr
-                key={el.idblog}
-                title={el.titulo}
-                role="button"
-                onClick={() => setRelativeData(el)}
-              >
-                <td>{el.updatedAt}</td>
-                <td>{el.titulo}</td>
-                <td>{el.estatus}</td>
-                <td>---</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Tabla
+          columnas={columnas}
+          data={data}
+          onClickAction={setRelativeData}
+        />
       </div>
     </>
   );

@@ -3,28 +3,34 @@ import useGetData from "../hooks/useGetData";
 
 function Article({ ruta }) {
   const { data, isPending } = useGetData(`/articulos/obtener/${ruta}`);
-  const content = !isPending ? JSON.parse(data.response.contenido) : {};
 
-  console.log(content);
   return (
     <>
       {!isPending && data.response ? (
-        <>
-          <div className="article-header">
-            <img className="article-background" src={content.background} />
-            <img className="article-foreground" src={content.foreground} />
-            <h1 className="article-title">{data.response.titulo}</h1>
-          </div>
-          <div
-            className="article-items"
-            dangerouslySetInnerHTML={{ __html: content.contenidoPrincipal }}
-          />
-        </>
+        <Success data={data.response} />
       ) : (
-        <div className="article-container">Sin contenido</div>
+        <div className="article-no-content">Sin contenido</div>
       )}{" "}
     </>
   );
 }
+const Success = ({ data }) => {
+  const { background, foreground, contenidoPrincipal } = JSON.parse(
+    data.contenido
+  );
+  return (
+    <>
+      <div className="article-header">
+        <img className="article-background" src={background} />
+        <img className="article-foreground" src={foreground} />
+        <h1 className="article-title">{data.titulo}</h1>
+      </div>
+      <div
+        className="article-items"
+        dangerouslySetInnerHTML={{ __html: contenidoPrincipal }}
+      />
+    </>
+  );
+};
 
 export default Article;
