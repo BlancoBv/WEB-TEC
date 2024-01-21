@@ -1,6 +1,6 @@
 import useGetData from "../../../../hooks/useGetData";
 import format from "../../../../assets/format";
-import Modal, { ModalConfirm } from "../../../../components/Modal";
+import Modal, { ModalBottom, ModalConfirm } from "../../../../components/Modal";
 import { InputSelect, InputSwitchAction } from "../../../../components/Input";
 import Axios from "../../../../axios/Axios";
 import { useState, useContext } from "react";
@@ -12,7 +12,8 @@ import ContextualMenu, { show } from "../../../../components/ContextualMenu";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
 
 function NoticiasPendientes() {
-  const { showSuccess, closeAlerts } = useContext(AlertsContexts);
+  const { showSuccess, showError } = useContext(AlertsContexts);
+  const [labels, setLabels] = useState([]);
   const [showLabels, setShowLabels] = useState(false);
   const [actualizador, setActualizador] = useState(false);
   const [relativeData, setRelativeData] = useState({});
@@ -41,26 +42,20 @@ function NoticiasPendientes() {
       console.log(error);
     }
   };
-  const addEtiqueta = async (id) => {};
-  const removeEtiqueta = async (id) => {};
-  const handle = (e) => {
-    const { value, name } = e.target;
-    setBody({ ...body, [name]: value });
-  };
-  const updateLabels = async (data) => {
+
+  const updateLabels = async (e) => {
+    e.preventDefault();
     try {
-      await Axios.put(`/blogs/actualizaretiquetasxidblog/${blogData.idblog}`, {
-        idsEtiquetas: data,
-      });
+      await Axios.put(
+        `/blogs/actualizaretiquetasxidblog/${relativeData.idblog}`,
+        {
+          idsEtiquetas: labels,
+        }
+      );
       showSuccess();
-      setTimeout(() => {
-        closeAlerts();
-        setActualizador(!actualizador);
-      }, 800);
-      return true;
+      setActualizador(!actualizador);
     } catch (error) {
-      console.log(error);
-      return false;
+      showError();
     }
   };
   const display = (event, element) => {
@@ -100,7 +95,12 @@ function NoticiasPendientes() {
     {
       content: "Editar etiquetas",
       icon: "fa-pen-to-square",
-      action: () => setShowLabels(true),
+      action: () => {
+        console.log(relativeData);
+        const etiqueta = relativeData.etiquetas.map((el) => el.idetiqueta);
+        setShowLabels(true);
+        setLabels(etiqueta);
+      },
     },
   ];
 
@@ -137,14 +137,39 @@ function NoticiasPendientes() {
         darkMode={true}
         size="md"
       >
-        <ScrollbarCustom>
-          <div className="h-100 w-100 d-flex justify-content-evenly flex-wrap">
-            {!etiquetas.isPending &&
-              etiquetas.data.response.map((el) => (
-                <InputSwitchAction label={el.etiqueta} initialChecked={true} />
-              ))}
-          </div>
-        </ScrollbarCustom>
+        <form className="h-100" onSubmit={updateLabels}>
+          <ScrollbarCustom height="90%">
+            <div className="h-100 w-100 d-flex justify-content-evenly flex-wrap">
+              {!etiquetas.isPending &&
+                etiquetas.data.response.map((el) => (
+                  <InputSwitchAction
+                    label={el.etiqueta}
+                    initialChecked={() => {
+                      const etiquetas = relativeData.etiquetas;
+                      return etiquetas.some(
+                        (label) => label.idetiqueta === el.idetiqueta
+                      );
+                    }}
+                    checkedAction={() => {
+                      setLabels([...labels, el.idetiqueta]);
+                      return true;
+                    }}
+                    uncheckedAction={() => {
+                      const filtered = labels.filter(
+                        (elem) => elem !== el.idetiqueta
+                      );
+
+                      setLabels(filtered);
+                      return true;
+                    }}
+                  />
+                ))}
+            </div>
+          </ScrollbarCustom>
+          <ModalBottom>
+            <button type="submit">Guardar</button>
+          </ModalBottom>
+        </form>
       </Modal>
       {!isPending && (
         <Success

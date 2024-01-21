@@ -56,7 +56,7 @@ function NavBar() {
             })}
           <NavLink
             className="text-decoration-none text-white"
-            to="/panel"
+            to="/login"
             target="_blank"
           >
             Identificate <i className="fa-solid fa-user" />

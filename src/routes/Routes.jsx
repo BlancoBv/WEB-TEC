@@ -26,14 +26,63 @@ import useGetData from "../hooks/useGetData";
 import Article from "../components/Article";
 import Loader from "../components/Loader";
 import EditArticulos from "../pages/userMenu/sections/articulos/EditArticulos";
+import Login from "../pages/login/Login";
+import { useEffect } from "react";
 
 function Routes() {
   const { data, isPending } = useGetData("/categorias/obtener");
   const rutasIndex = [
     { index: true, element: <Home /> },
-    { path: "antecedentes", element: <Antecedentes /> },
     { path: "search/:label", element: <SearchByLabel /> },
   ];
+  const rutasPanel = {
+    path: "panel",
+    element: <IndexMenu />,
+    children: [
+      {
+        path: "article/:ruta",
+        element: <EditArticulos />,
+      },
+      ,
+      {
+        path: "noticias",
+        element: <Noticias_Index />,
+        children: [
+          { index: true, element: <ListaNoticias /> },
+          {
+            path: "crear",
+            element: <AddNoticias />,
+          },
+          { path: "pendientes", element: <NoticiasPendientes /> },
+        ],
+      },
+      { path: "banners", element: <Banners /> },
+      {
+        path: "convocatorias",
+        element: <Convocatorias_Index />,
+        children: [
+          { index: true, element: <ListaConvocatorias /> },
+          {
+            path: "crear",
+            element: <AddConvocatoria />,
+          },
+        ],
+      },
+      {
+        path: "etiquetas",
+        element: <Labels_Index />,
+        children: [{ index: true, element: <ManageLabels /> }],
+      },
+      {
+        path: "menus-control",
+        element: <Menus_Index />,
+        children: [
+          { index: true, element: <ListaMenus /> },
+          { path: "crear", element: <AddMenu /> },
+        ],
+      },
+    ],
+  };
   const rutas = [
     {
       path: "/",
@@ -41,56 +90,11 @@ function Routes() {
       children: rutasIndex,
     },
     {
-      path: "panel",
-      element: <IndexMenu />,
-      children: [
-        {
-          path: "article/:ruta",
-          element: <EditArticulos />,
-        },
-        ,
-        {
-          path: "noticias",
-          element: <Noticias_Index />,
-          children: [
-            { index: true, element: <ListaNoticias /> },
-            {
-              path: "crear",
-              element: <AddNoticias />,
-            },
-            { path: "pendientes", element: <NoticiasPendientes /> },
-          ],
-        },
-        { path: "banners", element: <Banners /> },
-        {
-          path: "convocatorias",
-          element: <Convocatorias_Index />,
-          children: [
-            { index: true, element: <ListaConvocatorias /> },
-            {
-              path: "crear",
-              element: <AddConvocatoria />,
-            },
-          ],
-        },
-        {
-          path: "etiquetas",
-          element: <Labels_Index />,
-          children: [{ index: true, element: <ManageLabels /> }],
-        },
-        {
-          path: "menus-control",
-          element: <Menus_Index />,
-          children: [
-            { index: true, element: <ListaMenus /> },
-            { path: "crear", element: <AddMenu /> },
-          ],
-        },
-      ],
+      path: "/login",
+      index: true,
+      element: <Login />,
     },
   ];
-
-  console.log(rutasIndex);
 
   !isPending &&
     data.response.forEach((ruta) => {
@@ -109,10 +113,27 @@ function Routes() {
         });
       }
     });
+  const token = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).token
+    : null;
+  /*   useEffect(() => {
+    const token = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user")).token
+      : null;
+    console.log(token, "ola");
+    if (token) {
+      rutas.push(rutasPanel);
+      console.log(rutas, "xd");
+    }
+  }, []);
+  console.log(rutas); */
 
   return (
     !isPending && (
-      <RouterProvider router={Router(rutas)} fallbackElement={<Loader />} />
+      <RouterProvider
+        router={Router(token ? [...rutas, rutasPanel] : rutas)}
+        fallbackElement={<Loader />}
+      />
     )
   );
 }
