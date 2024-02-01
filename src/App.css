@@ -16,6 +16,8 @@
 @import "../src/assets/css/Article.css";
 @import "../src/assets/css/Footer.css";
 @import "../src/assets/css/NoContent.css";
+@import "../src/assets/css/SitiosLocales.css";
+@import "../src/assets/css/SitiosInteres.css";
 
 .bg-dark-mode {
   background-color: #000;

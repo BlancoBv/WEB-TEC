@@ -1,12 +1,18 @@
 import SectionContainer from "../components/SectionContainer";
 import LogoGob from "../assets/img/logoheader.svg";
 import Mapa from "../components/Mapa";
+import SitiosLocales from "../components/SitiosLocales";
+import SitiosInteres from "../components/SitiosInteres";
 
 function Footer() {
   return (
     <footer className="footer-container">
-      <SectionContainer title="Sitios locales"></SectionContainer>
-      <SectionContainer title="Sitios de interés"></SectionContainer>
+      <SectionContainer title="Sitios locales">
+        <SitiosLocales />
+      </SectionContainer>
+      <SectionContainer title="Sitios de interés">
+        <SitiosInteres />
+      </SectionContainer>
       {/* Footer azul */}
       <div className="footer-azul">
         <div className="info-container">

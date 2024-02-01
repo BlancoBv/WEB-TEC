@@ -36,7 +36,7 @@ function Home() {
         </div>
       </SectionContainer>
       <SectionContainer title="Redes sociales">
-        {/*  <div className="d-flex align-items-center justify-content-evenly p-2">
+        <div className="d-flex align-items-center justify-content-evenly p-2 ">
           <div className="w-25">
             <a
               className="twitter-timeline"
@@ -56,7 +56,7 @@ function Home() {
             allowFullScreen={true}
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           ></iframe>
-        </div> */}
+        </div>
       </SectionContainer>
     </div>
   );

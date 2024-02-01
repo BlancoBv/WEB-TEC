@@ -26,7 +26,7 @@
     }
   }
 }
-@media (min-width: 683px) {
+@media (min-width: 682px) {
   .nav-menu-container {
     background-color: var(--blue-color);
     color: white;

@@ -1,0 +1,55 @@
+.sitios-interes {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  position: relative;
+  scroll-snap-type: x mandatory;
+  overflow-x: hidden;
+  img {
+    scroll-snap-align: center;
+    left: 0;
+  }
+
+  img:hover {
+    opacity: 0.5;
+    transition: all 100ms ease-in;
+  }
+  .prev-card-button {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 50px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    opacity: 0.5;
+    z-index: 1;
+  }
+
+  .next-card-button {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 50px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    opacity: 0.5;
+    z-index: 1;
+  }
+  @media (max-width: 682px) {
+    .next-card-button,
+    .prev-card-button {
+      display: flex;
+    }
+  }
+}
+@media (min-width: 683px) {
+  .sitios-interes {
+    justify-content: space-evenly;
+  }
+}
