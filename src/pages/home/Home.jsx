@@ -3,6 +3,7 @@ import Carrousel from "../../components/Carrousel";
 import ConvocatoriaCard from "../../components/ConvocatoriaCard";
 import Mapa from "../../components/Mapa";
 import NoticiaCard from "../../components/NoticiaCard";
+import NoticiaSection from "../../components/NoticiasSection";
 import SectionContainer from "../../components/SectionContainer";
 import useGetData from "../../hooks/useGetData";
 
@@ -10,7 +11,7 @@ function Home() {
   const { data, isPending, error } = useGetData(
     "/banners/obtener?mostrar=vigentes"
   );
-  const blogs = useGetData("/blogs/obtener?estatus=aceptado");
+
   const convocatorias = useGetData("/convocatorias/obtener");
 
   return (
@@ -20,12 +21,7 @@ function Home() {
       )}
 
       <SectionContainer title="Noticias">
-        <div className="w-100 h-100 d-flex justify-content-evenly p-2">
-          {!blogs.isPending &&
-            blogs.data.response.map((el, i) => (
-              <NoticiaCard key={i} element={el} />
-            ))}
-        </div>
+        <NoticiaSection />
       </SectionContainer>
       <SectionContainer title="Convocatorias">
         <div className="d-flex justify-content-evenly align-items-center flex-column flex-md-row">

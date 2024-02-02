@@ -1,0 +1,25 @@
+.noticias-section {
+  height: 20rem;
+  .no-noticia {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .icon-container {
+      position: relative;
+    }
+    .primary-icon {
+      font-size: 200px;
+    }
+    .secondary-icon {
+      font-size: 100px;
+      color: red;
+      position: absolute;
+      bottom: 0px;
+      right: -30px;
+      animation: scale-bounce 2s ease-in-out infinite;
+    }
+  }
+}
