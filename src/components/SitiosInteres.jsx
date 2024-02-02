@@ -18,21 +18,31 @@ function SitiosInteres() {
   });
 
   const items = [
-    ({ style }) => {
-      console.log(style, "ola");
-      return (
-        <animated.a style={style} href="https://conahcyt.mx/">
-          <img src={conacyt} alt="Conacyt" />
-        </animated.a>
-      );
-    },
     ({ style }) => (
-      <animated.a style={style} href="http://www.imss.gob.mx/">
+      <animated.a
+        style={style}
+        href="https://conahcyt.mx/"
+        className="slider-card"
+      >
+        <img src={conacyt} alt="Conacyt" />
+      </animated.a>
+    ),
+
+    ({ style }) => (
+      <animated.a
+        style={style}
+        href="http://www.imss.gob.mx/"
+        className="slider-card"
+      >
         <img src={imss} alt="IMSS" />
       </animated.a>
     ),
     ({ style }) => (
-      <animated.a style={style} href="https://home.inai.org.mx">
+      <animated.a
+        style={style}
+        href="https://home.inai.org.mx"
+        className="slider-card"
+      >
         <img src={inai} alt="INAI" />
       </animated.a>
     ),
@@ -40,6 +50,7 @@ function SitiosInteres() {
       <animated.a
         style={style}
         href="https://consultapublicamx.plataformadetransparencia.org.mx/"
+        className="slider-card"
       >
         <img src={pnt} alt="PNT" />
       </animated.a>
@@ -66,10 +77,17 @@ function SitiosInteres() {
       <div className="prev-card-button" onClick={previousCard}>
         <i className="fa-solid fa-angle-left" />
       </div>
-      {transitions((style, item) => {
-        const Page = items[item];
-        return <Page style={style} />;
-      })}
+      <div className="slider-container">
+        {transitions((style, item) => {
+          const Page = items[item];
+          return <Page style={{ ...style, left: "50%" }} />;
+        })}
+      </div>
+      <>
+        {items.map((Element, index) => (
+          <Element key={index} />
+        ))}
+      </>
       <div className="next-card-button" onClick={nextCard}>
         <i className="fa-solid fa-angle-right" />
       </div>
