@@ -4,7 +4,8 @@ import ConvocatoriaCard from "./ConvocatoriaCard";
 import LoadingContent from "./LoadingContent";
 
 function Convocatorias() {
-  const { data, isPending } = useGetData("/convocatorias/obtener");
+  const { data, isPending, error } = useGetData("/convocatorias/obtener");
+  console.log({ data, isPending, error });
   return (
     <div className="convocatorias-section">
       {!isPending && data.response.length > 0 && (
