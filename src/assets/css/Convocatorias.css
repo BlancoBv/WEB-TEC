@@ -1,8 +1,10 @@
-.noticias-section {
-  min-height: 20rem;
+.convocatorias-section {
+  min-height: 400px;
   display: flex;
   justify-content: space-evenly;
-  .no-noticia {
+  align-items: center;
+  flex-wrap: wrap;
+  .no-convocatoria {
     height: 100%;
     width: 100%;
     display: flex;

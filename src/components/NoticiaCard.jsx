@@ -13,21 +13,22 @@ function NoticiaCard({ element }) {
   });
 
   return (
-    <div className="noticia-card border d-flex flex-column align-items-center">
+    <div className="noticia-card">
+      <h4>{element.titulo}</h4>
       <div className="position-relative noticia-imagen">
         <img src={`${urlMain}${element.imagen}`} />
-        <span className="position-absolute bottom-0 start-0 blueBackground text-white p-2">
+        <span className="position-absolute bottom-0 start-0 text-white p-2">
           {format.formatFecha(element.updatedAt, "full")}
         </span>
       </div>
-      <h5>{element.titulo}</h5>
+
       <div className="d-flex justify-content-start w-100">
         <button
           onClick={() =>
             setShowViewer({ status: true, idNoticia: element.idblog })
           }
         >
-          Leer más
+          Abrir
         </button>
       </div>
 

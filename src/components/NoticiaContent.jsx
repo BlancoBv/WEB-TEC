@@ -4,10 +4,9 @@ import format from "../assets/format";
 import { NavLink } from "react-router-dom";
 
 function NoticiaContent({ data }) {
-  console.log(data);
   return (
     <ScrollbarCustom>
-      <div className="d-flex flex-column w-100 align-items-center">
+      <div className="d-flex flex-column w-100 align-items-center h-100">
         <img
           src={`${urlMain}${data.imagen}`}
           alt="Imagen principal"
@@ -17,7 +16,7 @@ function NoticiaContent({ data }) {
           {format.formatFecha(data.updatedAt || null, "full")}
         </i>
         <div
-          className="w-100"
+          className="w-100 flex-grow-1"
           dangerouslySetInnerHTML={{ __html: data.contenido }}
         ></div>
         {data.etiquetas && (

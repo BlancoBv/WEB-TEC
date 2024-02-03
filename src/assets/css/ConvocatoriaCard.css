@@ -3,6 +3,7 @@
   height: 400px;
   position: relative;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 .convocatoria-card-container img {
   width: 100%;

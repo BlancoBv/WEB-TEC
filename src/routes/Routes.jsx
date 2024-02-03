@@ -30,7 +30,7 @@ import Login from "../pages/login/Login";
 import { useEffect } from "react";
 
 function Routes() {
-  const { data, isPending } = useGetData("/categorias/obtener");
+  const { data, isPending, error } = useGetData("/categorias/obtener");
   const rutasIndex = [
     { index: true, element: <Home /> },
     { path: "search/:label", element: <SearchByLabel /> },
@@ -116,17 +116,8 @@ function Routes() {
   const token = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")).token
     : null;
-  /*   useEffect(() => {
-    const token = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user")).token
-      : null;
-    console.log(token, "ola");
-    if (token) {
-      rutas.push(rutasPanel);
-      console.log(rutas, "xd");
-    }
-  }, []);
-  console.log(rutas); */
+
+  console.log({ data, isPending, error });
 
   return (
     !isPending && (

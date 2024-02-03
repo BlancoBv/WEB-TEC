@@ -1,9 +1,9 @@
 import React from "react";
 import useGetData from "../hooks/useGetData";
+import NoticiaCard from "./NoticiaCard";
 
-function NoticiasSection() {
+function Noticias() {
   const { data, isPending } = useGetData("/blogs/obtener?estatus=aceptado");
-  console.log(data);
   return (
     <div className="noticias-section">
       {!isPending && data.response.length > 0 ? (
@@ -24,4 +24,4 @@ function NoticiasSection() {
   );
 }
 
-export default NoticiasSection;
+export default Noticias;
