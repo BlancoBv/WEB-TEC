@@ -8,18 +8,11 @@ import SectionContainer from "../../components/SectionContainer";
 import useGetData from "../../hooks/useGetData";
 
 function Home() {
-  const { data, isPending, error } = useGetData(
-    "/banners/obtener?mostrar=vigentes"
-  );
-
   const convocatorias = useGetData("/convocatorias/obtener");
 
   return (
     <div>
-      {!isPending && !error && data.response && (
-        <Carrousel images={data.response} />
-      )}
-
+      <Carrousel />
       <SectionContainer title="Noticias">
         <NoticiaSection />
       </SectionContainer>

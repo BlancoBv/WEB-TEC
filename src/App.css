@@ -19,6 +19,7 @@
 @import "../src/assets/css/SitiosLocales.css";
 @import "../src/assets/css/SitiosInteres.css";
 @import "../src/assets/css/NoticiasSection.css";
+@import "../src/assets/css/LoadingContent.css";
 
 .bg-dark-mode {
   background-color: #000;
@@ -70,6 +71,9 @@
 .w-15 {
   width: 15%;
 }
+.w-50px {
+  width: 100px;
+}
 .w-100px {
   width: 100px;
 }
@@ -81,6 +85,9 @@
 }
 .w-0 {
   width: 0px;
+}
+.h-10px {
+  height: 10px;
 }
 
 .imageOpacity img:hover {

@@ -1,24 +1,24 @@
 import { useTransition, animated } from "@react-spring/web";
 import { useState } from "react";
 import { urlMain } from "../axios/Axios";
+import useGetData from "../hooks/useGetData";
+import LoadingContent from "./LoadingContent";
 
-function Carrousel({ images }) {
-  /**
-   * Esta instruccion resuelve la problematica de si no existe o hay elementos vacios en la BD regresa parametros predeterminados
-   * @returns {Array} Returna un arreglo con las rutas de las imagenes.
-   */
-  images = (images &&
-    images.length > 0 &&
-    images.map((img) => ({ imagen: urlMain + img.imagen }))) || [
-    { imagen: "https://placehold.co/500x400" },
-    { imagen: "https://placehold.co/800x400" },
-    { imagen: "https://placehold.co/600x400" },
-  ];
+function Carrousel() {
+  const { data, isPending } = useGetData("/banners/obtener?mostrar=vigentes");
 
-  console.log(images);
+  return (
+    <div className="carrousel">
+      {!isPending && data.response.length > 0 && (
+        <Success images={data.response} />
+      )}
+      {isPending && <LoadingContent />}
+    </div>
+  );
+}
 
+const Success = ({ images }) => {
   const [index, set] = useState(0);
-  const [isManualChanged, setIsManualChanged] = useState(false);
 
   const transitions = useTransition(index, {
     key: index,
@@ -34,50 +34,21 @@ function Carrousel({ images }) {
     },
     exitBeforeEnter: true,
   });
-
-  const manualChange = (e) => {
-    const { id } = e.target;
-    setIsManualChanged(true);
-    set(Number(id));
-  };
-  /* 
-  useEffect(() => {
-    if (isManualChanged) {
-      setTimeout(() => {
-        setIsManualChanged(false);
-      }, 2000);
-    }
-  }, [isManualChanged, setIsManualChanged]); */
-
   return (
-    <div>
-      <div className="carrousel">
-        {/*  */}
-        {transitions((style, i) => (
-          <animated.div
-            style={{
-              ...style,
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <img src={`${images[i].imagen}`} width="100%" />
-          </animated.div>
-        ))}
-      </div>
-
-      {/*  <div className="d-flex justify-content-center gap-3 p-2">
-        {images.map((el, i) => (
-          <i
-            key={el.idbanner}
-            id={i}
-            className="fa-regular fa-circle-dot"
-            onClick={manualChange}
-          />
-        ))}
-      </div> */}
-    </div>
+    <>
+      {transitions((style, i) => (
+        <animated.div
+          style={{
+            ...style,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <img src={`${urlMain}${images[i].imagen}`} width="100%" />
+        </animated.div>
+      ))}
+    </>
   );
-}
+};
 
 export default Carrousel;

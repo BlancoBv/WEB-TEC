@@ -2,6 +2,7 @@ import React from "react";
 import useGetData from "../hooks/useGetData";
 import { NavLink } from "react-router-dom";
 import Dropdown from "./Dropdown";
+import LoadingContent from "./LoadingContent";
 
 function NavBar() {
   const { data, isPending } = useGetData("/categorias/obtener");
@@ -54,6 +55,19 @@ function NavBar() {
                 </NavLink>
               );
             })}
+          {isPending && (
+            <>
+              <div className="w-50px h-10px">
+                <LoadingContent />
+              </div>
+              <div className="w-50px h-10px">
+                <LoadingContent />
+              </div>
+              <div className="w-50px h-10px">
+                <LoadingContent />
+              </div>
+            </>
+          )}
           <NavLink
             className="text-decoration-none text-white"
             to="/login"
