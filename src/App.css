@@ -20,6 +20,7 @@
 @import "../src/assets/css/SitiosInteres.css";
 @import "../src/assets/css/NoticiasSection.css";
 @import "../src/assets/css/LoadingContent.css";
+@import "../src/assets/css/SectionContainer.css";
 
 .bg-dark-mode {
   background-color: #000;

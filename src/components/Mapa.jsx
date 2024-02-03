@@ -8,7 +8,7 @@ function Mapa() {
       allowfullscreen=""
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
-      style={{ height: "500px" }}
+      style={{ height: "500px", borderRadius: "10px" }}
     />
   );
 }

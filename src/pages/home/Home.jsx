@@ -11,7 +11,7 @@ function Home() {
   const convocatorias = useGetData("/convocatorias/obtener");
 
   return (
-    <div>
+    <>
       <Carrousel />
       <SectionContainer title="Noticias">
         <NoticiaSection />
@@ -47,7 +47,7 @@ function Home() {
           ></iframe>
         </div>
       </SectionContainer>
-    </div>
+    </>
   );
 }
 

@@ -9,12 +9,12 @@ function NavBar() {
   const element = document.getElementById("nav-menu-content");
   const showOffCanvas = () => {
     console.log(element);
-    element.style.display = "flex";
-    element.classList.add("active");
+    element.style.left = "0px";
+    element.style.width = "75%";
   };
   const closeOffCanvas = () => {
-    element.style.display = "";
-    element.classList.remove("active");
+    element.style.left = "";
+    element.style.width = "";
   };
   return (
     <>
@@ -26,11 +26,11 @@ function NavBar() {
           className="nav-menu-button"
           onClick={showOffCanvas}
         >
-          Menu
+          <i className="fa-solid fa-bars" />
         </button>
         <div className="nav-menu-items" id="nav-menu-content">
           <button type="button" onClick={closeOffCanvas}>
-            close
+            <i className="fa-solid fa-xmark" />
           </button>
           <NavLink className="text-decoration-none text-white" to="/" end>
             <i className="fa-solid fa-house" />
