@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useTransition, animated, useSpringRef } from "@react-spring/web";
+import useGetLocalData from "../hooks/useGetLocalData";
+//import tarjetas from "../configs/localSites.json";
 
 function SitiosLocales() {
   const [index, setIndex] = useState(0);
   const transfRef = useSpringRef();
 
-  const tarjetas = [
-    {
-      titulo: "Decreto de creación del TecNM",
-      url: "https://rios.tecnm.mx/rios/vista/pdf/docanexo/decreto_tecnologico_nacional_mexico.pdf",
-    },
-    { titulo: "Codigo de etica de las personas ", url: "" },
-    { titulo: "Comite", url: "" },
-  ];
+  const { data: tarjetas, isPending } = useGetLocalData(
+    "/config/localSites.json"
+  );
+
   const transitions = useTransition(index, {
     ref: transfRef,
     keys: null,
@@ -37,12 +35,15 @@ function SitiosLocales() {
   useEffect(() => {
     transfRef.start();
   }, [index]);
+
   return (
     <div className="slider">
       <div className="prev-card-button" onClick={previousCard}>
         <i className="fa-solid fa-angle-left" />
       </div>
-      <LocalSitesCard items={tarjetas} transitions={transitions} />
+      {!isPending && (
+        <LocalSitesCard items={tarjetas} transitions={transitions} />
+      )}
       <div className="next-card-button" onClick={nextCard}>
         <i className="fa-solid fa-angle-right" />
       </div>
@@ -63,12 +64,13 @@ const LocalSitesCard = ({ items, transitions }) => {
           {items[item].titulo}
         </animated.a>
       ))}
-      {items.map((el) => (
+      {items.map((el, index) => (
         <a
           href={el.url}
           style={{ left: "50%" }}
           target="_blank"
           className="slider-card"
+          key={index}
         >
           {el.titulo}
         </a>
