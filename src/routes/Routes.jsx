@@ -2,6 +2,7 @@ import {
   Outlet,
   createBrowserRouter as Router,
   RouterProvider,
+  redirect,
 } from "react-router-dom";
 import IndexLayout from "../layout/IndexLayout";
 import Antecedentes from "../pages/conocenos/Antecedentes";
@@ -88,11 +89,19 @@ function Routes() {
       path: "/",
       element: <IndexLayout />,
       children: rutasIndex,
+      errorElement: <div>Pagina no encontrada</div>,
     },
     {
       path: "/login",
       index: true,
       element: <Login />,
+      loader: () => {
+        const user = localStorage.getItem("user");
+        if (user) {
+          return redirect("/panel");
+        }
+        return null;
+      },
     },
   ];
 

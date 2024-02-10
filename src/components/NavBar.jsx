@@ -3,6 +3,7 @@ import useGetData from "../hooks/useGetData";
 import { NavLink } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import LoadingContent from "./LoadingContent";
+import regularExp from "../assets/regularExp";
 
 function NavBar() {
   const { data, isPending } = useGetData("/categorias/obtener");
@@ -50,7 +51,11 @@ function NavBar() {
                 );
               }
               return (
-                <NavLink key={el.idcategoria} to={el.ruta}>
+                <NavLink
+                  key={el.idcategoria}
+                  to={el.ruta}
+                  target={regularExp("http", el.ruta) ? "_blank" : ""}
+                >
                   {el.categoria}
                 </NavLink>
               );

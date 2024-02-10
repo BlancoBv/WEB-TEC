@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import regularExp from "../assets/regularExp";
 
 function Dropdown({
   items,
@@ -9,6 +10,7 @@ function Dropdown({
   includeMainRoute,
   mainRoute,
 }) {
+  console.log(includeMainRoute);
   return (
     <div className="dropdown">
       {title} <i className="fa-solid fa-caret-down" />
@@ -17,13 +19,18 @@ function Dropdown({
         style={{ backgroundColor: background }}
       >
         {items.map((el, i) => (
-          <Link
+          <NavLink
             key={i}
             className="dropdown-item"
-            to={includeMainRoute ? `${mainRoute}/${el.ruta}` : el.ruta}
+            to={
+              includeMainRoute && !regularExp("http", el.ruta)
+                ? `${mainRoute}/${el.ruta}`
+                : el.ruta
+            }
+            target={regularExp("http", el.ruta) ? "_blank" : ""}
           >
             {el.subcategoria}
-          </Link>
+          </NavLink>
         ))}
       </div>
     </div>

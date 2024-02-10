@@ -46,7 +46,7 @@ const Success = ({ convocatorias }) => {
   return (
     <>
       {convocatorias.map((el) => (
-        <ConvocatoriaCard element={el} />
+        <ConvocatoriaCard element={el} key={el.idconvocatoria} />
       ))}
     </>
   );

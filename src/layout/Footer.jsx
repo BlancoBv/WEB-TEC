@@ -88,10 +88,10 @@ function Footer() {
             <p>Siguenos en</p>
             <div>
               <a href="https://www.facebook.com/gobmexico">
-                <i class="fa-brands fa-facebook-f" />
+                <i className="fa-brands fa-facebook-f" />
               </a>
               <a href="https://twitter.com/GobiernoMX">
-                <i class="fa-brands fa-twitter" />
+                <i className="fa-brands fa-twitter" />
               </a>
             </div>
           </div>

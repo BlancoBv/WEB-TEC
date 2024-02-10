@@ -16,6 +16,7 @@ import Input, {
 } from "../../../../components/Input";
 import format from "../../../../assets/format";
 import { useNavigate } from "react-router-dom";
+import regularExp from "../../../../assets/regularExp";
 
 function ListaMenus() {
   const navigate = useNavigate();
@@ -86,8 +87,7 @@ function ListaMenus() {
         navigate(`/panel/article/${relativeData["ruta"]}`);
       },
       disabled:
-        relativeData.hasOwnProperty("dropcollapse") &&
-        relativeData.dropcollapse,
+        relativeData.dropcollapse || regularExp("http", relativeData.ruta),
     },
     { content: "separator" },
     {
@@ -118,7 +118,7 @@ function ListaMenus() {
         setBody({ ruta, subcategoria, descripcion });
         setShowModal({
           status: true,
-          title: "Editar etiqueta",
+          title: `Editar ${subcategoria}`,
           target: "idsubcategoria",
           route: "/subcategorias/editar/",
           type: "update",
@@ -133,8 +133,7 @@ function ListaMenus() {
         navigate(`/panel/article/${relativeData["ruta"]}`);
       },
       disabled:
-        relativeData.hasOwnProperty("dropcollapse") &&
-        relativeData.dropcollapse,
+        relativeData.dropcollapse || regularExp("http", relativeData.ruta),
     },
     { content: "separator" },
     {
@@ -202,7 +201,6 @@ function ListaMenus() {
       showError();
     }
   };
-  console.log(urlMain);
 
   return (
     <div className="h-100 w-100 d-flex flex-column gap-2">
@@ -230,11 +228,17 @@ function ListaMenus() {
         >
           <Input
             label={`Titulo ${
-              showModal.type === "add" ? "del submenú" : "de la categoria"
+              showModal.type === "add" || showModal.type === "update"
+                ? "del submenú"
+                : "de la categoria"
             }`}
             placeholder="Titulo"
             handle={handle}
-            name={showModal.type === "add" ? "subcategoria" : "categoria"}
+            name={
+              showModal.type === "add" || showModal.type === "update"
+                ? "subcategoria"
+                : "categoria"
+            }
             value={body}
             id="subcategoria"
             required={true}
@@ -252,7 +256,7 @@ function ListaMenus() {
           <div className="d-flex align-items-center gap-2">
             <div className="flex-grow-1">
               <Input
-                label="Ruta"
+                label="Ruta**"
                 placeholder="Ruta"
                 handle={handleRuta}
                 name="ruta"
@@ -273,6 +277,10 @@ function ListaMenus() {
               }}
             />
           </div>
+          <span style={{ fontSize: "12px" }}>
+            **Sí la ruta empieza con <i>https:// o http://</i> se abrirá
+            automaticamente una nueva pestaña.
+          </span>
           <ModalBottom>
             <button className="mx-auto" type="submit">
               Guardar

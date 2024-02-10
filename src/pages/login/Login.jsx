@@ -1,61 +1,67 @@
 import React, { useState } from "react";
 import Axios from "../../axios/Axios";
+import Button from "../../components/Button";
 
 function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({ usuario: "", password: "" });
+  const [isPending, setIsPending] = useState(false);
   const handle = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
   const login = async (e) => {
+    setIsPending(true);
     e.preventDefault();
     try {
       const req = await Axios.post("/auth/login", data);
       localStorage.setItem("user", JSON.stringify(req.data.response));
-      //navigate("/panel");
       window.location.href = "/panel";
     } catch (error) {
       console.log(error);
     }
+    setIsPending(false);
   };
+
   return (
-    <div
-      className="w-100 h-100 d-flex align-items-center justify-content-center"
-      style={{
-        backgroundColor: "var(--blue-color)",
-      }}
-    >
-      <form
-        className="d-flex flex-column shadow rounded p-2 w-25 bg-white"
-        onSubmit={login}
-      >
-        <h3 className="fw-bold">Iniciar sesión</h3>
-        <div className="d-flex flex-column w-100 mb-3">
-          <input
-            type="text"
-            placeholder="Usuario"
-            onChange={handle}
-            name="usuario"
-            required
-          />
-        </div>
-        <div className="d-flex flex-column w-100 mb-3">
-          <div className="d-flex w-100">
+    <div className="w-100 h-100 d-flex align-items-center justify-content-center login-background">
+      <div className="login-container shadow">
+        <img src="/img/login_background.jpg" loading="lazy" />
+        <form onSubmit={login}>
+          <h3 className="fw-bold">Panel de administración</h3>
+          <span>Bienvenido</span>
+          <div className="d-flex flex-column w-100 mb-3">
             <input
-              type="password"
-              className="flex-grow-1"
-              placeholder="Contraseña"
+              className="form-control"
+              type="text"
+              placeholder="Usuario"
               onChange={handle}
-              name="password"
+              name="usuario"
               required
             />
-            <button>
-              <i className="fa-solid fa-eye" />
-            </button>
           </div>
-        </div>
-        <button>Acceder</button>
-      </form>
+          <div className="d-flex flex-column w-100 mb-3">
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                placeholder="Contraseña"
+                onChange={handle}
+                name="password"
+                required
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <i className="fa-solid fa-eye" />
+              </button>
+            </div>
+          </div>
+          <Button type="submit" text="Acceder" pending={isPending} />
+        </form>
+      </div>
     </div>
   );
 }

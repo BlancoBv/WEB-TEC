@@ -22,6 +22,8 @@
 @import "../src/assets/css/LoadingContent.css";
 @import "../src/assets/css/SectionContainer.css";
 @import "../src/assets/css/Convocatorias.css";
+@import "../src/assets/css/Login.css";
+@import "../src/assets/css/Button.css";
 
 .bg-dark-mode {
   background-color: #000;

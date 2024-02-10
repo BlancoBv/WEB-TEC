@@ -1,0 +1,14 @@
+.button-custom {
+  background-color: var(--blue-color);
+  border: none;
+  color: #ffff;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background-color 100ms ease-in;
+  min-width: 100px;
+  min-height: 55px;
+}
+.button-custom:hover {
+  background-color: #27549c;
+  transition: background-color 100ms ease-in;
+}

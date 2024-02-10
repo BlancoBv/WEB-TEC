@@ -2,15 +2,14 @@ import React from "react";
 import useGetData from "../hooks/useGetData";
 
 function Article({ ruta }) {
-  const { data, isPending } = useGetData(`/articulos/obtener/${ruta}`);
+  const { data, isPending, error } = useGetData(`/articulos/obtener/${ruta}`);
 
   return (
     <>
-      {!isPending && data.response ? (
-        <Success data={data.response} />
-      ) : (
+      {!isPending && !error && <Success data={data.response} />}
+      {!isPending && error && (
         <div className="article-no-content">Sin contenido</div>
-      )}{" "}
+      )}
     </>
   );
 }

@@ -75,86 +75,9 @@ const Header = () => {
             <img src={LogoTec} />
           </a>
         </div>
-        {/* <div className="w-25 d-flex flex-column">
-          <div className="h-50"></div>
-          <div className="h-50">
-            <Dropdown
-              title="SGI"
-              background="#fff"
-              items={[
-                {
-                  item: "Formatos de requisiciones",
-                  link: "https://rios.tecnm.mx/Formatos_SGC/",
-                },
-              ]}
-            />
-          </div>
-        </div> */}
       </div>
       {/* Barra azul */}
       <NavBar />
-      {/* <div className="blueBackground text-white blueMenu d-flex justify-content-evenly align-items-center">
-        <Link className="text-decoration-none text-white" to="/">
-          <i className="fa-solid fa-house" />
-        </Link>
-        <Dropdown
-          title="Conocenos"
-          items={[
-            { item: "Antecedentes Historicos", link: "/antecedentes" },
-            { item: "Misión", link: "" },
-            { item: "Visión", link: "" },
-            { item: "Valores institucionales", link: "" },
-          ]}
-        />
-        <Dropdown
-          title="Oferta Educativa"
-          items={[
-            { item: "Ingeniería Ambiental", link: "" },
-            { item: "Ingeniería Bioquímica", link: "" },
-            { item: "Ingeniería Civil", link: "" },
-            { item: "Ingeniería Electromecanica ", link: "" },
-            { item: "Ingeniería Industrial", link: "" },
-            { item: "Ingeniería en Sistemas Computacionales", link: "" },
-            { item: "Licenciatura en Administración", link: "" },
-          ]}
-        />
-        <Dropdown
-          title="Servicios"
-          items={[
-            { item: "Antecedentes Historicos", link: "" },
-            { item: "Misión", link: "" },
-            { item: "Visión", link: "" },
-            { item: "Valores institucionales", link: "" },
-          ]}
-        />
-        <Dropdown
-          title="Estudiantes"
-          items={[
-            { item: "Titulos y cedulas", link: "" },
-            { item: "Formatos", link: "" },
-            { item: "SIE para estudiantes", link: "" },
-          ]}
-        />
-        <Dropdown
-          title="Docentes"
-          items={[
-            { item: "Documentos", link: "" },
-            { item: "SIE para docentes", link: "" },
-          ]}
-        />
-        <Dropdown
-          title="Egresados"
-          items={[
-            { item: "Antecedentes Historicos", link: "" },
-            { item: "Misión", link: "" },
-            { item: "Visión", link: "" },
-            { item: "Valores institucionales", link: "" },
-          ]}
-        />
-        <a className="text-white text-decoration-none" href="">
-          H. Junta Directiva
-        </a>
-      </div> */}
     </header>
   );
 };

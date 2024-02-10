@@ -1,0 +1,32 @@
+.login-container {
+  width: 70%;
+  height: 70%;
+  display: flex;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #ffff;
+
+  img {
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  form {
+    width: 50%;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+.login-background {
+  background: rgb(25, 57, 106);
+  background: linear-gradient(
+    69deg,
+    rgba(25, 57, 106, 1) 50%,
+    rgba(206, 226, 255, 1) 100%
+  );
+}
