@@ -42,7 +42,7 @@ function SitiosInteres() {
         {!isPending &&
           transitions((style, item) => (
             <animated.a
-              style={style}
+              style={{ ...style, left: "50%" }}
               href={items[item]["ruta"]}
               className="slider-card"
             >
@@ -53,9 +53,9 @@ function SitiosInteres() {
       <>
         {!isPending &&
           items.map((el, index) => (
-            <animated.a href={el["ruta"]} className="slider-card" key={index}>
+            <a href={el["ruta"]} className="slider-card" key={index}>
               <img src={el["imagen"]} alt={el["alt"]} />
-            </animated.a>
+            </a>
           ))}
       </>
       <div className="next-card-button" onClick={nextCard}>
