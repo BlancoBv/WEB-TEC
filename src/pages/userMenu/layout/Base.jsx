@@ -55,7 +55,7 @@ function Base() {
 
   const logout = () => {
     localStorage.removeItem("user");
-    window.location.href = "/";
+    window.close();
   };
   return (
     <div

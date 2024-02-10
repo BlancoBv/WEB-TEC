@@ -17,4 +17,12 @@ export default Axios.create({
     Authorization: token,
   },
   baseURL: urlMain + "/api",
+  validateStatus: function (status) {
+    if (status === 401) {
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    }
+
+    return status >= 200 && status < 300; // default
+  },
 });
