@@ -1,0 +1,22 @@
+[
+  {
+    "imagen": "/img/conacyt.png",
+    "ruta": "https://conahcyt.mx/",
+    "alt": "Conacyt"
+  },
+  {
+    "imagen": "/img/imss.png",
+    "ruta": "http://www.imss.gob.mx/",
+    "alt": "IMSS"
+  },
+  {
+    "imagen": "/img/inai.png",
+    "ruta": "https://home.inai.org.mx",
+    "alt": "INAI"
+  },
+  {
+    "imagen": "/img/pnt.png",
+    "ruta": "https://consultapublicamx.plataformadetransparencia.org.mx/",
+    "alt": "PNT"
+  }
+]
