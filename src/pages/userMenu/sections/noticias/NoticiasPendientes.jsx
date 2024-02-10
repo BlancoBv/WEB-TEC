@@ -105,7 +105,7 @@ function NoticiasPendientes() {
   ];
 
   return (
-    <div className="h-100 w-100 bg-dark-mode-base p-2 rounded d-flex flex-column">
+    <div className="h-100 w-100 bg-dark-mode-base rounded p-2">
       <ModalConfirm
         darkMode={true}
         show={showConfirmacion.status}

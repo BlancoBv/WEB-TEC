@@ -26,13 +26,13 @@ function IndexMenu() {
   };
 
   return (
-    <div>
+    <>
       <AlertSuccess show={showAlertSuccess} />
       <AlertError show={showAlertError.status} text={showAlertError.text} />
       <AlertsContexts.Provider value={{ showSuccess, showError }}>
         <Base />
       </AlertsContexts.Provider>
-    </div>
+    </>
   );
 }
 

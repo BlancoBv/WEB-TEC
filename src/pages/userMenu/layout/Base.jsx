@@ -59,56 +59,51 @@ function Base() {
   };
   return (
     <div
-      className="vw-100 vh-100 d-flex flex-column bg-dark-mode text-white"
+      className="h-100 d-flex p-2 gap-2 bg-dark-mode text-white"
       data-bs-theme="dark"
     >
-      {/* <div className="h-10 d-flex align-items-center p-2">
-        <h5>Administración de WEBTECNM</h5>
-      </div> */}
-      <div className="h-100 d-flex p-2 gap-2">
-        <div className="w-15 d-flex flex-column justify-content-evenly align-items-end rounded bg-dark-mode-base user-side-bar">
-          {configOptions.map((el, i) => (
-            <NavLink
-              key={i}
-              /* onClick={el.activate}  */ /* role="button" */ to={el.route}
-              className="w-90 d-flex align-items-center justify-content-center"
+      <div className="w-15 d-flex flex-column justify-content-evenly align-items-end rounded bg-dark-mode-base user-side-bar">
+        {configOptions.map((el, i) => (
+          <NavLink
+            key={i}
+            /* onClick={el.activate}  */ /* role="button" */ to={el.route}
+            className="w-90 d-flex align-items-center justify-content-center"
+          >
+            <span>
+              <i className={`${el.icon} fs-4`} /> {el.name}
+            </span>
+          </NavLink>
+        ))}
+      </div>
+      <div className="w-85 h-100 d-flex flex-column">
+        <div className="bg-dark-mode-base h-10 rounded p-2 d-flex gap-2">
+          <img
+            src={itsr}
+            height="100%"
+            onClick={() => navigate("/panel")}
+            role="button"
+          />
+          <h3>Panel de administración de la pagina</h3>
+          <div className="flex-grow-1 d-flex justify-content-end align-items-center gap-2">
+            <span>
+              <i className="fa-solid fa-user" />{" "}
+              {`${user.nombres} ${user.apepat} ${user.apemat}`}
+            </span>
+            <button
+              onClick={logout}
+              className="text-danger"
+              style={{
+                outline: "none",
+                backgroundColor: "rgba(0,0,0,0)",
+                border: "none",
+              }}
+              title="Cerrar sesión"
             >
-              <span>
-                <i className={`${el.icon} fs-4`} /> {el.name}
-              </span>
-            </NavLink>
-          ))}
-        </div>
-        <div className="w-85 h-100 d-flex flex-column gap-2">
-          <div className="bg-dark-mode-base h-10 rounded p-2 d-flex gap-2">
-            <img
-              src={itsr}
-              height="100%"
-              onClick={() => navigate("/panel")}
-              role="button"
-            />
-            <h3>Panel de administración de la pagina</h3>
-            <div className="flex-grow-1 d-flex justify-content-end align-items-center gap-2">
-              <span>
-                <i className="fa-solid fa-user" />{" "}
-                {`${user.nombres} ${user.apepat} ${user.apemat}`}
-              </span>
-              <button
-                onClick={logout}
-                className="text-danger"
-                style={{
-                  outline: "none",
-                  backgroundColor: "rgba(0,0,0,0)",
-                  border: "none",
-                }}
-                title="Cerrar sesión"
-              >
-                <i className="fa-solid fa-right-from-bracket" />
-              </button>
-            </div>
+              <i className="fa-solid fa-right-from-bracket" />
+            </button>
           </div>
-          <Outlet />
         </div>
+        <Outlet />
       </div>
     </div>
   );
@@ -116,7 +111,7 @@ function Base() {
 
 export const NavigationMenuUser = ({ tabs, mainRoute }) => {
   return (
-    <div className="d-flex w-100 d-flex pb-2 gap-2 nav-menu-tabs">
+    <div className="nav-menu-tabs">
       {tabs.map((el) => (
         <NavLink to={`${el.route}`} key={el.name} end>
           <i className={el.icon} />

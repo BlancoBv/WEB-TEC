@@ -1,6 +1,16 @@
 .tabla {
-  background-attachment: fixed;
+  height: 100px;
+  width: 100%;
+  table-layout: fixed;
+  table-layout: auto;
+  overflow: hidden;
+  thead {
+    position: sticky;
+    top: 0px;
+    background-color: var(--dark-base);
+  }
 }
+
 .tabla tr {
   border-bottom: 2px solid #242424;
   height: 50px;

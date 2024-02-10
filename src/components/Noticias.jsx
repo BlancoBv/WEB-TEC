@@ -3,7 +3,9 @@ import useGetData from "../hooks/useGetData";
 import NoticiaCard from "./NoticiaCard";
 
 function Noticias() {
-  const { data, isPending } = useGetData("/blogs/obtener?estatus=aceptado");
+  const { data, isPending } = useGetData(
+    "/blogs/obtener?estatus=aceptado&limit=3"
+  );
   return (
     <div className="noticias-section">
       {!isPending && data.response.length > 0 ? (

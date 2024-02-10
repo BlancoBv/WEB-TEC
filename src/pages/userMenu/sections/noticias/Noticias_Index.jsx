@@ -10,9 +10,9 @@ function Noticias_Index() {
   ];
 
   return (
-    <div className="w-100 h-100 d-flex flex-column">
+    <div className="w-100 h-90 d-flex flex-column">
       <NavigationMenuUser tabs={tabs} mainRoute="noticias" />
-      <div className="flex-grow-1">
+      <div className="h-90">
         <Outlet />
       </div>
     </div>

@@ -3,9 +3,9 @@ import NoContent from "./NoContent";
 
 function Tabla({ data, columnas, onClickAction, onContextAction }) {
   return (
-    <>
+    <div className="overflow-auto h-100 w-100">
       {data.length > 0 && (
-        <table className="w-100 table table-hover">
+        <table className="tabla">
           <thead>
             <tr>
               {columnas.map((encabezado) => (
@@ -33,7 +33,7 @@ function Tabla({ data, columnas, onClickAction, onContextAction }) {
         </table>
       )}
       {data.length <= 0 && <NoContent />}
-    </>
+    </div>
   );
 }
 
