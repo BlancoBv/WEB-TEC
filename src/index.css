@@ -1,5 +1,6 @@
 :root {
   --blue-color: rgb(27, 57, 106);
+  --blue-color-disabled: rgb(16, 34, 63);
   --max-break: (min-width: 862px);
   --link-base: #ffff;
   --link-hover: rgb(150, 150, 150);

@@ -18,6 +18,7 @@ export default Axios.create({
   },
   baseURL: urlMain + "/api",
   validateStatus: function (status) {
+    console.log({ status });
     if (status === 401) {
       localStorage.removeItem("user");
       window.location.href = "/login";

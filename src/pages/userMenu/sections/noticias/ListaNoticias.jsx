@@ -25,7 +25,7 @@ function ListaNoticias() {
   };
   console.log(data);
   return (
-    <div className="h-100 w-100 d-flex flex-column gap-2">
+    <div className="h-100 w-100 d-flex flex-column">
       <Modal
         show={showModal.status}
         close={() => setShowModal({ status: false, data: "" })}
@@ -35,7 +35,7 @@ function ListaNoticias() {
       >
         <NoticiaContent data={showModal.data} />
       </Modal>
-      <div className="d-flex w-100 gap-2 bg-dark-mode-base rounded p-2 h-10 align-items-center">
+      <div className="d-flex w-100 gap-2 h-10 align-items-center">
         <div className="w-150px">
           <select
             className="form-select"
@@ -59,11 +59,12 @@ function ListaNoticias() {
           </select>
         </div>
       </div>
-      <div className="flex-grow-1 bg-dark-mode-base rounded p-2 d-flex">
+      <div className="h-90 bg-dark-mode-base rounded p-2 d-flex">
         {!isPending && (
           <Success
             data={data.response}
-            modalState={{ showModal, setShowModal }}
+            modalState={{ setShowModal }}
+            error={error}
           />
         )}
         {isPending && <Loader />}
@@ -71,8 +72,8 @@ function ListaNoticias() {
     </div>
   );
 }
-const Success = ({ data, modalState }) => {
-  const { showModal, setShowModal } = modalState;
+const Success = ({ data, modalState, error }) => {
+  const { setShowModal } = modalState;
   const setRelativeData = (element) => {
     setShowModal({ status: true, data: element });
   };
@@ -97,6 +98,7 @@ const Success = ({ data, modalState }) => {
           columnas={columnas}
           data={data}
           onClickAction={setRelativeData}
+          error={error}
         />
       </div>
     </>

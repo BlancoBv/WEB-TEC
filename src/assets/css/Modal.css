@@ -36,5 +36,7 @@
 }
 .modal-bottom {
   height: 15%;
-  padding: 0px 10px 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }

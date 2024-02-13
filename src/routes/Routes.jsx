@@ -1,16 +1,12 @@
 import {
-  Outlet,
   createBrowserRouter as Router,
   RouterProvider,
   redirect,
 } from "react-router-dom";
 import IndexLayout from "../layout/IndexLayout";
-import Antecedentes from "../pages/conocenos/Antecedentes";
 import Home from "../pages/home/Home";
 import IndexMenu from "../pages/userMenu/IndexMenu";
 import AddNoticias from "../pages/userMenu/sections/noticias/AddNoticias";
-import Banners from "../pages/userMenu/sections/Banners";
-import BaseNoticias from "../pages/userMenu/sections/noticias/Noticias_Index";
 import Noticias_Index from "../pages/userMenu/sections/noticias/Noticias_Index";
 import NoticiasPendientes from "../pages/userMenu/sections/noticias/NoticiasPendientes";
 import ListaNoticias from "../pages/userMenu/sections/noticias/ListaNoticias";
@@ -28,7 +24,8 @@ import Article from "../components/Article";
 import Loader from "../components/Loader";
 import EditArticulos from "../pages/userMenu/sections/articulos/EditArticulos";
 import Login from "../pages/login/Login";
-import { useEffect } from "react";
+import Banners_index from "../pages/userMenu/sections/banners/Banners_index";
+import ListaBanners from "../pages/userMenu/sections/banners/ListaBanners";
 
 function Routes() {
   const { data, isPending, error } = useGetData("/categorias/obtener");
@@ -57,7 +54,11 @@ function Routes() {
           { path: "pendientes", element: <NoticiasPendientes /> },
         ],
       },
-      { path: "banners", element: <Banners /> },
+      {
+        path: "banners",
+        element: <Banners_index />,
+        children: [{ index: true, element: <ListaBanners /> }],
+      },
       {
         path: "convocatorias",
         element: <Convocatorias_Index />,

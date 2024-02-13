@@ -6,6 +6,7 @@ import Input, {
 import Axios from "../../../../axios/Axios";
 import { AlertsContexts } from "../../IndexMenu";
 import format from "../../../../assets/format";
+import Button from "../../../../components/Button";
 
 function AddMenu() {
   const [body, setBody] = useState({
@@ -116,9 +117,9 @@ function AddMenu() {
             return true;
           }}
         />
-        <button className="mx-auto" type="submit">
-          Guardar
-        </button>
+        <div className="d-flex justify-content-center">
+          <Button text="Guardar" type="submit" />
+        </div>
       </form>
     </div>
   );

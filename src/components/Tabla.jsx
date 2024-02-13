@@ -1,10 +1,10 @@
 import React from "react";
 import NoContent from "./NoContent";
 
-function Tabla({ data, columnas, onClickAction, onContextAction }) {
+function Tabla({ data, columnas, onClickAction, onContextAction, error }) {
   return (
     <div className="overflow-auto h-100 w-100">
-      {data.length > 0 && (
+      {!error && (
         <table className="tabla">
           <thead>
             <tr>
@@ -32,7 +32,7 @@ function Tabla({ data, columnas, onClickAction, onContextAction }) {
           </tbody>
         </table>
       )}
-      {data.length <= 0 && <NoContent />}
+      {error && <NoContent />}
     </div>
   );
 }

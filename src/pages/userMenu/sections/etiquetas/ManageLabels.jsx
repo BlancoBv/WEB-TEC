@@ -5,6 +5,10 @@ import Modal, { ModalBottom, ModalConfirm } from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Axios from "../../../../axios/Axios";
 import { AlertsContexts } from "../../IndexMenu";
+import Button from "../../../../components/Button";
+import Tabla from "../../../../components/Tabla";
+import format from "../../../../assets/format";
+import Loader from "../../../../components/Loader";
 
 function ManageLabels() {
   const [body, setBody] = useState({});
@@ -18,7 +22,10 @@ function ManageLabels() {
   });
 
   const { showSuccess, showError } = useContext(AlertsContexts);
-  const { data, isPending } = useGetData("/etiquetas/obtener", actualizador);
+  const { data, isPending, error } = useGetData(
+    "/etiquetas/obtener",
+    actualizador
+  );
 
   const display = (event, element) => {
     setRelativeData(element);
@@ -112,7 +119,7 @@ function ManageLabels() {
             />
           </div>
           <ModalBottom>
-            <button type="submit">Guardar</button>
+            <Button text="Guardar" type="submit" />
           </ModalBottom>
         </form>
       </Modal>
@@ -122,10 +129,10 @@ function ManageLabels() {
         close={() => setShowConfirm(false)}
         action={deleteLabel}
       />
-      <div className="w-100 h-100 d-flex flex-column gap-2">
+      <div className="w-100 h-100 d-flex flex-column">
         <div className="h-10">
           <span
-            className="h-100 fit-content-width d-flex align-items-center gap-2 bg-dark-mode-base rounded p-2"
+            className="h-100 fit-content-width d-flex align-items-center gap-2 "
             role="button"
             title="Añadir etiqueta"
             onClick={() =>
@@ -139,41 +146,42 @@ function ManageLabels() {
             <i className="fa-solid fa-square-plus fs-1" /> Añadir etiqueta
           </span>
         </div>
-        <div className="flex-grow-1 p-2 bg-dark-mode-base rounded">
+        <div className="h-90 p-2 bg-dark-mode-base rounded">
           {!isPending && (
-            <Success data={data.response} displayContextMenu={display} />
+            <Success
+              data={data.response}
+              displayContextMenu={display}
+              error={error}
+            />
+          )}
+          {isPending && (
+            <div className="d-flex h-100 w-100">
+              <Loader />
+            </div>
           )}
         </div>
       </div>
     </>
   );
 }
-const Success = ({ data, displayContextMenu }) => {
+const Success = ({ data, displayContextMenu, error }) => {
+  const columnas = [
+    {
+      name: "Ultima vez actualizado",
+      selector: (row) => format.formatFecha(row.updatedAt, "numeric"),
+    },
+    {
+      name: "Etiquetas",
+      selector: (row) => row.etiqueta,
+    },
+  ];
   return (
-    <div className="w-100">
-      <table className="w-100 table table-hover">
-        <thead>
-          <tr>
-            <th>Ultima actualización</th>
-            <th>Nombre</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((el) => (
-            <tr
-              key={el.idetiqueta}
-              title={el.etiqueta}
-              role="button"
-              onContextMenu={(e) => displayContextMenu(e, el)}
-              //onClick={() => setRelativeData(el)}
-            >
-              <td>{el.updatedAt}</td>
-              <td>{el.etiqueta}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Tabla
+      data={data}
+      columnas={columnas}
+      error={error}
+      onContextAction={displayContextMenu}
+    />
   );
 };
 export default ManageLabels;

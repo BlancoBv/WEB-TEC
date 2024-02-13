@@ -12,6 +12,9 @@ import Input, {
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
 import PDFViewer from "../../../../components/PDFViewer";
 import Loader from "../../../../components/Loader";
+import Button from "../../../../components/Button";
+import Tabla from "../../../../components/Tabla";
+import format from "../../../../assets/format";
 
 function ListaConvocatorias() {
   const [relativeData, setRelativeData] = useState({});
@@ -27,7 +30,7 @@ function ListaConvocatorias() {
   const [bodyFiles, setBodyFiles] = useState({});
 
   const { showSuccess, showError } = useContext(AlertsContexts);
-  const { data, isPending } = useGetData(
+  const { data, isPending, error } = useGetData(
     "/convocatorias/obtener",
     actualizador
   );
@@ -156,7 +159,7 @@ function ListaConvocatorias() {
       },
     },
   ];
-  console.log(bodyFiles);
+
   return (
     <div className="h-100 w-100 bg-dark-mode-base p-2 rounded">
       <ContextualMenu elements={contextMenuOptions} />
@@ -203,7 +206,7 @@ function ListaConvocatorias() {
               </ScrollbarCustom>
             </div>
             <ModalBottom>
-              <button type="submit">Guardar</button>
+              <Button text="Guardar" type="submit" />
             </ModalBottom>
           </form>
         )}
@@ -237,7 +240,7 @@ function ListaConvocatorias() {
               </div>
             </div>
             <ModalBottom>
-              <button type="submit">Guardar</button>
+              <Button text="Guardar" type="submit" />
             </ModalBottom>
           </form>
         )}
@@ -284,12 +287,14 @@ function ListaConvocatorias() {
               </ScrollbarCustom>
             </div>
             <ModalBottom>
-              <button type="submit">Guardar</button>
+              <Button text="Guardar" type="submit" />
             </ModalBottom>
           </form>
         )}
       </Modal>
-      {!isPending && <Success data={data.response} display={display} />}
+      {!isPending && (
+        <Success data={data.response} display={display} error={error} />
+      )}
       {isPending && (
         <div className="d-flex w-100 h-100 align-items-center justify-content-center">
           <Loader />
@@ -299,36 +304,25 @@ function ListaConvocatorias() {
   );
 }
 
-const Success = ({ data, display }) => {
+const Success = ({ data, display, error }) => {
+  const columnas = [
+    {
+      name: "Ultima vez actualizado",
+      selector: (row) => format.formatFecha(row.updatedAt, "numeric"),
+    },
+    { name: "Titulo", selector: (row) => row.titulo },
+    { name: "Descripcion", selector: (row) => row.descripcion },
+  ];
+  console.log(data);
   return (
-    <div className="w-100">
-      <table className="w-100 table table-hover">
-        <thead>
-          <tr>
-            <th>Ultima actualización</th>
-            <th>Titulo</th>
-            <th>Descripción</th>
-            <th>Etiquetas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((el) => (
-            <tr
-              key={el.idconvocatoria}
-              title={el.titulo}
-              role="button"
-              onContextMenu={(e) => display(e, el)}
-              //onClick={() => setRelativeData(el)}
-            >
-              <td>{el.updatedAt}</td>
-              <td>{el.titulo}</td>
-              <td>{el.descripcion}</td>
-              <td>{el.imagen}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <Tabla
+        columnas={columnas}
+        data={data}
+        error={error}
+        onContextAction={display}
+      />
+    </>
   );
 };
 export default ListaConvocatorias;

@@ -1,21 +1,22 @@
 import { useContext, useState } from "react";
-import Axios, { urlMain } from "../../../axios/Axios";
-import UseGetData from "../../../hooks/useGetData";
-import Modal from "../../../components/Modal";
+import Axios, { urlMain } from "../../../../axios/Axios";
+import UseGetData from "../../../../hooks/useGetData";
+import Modal from "../../../../components/Modal";
 
-import { InputImage, InputSwitchAction } from "../../../components/Input";
-import { AlertsContexts } from "../IndexMenu";
-import Loader from "../../../components/Loader";
-import ScrollbarCustom from "../../../components/ScrollbarCustom";
+import { InputImage, InputSwitchAction } from "../../../../components/Input";
+import { AlertsContexts } from "../../IndexMenu";
+import Loader from "../../../../components/Loader";
+import ScrollbarCustom from "../../../../components/ScrollbarCustom";
+import Tabla from "../../../../components/Tabla";
+import format from "../../../../assets/format";
 
 function Banners() {
   const { showSuccess, closeAlerts } = useContext(AlertsContexts);
   const [actualizar, setActualizar] = useState(false);
-  const { data, isPending } = UseGetData("/banners/obtener", actualizar);
+  const { data, isPending, error } = UseGetData("/banners/obtener", actualizar);
   const [showAddBanner, setShowAddBanner] = useState(false);
 
   const [banner, setBanner] = useState({ imagen: "" });
-  console.log(banner);
 
   const saveBanner = async (e) => {
     e.preventDefault();
@@ -67,15 +68,16 @@ function Banners() {
           )}
         </form>
       </Modal>
-      <div className="h-10 border-bottom">
+      <div className="h-10">
         <button onClick={() => setShowAddBanner(true)}>Nuevo banner</button>
       </div>
-      <div className="h-90 overflow-y-auto">
+      <div className="h-90 rounded bg-dark-mode-base p-2">
         {!isPending && (
           <Success
             data={data.response}
             actualizarState={[actualizar, setActualizar]}
             bannerState={[banner, setBanner]}
+            error={error}
           />
         )}
         {isPending && <Loader />}
@@ -84,7 +86,7 @@ function Banners() {
   );
 }
 
-const Success = ({ data, actualizarState, bannerState }) => {
+const Success = ({ data, actualizarState, bannerState, error }) => {
   const { showSuccess, closeAlerts } = useContext(AlertsContexts);
   const [actualizar, setActualizar] = actualizarState;
   const [showImage, setShowImage] = useState({
@@ -100,7 +102,6 @@ const Success = ({ data, actualizarState, bannerState }) => {
   const [banner, setBanner] = useState({ imagen: "" });
 
   const visualizarImagen = (el) => {
-    console.log(el);
     setShowImage({
       status: true,
       url: `${urlMain}${el.imagen}`,
@@ -140,6 +141,18 @@ const Success = ({ data, actualizarState, bannerState }) => {
       console.log(error);
     }
   };
+
+  const columnas = [
+    {
+      name: "Ultima vez actualizado",
+      selector: (row) => format.formatFecha(row.updatedAt, "numeric"),
+    },
+    { name: "Subido por", selector: (row) => row.usuario },
+    {
+      name: "Visibilidad",
+      selector: (row) => (row.mostrar ? "Visible" : "Oculta"),
+    },
+  ];
 
   return (
     <>
@@ -181,7 +194,7 @@ const Success = ({ data, actualizarState, bannerState }) => {
         </form>
       </Modal>
 
-      <div className="w-100">
+      {/* <div className="w-100">
         <table className="w-100 table table-hover">
           <thead>
             <tr>
@@ -235,7 +248,13 @@ const Success = ({ data, actualizarState, bannerState }) => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
+      <Tabla
+        columnas={columnas}
+        data={data}
+        error={error}
+        onClickAction={visualizarImagen}
+      />
     </>
   );
 };

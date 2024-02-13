@@ -6,18 +6,19 @@ import Axios, { multipartHeader, urlMain } from "../../../../axios/Axios";
 import format from "../../../../assets/format";
 import { AlertsContexts } from "../../IndexMenu";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
-import NoticiaContent from "../../../../components/NoticiaContent";
 import UploadImages from "../../../../components/UploadImages";
+import Button from "../../../../components/Button";
 
 function AddNoticias() {
   const { showSuccess, showError } = useContext(AlertsContexts);
+  const [pending, setPending] = useState(false);
   const date = new Date(Date.now());
   const [showModal, setShowModal] = useState(false);
   const [editorContent, setEditorContent] = useState({ html: "" });
   const [body, setBody] = useState({
     fecha: format.formatFechaDB(date),
   });
-  const [imagen, setImagen] = useState({ imagenPrincipal: "" });
+  const [imagen, setImagen] = useState({ imagenPrincipal: {} });
 
   const handle = (e) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ function AddNoticias() {
   };
 
   const saveBlog = async (e) => {
+    setPending(true);
     e.preventDefault();
     const formData = new FormData();
     formData.append("imagenPrincipal", imagen.imagenPrincipal.file);
@@ -37,9 +39,15 @@ function AddNoticias() {
     try {
       await Axios.post("/blogs/crear", formData, multipartHeader);
       showSuccess();
+      setImagen({ imagenPrincipal: {} });
+      setBody({
+        fecha: format.formatFechaDB(date),
+      });
+      setEditorContent({ html: "" });
     } catch (error) {
       showError();
     }
+    setPending(false);
   };
 
   return (
@@ -115,16 +123,14 @@ function AddNoticias() {
             </div>
           </div>
 
-          <div className="d-flex justify-content-evenly align-items-center">
-            <button
+          <div className="d-flex justify-content-evenly align-items-center h-10 p-2">
+            <Button text="Previsualizar" action={() => setShowModal(true)} />
+            <Button
+              text="Guardar"
               type="submit"
               disabled={!editorContent.hasOwnProperty("json")}
-            >
-              Guardar
-            </button>
-            <button type="button" onClick={() => setShowModal(true)}>
-              Previsualizar
-            </button>
+              pending={pending}
+            />
           </div>
         </form>
 

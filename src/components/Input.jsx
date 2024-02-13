@@ -49,7 +49,7 @@ export const InputImage = ({
     e.preventDefault();
     let resultForMultiple = [];
 
-    const { name, files } = e.target;
+    const { name, files, value } = e.target;
     if (multiple && files.length > 1) {
       Array.from(files).forEach((element) => {
         const reader = new FileReader();
@@ -61,7 +61,11 @@ export const InputImage = ({
       setVariable({ ...variable, [name]: resultForMultiple });
     } else {
       const imgSrc = URL.createObjectURL(files[0]);
-      setVariable({ ...variable, [name]: { file: files[0], src: imgSrc } });
+      setVariable({
+        ...variable,
+        [name]: { file: files[0], src: imgSrc },
+        value,
+      });
     }
   };
 
@@ -71,8 +75,8 @@ export const InputImage = ({
       <input
         className="form-control"
         type="file"
-        //value={body.imagenPrincipal}
         name={name}
+        value={variable.hasOwnProperty("value") ? variable["value"] : ""}
         onChange={handle}
         accept="image/*"
         multiple={multiple}

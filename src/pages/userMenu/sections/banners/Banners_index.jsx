@@ -1,6 +1,7 @@
 import { NavigationMenuUser } from "../../layout/Base";
 import { Outlet } from "react-router-dom";
-function Labels_Index() {
+
+function Banners_index() {
   const tabs = [{ name: "Lista", route: "", icon: "fa-solid fa-table-list" }];
   return (
     <div className="d-flex flex-column w-100 h-100">
@@ -12,4 +13,4 @@ function Labels_Index() {
   );
 }
 
-export default Labels_Index;
+export default Banners_index;

@@ -5,25 +5,7 @@ import itsr from "../../../assets/img/logoitsr.png";
 function Base() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  const [showAddNotice, setShowAddNotice] = useState(false);
-  const [showBanners, setShowBanners] = useState(false);
-  const [showNoticiasPend, setShowNoticiasPend] = useState(false);
 
-  const showBannersSection = () => {
-    setShowAddNotice(false);
-    setShowBanners(true);
-    setShowNoticiasPend(false);
-  };
-  const showNoticeSection = () => {
-    setShowBanners(false);
-    setShowAddNotice(true);
-    setShowNoticiasPend(false);
-  };
-  const showNoticiasPendientes = () => {
-    setShowBanners(false);
-    setShowAddNotice(false);
-    setShowNoticiasPend(true);
-  };
   const configOptions = [
     {
       name: "Noticias",

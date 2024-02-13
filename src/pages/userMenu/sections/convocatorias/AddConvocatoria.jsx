@@ -9,6 +9,7 @@ import PDFViewer from "../../../../components/PDFViewer";
 import format from "../../../../assets/format";
 import Axios, { multipartHeader } from "../../../../axios/Axios";
 import { AlertsContexts } from "../../IndexMenu";
+import Button from "../../../../components/Button";
 
 function AddConvocatoria() {
   const date = new Date(Date.now());
@@ -86,7 +87,7 @@ function AddConvocatoria() {
               value={body}
               name="titulo"
             />
-            <button type="submit">Guardar</button>
+            <Button text="Guardar" type="submit" />
           </div>
           <div className="w-50 h-100">
             <InputTextArea

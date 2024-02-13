@@ -17,6 +17,7 @@ import Input, {
 import format from "../../../../assets/format";
 import { useNavigate } from "react-router-dom";
 import regularExp from "../../../../assets/regularExp";
+import Button from "../../../../components/Button";
 
 function ListaMenus() {
   const navigate = useNavigate();
@@ -201,6 +202,7 @@ function ListaMenus() {
       showError();
     }
   };
+  console.log(showModal);
 
   return (
     <div className="h-100 w-100 d-flex flex-column gap-2">
@@ -228,17 +230,11 @@ function ListaMenus() {
         >
           <Input
             label={`Titulo ${
-              showModal.type === "add" || showModal.type === "update"
-                ? "del submenú"
-                : "de la categoria"
+              showModal.type === "add" ? "del submenú" : "de la categoria"
             }`}
             placeholder="Titulo"
             handle={handle}
-            name={
-              showModal.type === "add" || showModal.type === "update"
-                ? "subcategoria"
-                : "categoria"
-            }
+            name={showModal.type === "add" ? "subcategoria" : "categoria"}
             value={body}
             id="subcategoria"
             required={true}
@@ -282,9 +278,7 @@ function ListaMenus() {
             automaticamente una nueva pestaña.
           </span>
           <ModalBottom>
-            <button className="mx-auto" type="submit">
-              Guardar
-            </button>
+            <Button text="Guardar" type="submit" />
           </ModalBottom>
         </form>
       </Modal>
