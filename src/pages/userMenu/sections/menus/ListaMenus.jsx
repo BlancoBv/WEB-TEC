@@ -290,6 +290,7 @@ function ListaMenus() {
             modalState={{ showModal, setShowModal }}
             showContextMenu={display}
             showContextMenuSecondary={displaySecondary}
+            error={error}
           />
         )}
         {isPending && <Loader />}
@@ -298,7 +299,12 @@ function ListaMenus() {
   );
 }
 
-const Success = ({ data, showContextMenu, showContextMenuSecondary }) => {
+const Success = ({
+  data,
+  showContextMenu,
+  showContextMenuSecondary,
+  error,
+}) => {
   return (
     <>
       <div className="w-100">

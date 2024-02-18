@@ -33,6 +33,11 @@ function Base() {
       icon: "fa-solid fa-bookmark",
       route: "menus-control",
     },
+    {
+      name: "Menus secundarios",
+      icon: "fa-solid fa-bookmark",
+      route: "menus-control-secundarios",
+    },
   ];
 
   const logout = () => {

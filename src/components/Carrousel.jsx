@@ -19,6 +19,7 @@ function Carrousel() {
 
 const Success = ({ images }) => {
   const [index, set] = useState(0);
+  console.log(images);
 
   const transitions = useTransition(index, {
     key: index,
@@ -36,17 +37,31 @@ const Success = ({ images }) => {
   });
   return (
     <>
-      {transitions((style, i) => (
-        <animated.div
-          style={{
-            ...style,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <img src={`${urlMain}${images[i].imagen}`} width="100%" />
-        </animated.div>
-      ))}
+      {transitions((style, i) =>
+        images[i]["url"] ? (
+          <animated.a
+            style={{
+              ...style,
+              width: "100%",
+              height: "100%",
+            }}
+            href={images[i]["url"]}
+            target="_blank"
+          >
+            <img src={`${urlMain}${images[i].imagen}`} width="100%" />
+          </animated.a>
+        ) : (
+          <animated.div
+            style={{
+              ...style,
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <img src={`${urlMain}${images[i].imagen}`} width="100%" />
+          </animated.div>
+        )
+      )}
     </>
   );
 };

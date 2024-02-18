@@ -23,7 +23,6 @@ function ListaNoticias() {
     const { value, name } = e.target;
     setFilter({ ...filter, [name]: value });
   };
-  console.log(data);
   return (
     <div className="h-100 w-100 d-flex flex-column">
       <Modal
