@@ -9,8 +9,6 @@
 
 .modal-box {
   border-radius: 10px;
-  height: 90%;
-  width: 90%;
 }
 .modal-button-close {
   color: rgb(231, 40, 40);
@@ -39,4 +37,21 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+.modal-size-sm {
+  width: 350px;
+  height: 60%;
+}
+.modal-size-md {
+  width: 500px;
+  height: 90%;
+}
+.modal-size-lg {
+  width: 90%;
+  height: 90%;
+}
+@media (max-width: 682px) {
+  .modal-box {
+    width: 100%;
+  }
 }

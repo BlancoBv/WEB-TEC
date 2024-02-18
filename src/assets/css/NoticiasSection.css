@@ -2,6 +2,7 @@
   min-height: 20rem;
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   .no-noticia {
     height: 100%;
     width: 100%;
