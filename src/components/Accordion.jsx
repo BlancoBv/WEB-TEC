@@ -13,10 +13,11 @@ function Accordion() {
 
 export const AccordionTableMenus = ({
   element,
-  targets,
-  subcategoriaTargets,
   showContextMenu,
   showContextMenuSecondary,
+  columnas,
+  subcolumnas,
+  subTarget,
 }) => {
   const [isShow, setIsShow] = useState(false);
   const activatePanel = (e) => {
@@ -30,6 +31,7 @@ export const AccordionTableMenus = ({
       setIsShow(false);
     }
   };
+  console.log(element[subTarget]);
   return (
     <>
       <tr
@@ -37,8 +39,8 @@ export const AccordionTableMenus = ({
         onClick={activatePanel}
         onContextMenu={(e) => showContextMenu(e, element)}
       >
-        {targets.map((el, i) => (
-          <td key={i}>{element[el]}</td>
+        {columnas.map((target, i) => (
+          <td key={i}>{target.selector(element)}</td>
         ))}
         <i
           className={`fa-solid fa-caret-${
@@ -56,17 +58,11 @@ export const AccordionTableMenus = ({
         <td colSpan={3}>
           <table className="w-100">
             <tbody>
-              {element.subcategorias.map((subcategoia) => (
-                <tr
-                  onContextMenu={(e) =>
-                    showContextMenuSecondary(e, subcategoia)
-                  }
-                >
-                  {subcategoriaTargets.map((el, i) => (
-                    <td key={i}>{subcategoia[el]}</td>
-                  ))}{" "}
-                </tr>
-              ))}
+              <tr>
+                {/*  {subcolumnas.map((target) => (
+                  <td>{target.selector(element[subTarget])}</td>
+                ))} */}
+              </tr>
             </tbody>
           </table>
         </td>
