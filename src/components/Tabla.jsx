@@ -42,6 +42,7 @@ export const TablaDropdown = ({
   columnas,
   onClickAction,
   onContextAction,
+  onContextActionSecondary,
   error,
   dropdownOptions,
 }) => {
@@ -63,6 +64,8 @@ export const TablaDropdown = ({
                 columnas={columnas}
                 subcolumnas={dropdownOptions.columnas}
                 subTarget={dropdownOptions.target}
+                onContextAction={onContextAction}
+                onContextActionSecondary={onContextActionSecondary}
               />
             ) : (
               <tr

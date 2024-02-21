@@ -1,11 +1,7 @@
-import { forwardRef, useEffect, useState } from "react";
+import { useEffect } from "react";
 import LogoGob from "../assets/img/logoheader.svg";
-import LogoGobMx from "../assets/img/placa-gob1.png";
-import LogoSep from "../assets/img/placa-gob2.png";
-import LogoTec from "../assets/img/placa_tecnm.jpg";
-import Dropdown from "../components/Dropdown";
-import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import WhiteBar from "../components/WhiteBar";
 
 const Header = () => {
   /* Funcion usada para esconder la barra blanca en el header al desplazarse en el contenedor principal */
@@ -63,19 +59,9 @@ const Header = () => {
         </div>
       </div>
       {/* Barra blanca */}
-      <div className="white-bar" id="white-bar">
-        <div className="images-container">
-          <a className="imageOpacity" href="https://www.gob.mx">
-            <img src={LogoGobMx} />
-          </a>
-          <a className="imageOpacity" href="https://www.gob.mx/sep">
-            <img src={LogoSep} />
-          </a>
-          <a className="imageOpacity" href="https://www.tecnm.mx/">
-            <img src={LogoTec} />
-          </a>
-        </div>
-      </div>
+
+      <WhiteBar />
+
       {/* Barra azul */}
       <NavBar />
     </header>

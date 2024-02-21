@@ -10,7 +10,7 @@ function Menus_Sec_Index() {
   return (
     <div className="d-flex flex-column w-100 h-100">
       <NavigationMenuUser tabs={tabs} mainRoute="noticias" />
-      <div className="flex-grow-1">
+      <div className="h-90">
         <Outlet />
       </div>
     </div>

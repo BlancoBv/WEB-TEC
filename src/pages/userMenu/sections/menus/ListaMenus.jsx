@@ -18,6 +18,7 @@ import format from "../../../../assets/format";
 import { useNavigate } from "react-router-dom";
 import regularExp from "../../../../assets/regularExp";
 import Button from "../../../../components/Button";
+import { TablaDropdown } from "../../../../components/Tabla";
 
 function ListaMenus() {
   const navigate = useNavigate();
@@ -305,8 +306,40 @@ const Success = ({
   showContextMenuSecondary,
   error,
 }) => {
+  console.log(data);
+  const columnas = {
+    columnas: [
+      {
+        name: "Ultima vez actualizado",
+        selector: (row) => format.formatFecha(row.updatedAt, "numeric"),
+      },
+      { name: "Descripción", selector: (row) => row.descripcion },
+      { name: "Ruta", selector: (row) => row.ruta },
+    ],
+    dropdown: {
+      condition: (row) => row.subcategorias.length > 0,
+      target: "subcategorias",
+      columnas: [
+        {
+          name: "Ultima vez actualizado",
+          selector: (row) => format.formatFecha(row.updatedAt, "numeric"),
+        },
+        { name: "Descripción", selector: (row) => row.descripcion },
+        { name: "Ruta", selector: (row) => row.ruta },
+      ],
+    },
+  };
   return (
-    <>
+    <TablaDropdown
+      columnas={columnas.columnas}
+      data={data}
+      dropdownOptions={columnas.dropdown}
+      onContextAction={showContextMenu}
+      onContextActionSecondary={showContextMenuSecondary}
+    />
+  );
+  {
+    /* <>
       <div className="w-100">
         <ScrollbarCustom>
           <table className="w-100 tabla">
@@ -350,8 +383,8 @@ const Success = ({
           </table>
         </ScrollbarCustom>
       </div>
-    </>
-  );
+    </> */
+  }
 };
 
 export default ListaMenus;

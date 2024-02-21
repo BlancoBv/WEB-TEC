@@ -9,6 +9,8 @@ function Dropdown({
   responsive,
   includeMainRoute,
   mainRoute,
+  targetUrl,
+  targetName,
 }) {
   console.log(includeMainRoute);
   return (
@@ -24,12 +26,12 @@ function Dropdown({
             className="dropdown-item"
             to={
               includeMainRoute && !regularExp("http", el.ruta)
-                ? `${mainRoute}/${el.ruta}`
-                : el.ruta
+                ? `${mainRoute}/${el[targetUrl]}`
+                : el[targetUrl]
             }
             target={regularExp("http", el.ruta) ? "_blank" : ""}
           >
-            {el.subcategoria}
+            {el[targetName]}
           </NavLink>
         ))}
       </div>
@@ -45,6 +47,8 @@ Dropdown.defaultProps = {
   background: "rgba(27, 57, 106, 0.98)",
   responsive: false,
   includeMainRoute: false,
+  targetName: "subcategoria",
+  targetUrl: "ruta",
 };
 
 export const DropdownActions = ({ items, title, background }) => {

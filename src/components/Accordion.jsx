@@ -13,8 +13,8 @@ function Accordion() {
 
 export const AccordionTableMenus = ({
   element,
-  showContextMenu,
-  showContextMenuSecondary,
+  onContextAction,
+  onContextActionSecondary,
   columnas,
   subcolumnas,
   subTarget,
@@ -37,7 +37,7 @@ export const AccordionTableMenus = ({
       <tr
         className="accordion-custom"
         onClick={activatePanel}
-        onContextMenu={(e) => showContextMenu(e, element)}
+        onContextMenu={(e) => onContextAction(e, element)}
       >
         {columnas.map((target, i) => (
           <td key={i}>{target.selector(element)}</td>
@@ -58,11 +58,16 @@ export const AccordionTableMenus = ({
         <td colSpan={3}>
           <table className="w-100">
             <tbody>
-              <tr>
-                {/*  {subcolumnas.map((target) => (
+              {/*  {subcolumnas.map((target) => (
                   <td>{target.selector(element[subTarget])}</td>
                 ))} */}
-              </tr>
+              {element[subTarget].map((row) => (
+                <tr onContextMenu={(e) => onContextActionSecondary(e, row)}>
+                  {subcolumnas.map((el) => (
+                    <td>{el.selector(row)}</td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </td>
