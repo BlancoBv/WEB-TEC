@@ -38,6 +38,11 @@ function Base() {
       icon: "fa-solid fa-bookmark",
       route: "menus-control-secundarios",
     },
+    {
+      name: "Usuarios",
+      icon: "fa-solid fa-user",
+      route: "user-control",
+    },
   ];
 
   const logout = () => {

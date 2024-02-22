@@ -29,6 +29,10 @@ import ListaBanners from "../pages/userMenu/sections/banners/ListaBanners";
 import Menus_Sec_Index from "../pages/userMenu/sections/menusSecundarios/Menus_Sec_Index";
 import ListaMenusSec from "../pages/userMenu/sections/menusSecundarios/ListaMenusSec";
 import AddMenuSec from "../pages/userMenu/sections/menusSecundarios/AddMenuSec";
+import Users_index from "../pages/userMenu/sections/usuarios/Users_index";
+import ListaUsuarios from "../pages/userMenu/sections/usuarios/ListaUsuarios";
+import ListaPermisos from "../pages/userMenu/sections/usuarios/ListaPermisos";
+import ListaRoles from "../pages/userMenu/sections/usuarios/ListaRoles";
 
 function Routes() {
   const { data, isPending, error } = useGetData("/categorias/obtener");
@@ -92,6 +96,15 @@ function Routes() {
         children: [
           { index: true, element: <ListaMenusSec /> },
           { path: "crear", element: <AddMenuSec /> },
+        ],
+      },
+      {
+        path: "user-control",
+        element: <Users_index />,
+        children: [
+          { index: true, element: <ListaUsuarios /> },
+          { path: "roles", element: <ListaRoles /> },
+          { path: "permisos", element: <ListaPermisos /> },
         ],
       },
     ],
