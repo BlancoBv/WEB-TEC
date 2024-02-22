@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Base from "./layout/Base";
 import { AlertSuccess, AlertError } from "../../components/Alerts";
+import useGetData from "../../hooks/useGetData";
 
 export const AlertsContexts = createContext(null);
 
@@ -10,7 +11,9 @@ function IndexMenu() {
     status: false,
     text: "",
   });
+  const roles = useGetData("/auth/roles");
 
+  console.log(roles);
   const showSuccess = () => {
     setShowAlertSuccess(true);
     setTimeout(() => {
@@ -24,6 +27,19 @@ function IndexMenu() {
       setShowAlertError({ status: false, text: "" });
     }, 1000);
   };
+  useEffect(() => {
+    const userRol = JSON.parse(localStorage.getItem("user")).rol || null;
+    if (!roles.isPending) {
+      const rolesFiltered = roles.data.response.filter(
+        (el) => el.rol === userRol
+      );
+
+      localStorage.setItem(
+        "permisos",
+        JSON.stringify(rolesFiltered[0].permisos_permitidos)
+      );
+    }
+  }, [roles]);
 
   return (
     <>

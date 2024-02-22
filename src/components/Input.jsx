@@ -177,6 +177,7 @@ export const InputSelect = ({
   value,
   initialOption,
   children,
+  required,
 }) => {
   return (
     <div className="mb-3">
@@ -186,6 +187,7 @@ export const InputSelect = ({
         className="form-select"
         value={value.hasOwnProperty(name) ? value[name] : ""}
         onChange={handle}
+        required={required}
       >
         <option value="">{`${initialOption}...`}</option>
         {children}
@@ -195,6 +197,7 @@ export const InputSelect = ({
 };
 InputSelect.defaultProps = {
   initialOption: "Selecciona una opción",
+  required: false,
 };
 
 export const InputFile = ({

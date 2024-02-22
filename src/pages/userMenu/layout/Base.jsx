@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import itsr from "../../../assets/img/logoitsr.png";
+import Perm from "../../../auth/Perm";
 
 function Base() {
   const navigate = useNavigate();
@@ -11,12 +12,13 @@ function Base() {
       name: "Noticias",
       icon: "fa-solid fa-newspaper",
       route: "noticias",
+      show: Perm(8) || Perm(9) || Perm(10),
     },
     {
       name: "Banners",
       icon: "fa-solid fa-panorama",
-      activate: () => showBannersSection(),
       route: "banners",
+      show: Perm(5) || Perm(6) || Perm(7),
     },
     {
       name: "Convocatorias",
@@ -27,27 +29,31 @@ function Base() {
       name: "Etiquetas",
       icon: "fa-solid fa-tag",
       route: "etiquetas",
+      show: Perm(16),
     },
     {
       name: "Menus",
       icon: "fa-solid fa-bookmark",
       route: "menus-control",
+      show: Perm(17),
     },
     {
       name: "Menus secundarios",
       icon: "fa-solid fa-bookmark",
       route: "menus-control-secundarios",
+      show: Perm(18),
     },
     {
       name: "Usuarios",
       icon: "fa-solid fa-user",
       route: "user-control",
+      show: Perm(1),
     },
   ];
 
   const logout = () => {
     localStorage.removeItem("user");
-    window.close();
+    window.location.href = "/login";
   };
   return (
     <div
@@ -55,17 +61,20 @@ function Base() {
       data-bs-theme="dark"
     >
       <div className="w-15 d-flex flex-column justify-content-evenly align-items-end rounded bg-dark-mode-base user-side-bar">
-        {configOptions.map((el, i) => (
-          <NavLink
-            key={i}
-            /* onClick={el.activate}  */ /* role="button" */ to={el.route}
-            className="w-90 d-flex align-items-center justify-content-center"
-          >
-            <span>
-              <i className={`${el.icon} fs-4`} /> {el.name}
-            </span>
-          </NavLink>
-        ))}
+        {configOptions.map(
+          (el, i) =>
+            el.show && (
+              <NavLink
+                key={i}
+                to={el.route}
+                className="w-90 d-flex align-items-center justify-content-center"
+              >
+                <span>
+                  <i className={`${el.icon} fs-4`} /> {el.name}
+                </span>
+              </NavLink>
+            )
+        )}
       </div>
       <div className="w-85 h-100 d-flex flex-column">
         <div className="bg-dark-mode-base h-10 rounded p-2 d-flex gap-2">

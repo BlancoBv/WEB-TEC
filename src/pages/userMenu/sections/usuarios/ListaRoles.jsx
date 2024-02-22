@@ -8,6 +8,7 @@ import Axios from "../../../../axios/Axios";
 import { AlertsContexts } from "../../IndexMenu";
 import ContextualMenu, { show } from "../../../../components/ContextualMenu";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
+import Loader from "../../../../components/Loader";
 
 function ListaRoles() {
   const { showSuccess, showError } = useContext(AlertsContexts);
@@ -189,6 +190,11 @@ function ListaRoles() {
               error={error}
               onContextAction={display}
             />
+          </div>
+        )}
+        {isPending && (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+            <Loader />
           </div>
         )}
       </div>
