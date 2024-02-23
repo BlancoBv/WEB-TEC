@@ -1,6 +1,7 @@
 import React from "react";
 import useGetData from "../hooks/useGetData";
 import NoticiaCard from "./NoticiaCard";
+import Button from "./Button";
 
 function Noticias() {
   const { data, isPending } = useGetData(
@@ -22,6 +23,7 @@ function Noticias() {
           </div>
         </div>
       )}
+      <Button text="Ver anteriores" />
     </div>
   );
 }
