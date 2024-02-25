@@ -142,7 +142,9 @@ function ListaMenusSec() {
         </form>
       </Modal>
       <ContextualMenu elements={contextMenuOptions} />
-      {!isPending && <Success data={data.response} onContextAction={display} />}
+      {!isPending && (
+        <Success data={data.response} onContextAction={display} error={error} />
+      )}
       {isPending && (
         <div className="h-100 w-100 d-flex justify-content-center align-items-center">
           <Loader />
@@ -151,7 +153,7 @@ function ListaMenusSec() {
     </div>
   );
 }
-const Success = ({ data, onContextAction }) => {
+const Success = ({ data, onContextAction, error }) => {
   const columnas = {
     columnas: [
       {
@@ -180,6 +182,7 @@ const Success = ({ data, onContextAction }) => {
       columnas={columnas.columnas}
       dropdownOptions={columnas.dropdown}
       onContextAction={onContextAction}
+      error={error}
     />
   );
 };

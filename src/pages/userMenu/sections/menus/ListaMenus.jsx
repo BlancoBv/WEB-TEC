@@ -336,55 +336,9 @@ const Success = ({
       dropdownOptions={columnas.dropdown}
       onContextAction={showContextMenu}
       onContextActionSecondary={showContextMenuSecondary}
+      error={error}
     />
   );
-  {
-    /* <>
-      <div className="w-100">
-        <ScrollbarCustom>
-          <table className="w-100 tabla">
-            <thead>
-              <tr>
-                <th>Ultima actualización</th>
-                <th>Titulo</th>
-                <th>Ruta</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((el) => {
-                if (el.dropcollapse) {
-                  return (
-                    <AccordionTableMenus
-                      element={el}
-                      targets={["updatedAt", "categoria", "ruta"]}
-                      subcategoriaTargets={[
-                        "updatedAt",
-                        "subcategoria",
-                        "ruta",
-                      ]}
-                      showContextMenu={showContextMenu}
-                      showContextMenuSecondary={showContextMenuSecondary}
-                    />
-                  );
-                }
-                return (
-                  <tr
-                    key={el.idcategoria}
-                    title={el.titulo}
-                    onContextMenu={(e) => showContextMenu(e, el)}
-                  >
-                    <td>{el.updatedAt}</td>
-                    <td>{el.categoria}</td>
-                    <td>{el.ruta || "---"}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </ScrollbarCustom>
-      </div>
-    </> */
-  }
 };
 
 export default ListaMenus;

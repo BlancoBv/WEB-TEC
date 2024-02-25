@@ -1,8 +1,7 @@
-import React from "react";
-
 const Perm = (idPermiso) => {
-  const permisos = localStorage.getItem("permisos");
-  return true;
+  const permisos = JSON.parse(localStorage.getItem("user")).permisos || [];
+
+  return permisos.some((el) => el.permisoIdpermiso == idPermiso);
 };
 
 export default Perm;

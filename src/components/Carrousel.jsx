@@ -5,14 +5,26 @@ import useGetData from "../hooks/useGetData";
 import LoadingContent from "./LoadingContent";
 
 function Carrousel() {
-  const { data, isPending } = useGetData("/banners/obtener?mostrar=vigentes");
+  const { data, isPending, error } = useGetData(
+    "/banners/obtener?mostrar=vigentes"
+  );
 
   return (
     <div className="carrousel">
-      {!isPending && data.response.length > 0 && (
-        <Success images={data.response} />
-      )}
+      {!isPending && !error && <Success images={data.response} />}
       {isPending && <LoadingContent />}
+      {!isPending && error && (
+        <div className="no-carrousel">
+          <div className="icon-container">
+            <i className="fa-solid fa-images primary-icon" />
+            <i className="fa-solid fa-circle-xmark secondary-icon" />
+          </div>
+          <div className="text-center">
+            <h1>Nada por aquí...</h1>
+            <span>Espera a que suban contenido.</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

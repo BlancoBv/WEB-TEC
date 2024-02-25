@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Axios from "../../axios/Axios";
 import Button from "../../components/Button";
-import useGetData from "../../hooks/useGetData";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [badPassword, setBadPassword] = useState(false);
   const [data, setData] = useState({ usuario: "", password: "" });
   const [isPending, setIsPending] = useState(false);
   const handle = (e) => {
@@ -19,7 +19,7 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(req.data.response));
       window.location.href = "/panel";
     } catch (error) {
-      console.log(error);
+      setBadPassword(true);
     }
     setIsPending(false);
   };
@@ -28,7 +28,7 @@ function Login() {
     <div className="w-100 h-100 d-flex align-items-center justify-content-center login-background">
       <div className="login-container shadow">
         <img src="/img/login_background.jpg" loading="lazy" />
-        <form onSubmit={login}>
+        <form onSubmit={login} onFocus={() => setBadPassword(false)}>
           <h3 className="fw-bold">Panel de administración</h3>
           <span>Bienvenido</span>
           <div className="d-flex flex-column w-100 mb-3">
@@ -60,6 +60,11 @@ function Login() {
               </button>
             </div>
           </div>
+          {badPassword && (
+            <span className="text-danger fw-bold">
+              Usuario o contraseña incorrectos.
+            </span>
+          )}
           <Button type="submit" text="Acceder" pending={isPending} />
         </form>
       </div>

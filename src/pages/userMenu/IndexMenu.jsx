@@ -11,9 +11,6 @@ function IndexMenu() {
     status: false,
     text: "",
   });
-  const roles = useGetData("/auth/roles");
-
-  console.log(roles);
   const showSuccess = () => {
     setShowAlertSuccess(true);
     setTimeout(() => {
@@ -27,19 +24,6 @@ function IndexMenu() {
       setShowAlertError({ status: false, text: "" });
     }, 1000);
   };
-  useEffect(() => {
-    const userRol = JSON.parse(localStorage.getItem("user")).rol || null;
-    if (!roles.isPending) {
-      const rolesFiltered = roles.data.response.filter(
-        (el) => el.rol === userRol
-      );
-
-      localStorage.setItem(
-        "permisos",
-        JSON.stringify(rolesFiltered[0].permisos_permitidos)
-      );
-    }
-  }, [roles]);
 
   return (
     <>

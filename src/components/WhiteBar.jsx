@@ -7,7 +7,7 @@ import Dropdown from "./Dropdown";
 
 function WhiteBar() {
   const { data, isPending, error } = useGetData("/menu-blanco/obtener");
-  console.log(data);
+  console.log(data, error);
   return (
     <div className="white-bar" id="white-bar">
       <div className="images-container">
@@ -23,6 +23,7 @@ function WhiteBar() {
       </div>
       <nav>
         {!isPending &&
+          !error &&
           data.response.map((el) =>
             el.white_submenus.length > 0 ? (
               <Dropdown
@@ -31,6 +32,7 @@ function WhiteBar() {
                 key={el.idmenu}
                 targetUrl="url"
                 targetName="nombre"
+                title={el.nombre}
               />
             ) : (
               <a href={el.url} key={el.idmenu}>

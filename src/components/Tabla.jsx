@@ -48,41 +48,44 @@ export const TablaDropdown = ({
 }) => {
   return (
     <div className="overflow-auto h-100 w-100">
-      <table className="tabla">
-        <thead>
-          <tr>
-            {columnas.map((encabezado, index) => (
-              <th key={index}>{encabezado.name}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row) =>
-            dropdownOptions.condition(row) ? (
-              <AccordionTableMenus
-                element={row}
-                columnas={columnas}
-                subcolumnas={dropdownOptions.columnas}
-                subTarget={dropdownOptions.target}
-                onContextAction={onContextAction}
-                onContextActionSecondary={onContextActionSecondary}
-              />
-            ) : (
-              <tr
-                onClick={onClickAction ? () => onClickAction(row) : undefined}
-                onContextMenu={
-                  onContextAction ? (e) => onContextAction(e, row) : undefined
-                }
-                role="button"
-              >
-                {columnas.map((target) => (
-                  <td>{target.selector(row)}</td>
-                ))}
-              </tr>
-            )
-          )}
-        </tbody>
-      </table>
+      {!error && (
+        <table className="tabla">
+          <thead>
+            <tr>
+              {columnas.map((encabezado, index) => (
+                <th key={index}>{encabezado.name}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row) =>
+              dropdownOptions.condition(row) ? (
+                <AccordionTableMenus
+                  element={row}
+                  columnas={columnas}
+                  subcolumnas={dropdownOptions.columnas}
+                  subTarget={dropdownOptions.target}
+                  onContextAction={onContextAction}
+                  onContextActionSecondary={onContextActionSecondary}
+                />
+              ) : (
+                <tr
+                  onClick={onClickAction ? () => onClickAction(row) : undefined}
+                  onContextMenu={
+                    onContextAction ? (e) => onContextAction(e, row) : undefined
+                  }
+                  role="button"
+                >
+                  {columnas.map((target) => (
+                    <td>{target.selector(row)}</td>
+                  ))}
+                </tr>
+              )
+            )}
+          </tbody>
+        </table>
+      )}
+      {error && <NoContent />}
     </div>
   );
 };

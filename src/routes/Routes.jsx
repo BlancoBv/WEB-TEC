@@ -120,13 +120,13 @@ function Routes() {
       path: "/login",
       index: true,
       element: <Login />,
-      /*   loader: () => {
+      loader: () => {
         const user = localStorage.getItem("user");
         if (user) {
           return redirect("/panel");
         }
         return null;
-      }, */
+      },
     },
   ];
 

@@ -10,7 +10,6 @@ function useGetData(url, actualizador) {
   useEffect(() => {
     consultar(url)
       .then((res) => {
-        console.log(res);
         const { success, response } = res;
         if (success && response.length === 0) {
           setData(res);
@@ -23,7 +22,6 @@ function useGetData(url, actualizador) {
         }
       })
       .catch((err) => {
-        console.log(err);
         setDataError(err.data);
         setError(true);
         setIsPending(false);

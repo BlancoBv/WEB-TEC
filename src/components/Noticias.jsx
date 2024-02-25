@@ -4,13 +4,18 @@ import NoticiaCard from "./NoticiaCard";
 import Button from "./Button";
 
 function Noticias() {
-  const { data, isPending } = useGetData(
+  const { data, isPending, error } = useGetData(
     "/blogs/obtener?estatus=aceptado&limit=3"
   );
   return (
     <div className="noticias-section">
-      {!isPending && data.response.length > 0 ? (
-        data.response.map((el, i) => <NoticiaCard key={i} element={el} />)
+      {!isPending && !error ? (
+        <>
+          {data.response.map((el, i) => (
+            <NoticiaCard key={i} element={el} />
+          ))}
+          <Button text="Ver anteriores" />
+        </>
       ) : (
         <div className="no-noticia">
           <div className="icon-container">
@@ -23,7 +28,6 @@ function Noticias() {
           </div>
         </div>
       )}
-      <Button text="Ver anteriores" />
     </div>
   );
 }

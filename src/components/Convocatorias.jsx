@@ -8,10 +8,8 @@ function Convocatorias() {
   console.log({ data, isPending, error });
   return (
     <div className="convocatorias-section">
-      {!isPending && data.response.length > 0 && (
-        <Success convocatorias={data.response} />
-      )}
-      {!isPending && data.response.length <= 0 && (
+      {!isPending && !error && <Success convocatorias={data.response} />}
+      {!isPending && error && (
         <div className="no-convocatoria">
           <div className="icon-container">
             <i className="fa-solid fa-file-lines primary-icon" />
