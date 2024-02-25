@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import useGetData from "../../../../hooks/useGetData";
 import Loader from "../../../../components/Loader";
 import Modal from "../../../../components/Modal";
-import { urlMain } from "../../../../axios/Axios";
-import { Scrollbar } from "react-scrollbars-custom";
 import NoticiaContent from "../../../../components/NoticiaContent";
 import Tabla from "../../../../components/Tabla";
 import format from "../../../../assets/format";

@@ -1,8 +1,18 @@
 .noticias-section {
   min-height: 20rem;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
+  a {
+    text-decoration: none;
+  }
+  .noticias-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
   .no-noticia {
     height: 100%;
     width: 100%;

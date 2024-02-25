@@ -33,12 +33,15 @@ import Users_index from "../pages/userMenu/sections/usuarios/Users_index";
 import ListaUsuarios from "../pages/userMenu/sections/usuarios/ListaUsuarios";
 import ListaPermisos from "../pages/userMenu/sections/usuarios/ListaPermisos";
 import ListaRoles from "../pages/userMenu/sections/usuarios/ListaRoles";
+import ErrorPage from "../components/ErrorPage";
+import AllNoticias from "../pages/noticiaSearchByLabel/AllNoticias";
 
 function Routes() {
   const { data, isPending, error } = useGetData("/categorias/obtener");
   const rutasIndex = [
     { index: true, element: <Home /> },
     { path: "search/:label", element: <SearchByLabel /> },
+    { path: "todas-noticias", element: <AllNoticias /> },
   ];
   const rutasPanel = {
     path: "panel",
@@ -114,7 +117,7 @@ function Routes() {
       path: "/",
       element: <IndexLayout />,
       children: rutasIndex,
-      errorElement: <div>Pagina no encontrada</div>,
+      errorElement: <ErrorPage />,
     },
     {
       path: "/login",
@@ -150,8 +153,6 @@ function Routes() {
   const token = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")).token
     : null;
-
-  console.log({ data, isPending, error });
 
   return (
     !isPending && (

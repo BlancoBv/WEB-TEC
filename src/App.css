@@ -24,6 +24,7 @@
 @import "../src/assets/css/Convocatorias.css";
 @import "../src/assets/css/Login.css";
 @import "../src/assets/css/Button.css";
+@import "../src/assets/css/ErrorPage.css";
 
 .bg-dark-mode {
   background-color: #000;

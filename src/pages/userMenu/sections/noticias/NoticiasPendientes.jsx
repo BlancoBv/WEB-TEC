@@ -25,7 +25,7 @@ function NoticiasPendientes() {
   const [showPreview, setShowPreview] = useState(false);
   const [body, setBody] = useState({});
 
-  const { data, isPending } = useGetData(
+  const { data, isPending, error } = useGetData(
     "/blogs/obtener?estatus=pendiente&mostrarSinVigencia=true",
     actualizador
   );
@@ -176,6 +176,7 @@ function NoticiasPendientes() {
           datos={data.response}
           display={display}
           showPreview={previewBlog}
+          error={error}
         />
       )}
       {isPending && <Loader />}
@@ -183,7 +184,7 @@ function NoticiasPendientes() {
   );
 }
 
-const Success = ({ datos, showPreview, display }) => {
+const Success = ({ datos, showPreview, display, error }) => {
   const columnas = [
     {
       name: "Ultima Actualización",
@@ -201,6 +202,7 @@ const Success = ({ datos, showPreview, display }) => {
       columnas={columnas}
       onContextAction={display}
       onClickAction={showPreview}
+      error={error}
     />
   );
 };
