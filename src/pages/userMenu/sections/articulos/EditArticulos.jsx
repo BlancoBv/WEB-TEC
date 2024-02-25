@@ -11,11 +11,15 @@ import UploadImages from "../../../../components/UploadImages";
 
 function EditArticulos() {
   const { ruta } = useParams();
-  const { data, isPending } = useGetData(`/articulos/obtener/${ruta}`);
+  const { data, isPending, error } = useGetData(`/articulos/obtener/${ruta}`);
 
   return (
     <>
-      {!isPending ? <Success data={data.response} ruta={ruta} /> : <Loader />}
+      {!isPending ? (
+        <Success data={error ? data : data.response} ruta={ruta} />
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }
