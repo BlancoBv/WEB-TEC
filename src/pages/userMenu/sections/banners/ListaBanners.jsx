@@ -10,6 +10,7 @@ import Tabla from "../../../../components/Tabla";
 import format from "../../../../assets/format";
 import ContextualMenu, { show } from "../../../../components/ContextualMenu";
 import Button from "../../../../components/Button";
+import Perm from "../../../../auth/Perm";
 
 function Banners() {
   const { showSuccess, showError } = useContext(AlertsContexts);
@@ -264,10 +265,14 @@ function Banners() {
         close={() => setShowConfirmLink(false)}
         action={deleteBannerLink}
       />
-      <div className="h-10">
-        <button onClick={() => setShowAddBanner(true)}>Nuevo banner</button>
-      </div>
-      <div className="h-90 rounded bg-dark-mode-base p-2">
+      {Perm(5) && (
+        <div className="h-10">
+          <button onClick={() => setShowAddBanner(true)}>Nuevo banner</button>
+        </div>
+      )}
+      <div
+        className={`h-${Perm(5) ? "90" : "100"} rounded bg-dark-mode-base p-2`}
+      >
         {!isPending && (
           <Success
             data={data.response}

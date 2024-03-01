@@ -24,6 +24,7 @@ function Base() {
       name: "Convocatorias",
       icon: "fa-solid fa-newspaper",
       route: "convocatorias",
+      show: Perm(13) || Perm(14) || Perm(15),
     },
     {
       name: "Etiquetas",
@@ -113,12 +114,15 @@ function Base() {
 export const NavigationMenuUser = ({ tabs, mainRoute }) => {
   return (
     <div className="nav-menu-tabs">
-      {tabs.map((el) => (
-        <NavLink to={`${el.route}`} key={el.name} end>
-          <i className={el.icon} />
-          <span>{el.name}</span>
-        </NavLink>
-      ))}
+      {tabs.map(
+        (el) =>
+          el.show && (
+            <NavLink to={`${el.route}`} key={el.name} end>
+              <i className={el.icon} />
+              <span>{el.name}</span>
+            </NavLink>
+          )
+      )}
     </div>
   );
 };

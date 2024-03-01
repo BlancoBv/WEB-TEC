@@ -1,12 +1,23 @@
 import React from "react";
 import { NavigationMenuUser } from "../../layout/Base";
 import { Outlet } from "react-router-dom";
+import Perm from "../../../../auth/Perm";
 
 function Noticias_Index() {
   const tabs = [
-    { name: "Lista", route: "", icon: "fa-solid fa-table-list" },
-    { name: "Crear", route: "crear", icon: "fa-solid fa-square-plus" },
-    { name: "Pendientes", route: "pendientes", icon: "fa-solid fa-clock" },
+    { name: "Lista", route: "", icon: "fa-solid fa-table-list", show: true },
+    {
+      name: "Crear",
+      route: "crear",
+      icon: "fa-solid fa-square-plus",
+      show: Perm(8),
+    },
+    {
+      name: "Pendientes",
+      route: "pendientes",
+      icon: "fa-solid fa-clock",
+      show: Perm(9),
+    },
   ];
 
   return (

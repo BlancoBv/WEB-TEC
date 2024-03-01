@@ -3,16 +3,23 @@ import { NavigationMenuUser } from "../../layout/Base";
 import { Outlet } from "react-router-dom";
 function Users_index() {
   const tabs = [
-    { name: "Lista de usuarios", route: "", icon: "fa-solid fa-table-list" },
+    {
+      name: "Lista de usuarios",
+      route: "",
+      icon: "fa-solid fa-table-list",
+      show: true,
+    },
     {
       name: "Permisos",
       route: "permisos",
       icon: "fa-solid fa-user-shield",
+      show: true,
     },
     {
       name: "Roles",
       route: "roles",
       icon: "fa-solid fa-person-circle-question",
+      show: true,
     },
   ];
   return (

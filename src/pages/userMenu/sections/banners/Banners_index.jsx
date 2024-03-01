@@ -2,7 +2,9 @@ import { NavigationMenuUser } from "../../layout/Base";
 import { Outlet } from "react-router-dom";
 
 function Banners_index() {
-  const tabs = [{ name: "Lista", route: "", icon: "fa-solid fa-table-list" }];
+  const tabs = [
+    { name: "Lista", route: "", icon: "fa-solid fa-table-list", show: true },
+  ];
   return (
     <div className="d-flex flex-column w-100 h-100">
       <NavigationMenuUser tabs={tabs} mainRoute="noticias" />

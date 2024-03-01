@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [badPassword, setBadPassword] = useState(false);
+  const [truePassword, setTruePassword] = useState(false);
   const [data, setData] = useState({ usuario: "", password: "" });
   const [isPending, setIsPending] = useState(false);
   const handle = (e) => {
@@ -16,6 +17,7 @@ function Login() {
     e.preventDefault();
     try {
       const req = await Axios.post("/auth/login", data);
+      setTruePassword(true);
       localStorage.setItem("user", JSON.stringify(req.data.response));
       window.location.href = "/panel";
     } catch (error) {
@@ -63,6 +65,11 @@ function Login() {
           {badPassword && (
             <span className="text-danger fw-bold">
               Usuario o contraseña incorrectos.
+            </span>
+          )}
+          {truePassword && (
+            <span className="text-success fw-bold">
+              Autenticado, redirigiendo...
             </span>
           )}
           <Button type="submit" text="Acceder" pending={isPending} />
