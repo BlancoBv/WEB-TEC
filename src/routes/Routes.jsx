@@ -35,6 +35,7 @@ import ListaPermisos from "../pages/userMenu/sections/usuarios/ListaPermisos";
 import ListaRoles from "../pages/userMenu/sections/usuarios/ListaRoles";
 import ErrorPage from "../components/ErrorPage";
 import AllNoticias from "../pages/noticiaSearchByLabel/AllNoticias";
+import EditarNoticia from "../pages/userMenu/sections/noticias/EditarNoticia";
 
 function Routes() {
   const { data, isPending, error } = useGetData("/categorias/obtener");
@@ -51,7 +52,6 @@ function Routes() {
         path: "article/:ruta",
         element: <EditArticulos />,
       },
-      ,
       {
         path: "noticias",
         element: <Noticias_Index />,
@@ -61,7 +61,13 @@ function Routes() {
             path: "crear",
             element: <AddNoticias />,
           },
-          { path: "pendientes", element: <NoticiasPendientes /> },
+          {
+            path: "pendientes",
+            children: [
+              { index: true, element: <NoticiasPendientes /> },
+              { path: "editar/:idNoticia", element: <EditarNoticia /> },
+            ],
+          },
         ],
       },
       {

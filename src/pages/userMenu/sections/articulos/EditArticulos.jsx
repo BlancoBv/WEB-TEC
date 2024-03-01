@@ -8,6 +8,7 @@ import format from "../../../../assets/format";
 import Loader from "../../../../components/Loader";
 import htmlToDraft from "html-to-draftjs";
 import UploadImages from "../../../../components/UploadImages";
+import Button from "../../../../components/Button";
 
 function EditArticulos() {
   const { ruta } = useParams();
@@ -77,7 +78,7 @@ const Success = ({ data, ruta }) => {
   };
 
   return (
-    <div className="w-100 h-100 bg-dark-mode text-white d-flex gap-2">
+    <div className="w-100 h-90 bg-dark-mode text-white d-flex gap-2 mt-2">
       <form
         onSubmit={data ? update : save}
         className="rounded bg-dark-mode-base w-75 h-100 p-2"
@@ -115,7 +116,7 @@ const Success = ({ data, ruta }) => {
           <button type="button" onClick={closeWindow}>
             Cerrar
           </button>
-          <button type="submit">Guardar</button>
+          <Button type="submit" text="Guardar" />
         </div>
       </form>
 

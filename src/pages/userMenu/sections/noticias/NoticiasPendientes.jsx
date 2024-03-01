@@ -1,8 +1,8 @@
 import useGetData from "../../../../hooks/useGetData";
 import format from "../../../../assets/format";
 import Modal, { ModalBottom, ModalConfirm } from "../../../../components/Modal";
-import { InputSelect, InputSwitchAction } from "../../../../components/Input";
-import Axios from "../../../../axios/Axios";
+import { InputImage, InputSwitchAction } from "../../../../components/Input";
+import Axios, { multipartHeader, urlMain } from "../../../../axios/Axios";
 import { useState, useContext } from "react";
 import { AlertsContexts } from "../../IndexMenu";
 import Loader from "../../../../components/Loader";
@@ -11,9 +11,12 @@ import Tabla from "../../../../components/Tabla";
 import ContextualMenu, { show } from "../../../../components/ContextualMenu";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
 import Perm from "../../../../auth/Perm";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../../components/Button";
 
 function NoticiasPendientes() {
   const { showSuccess, showError } = useContext(AlertsContexts);
+  const navigate = useNavigate();
   const [labels, setLabels] = useState([]);
   const [showLabels, setShowLabels] = useState(false);
   const [actualizador, setActualizador] = useState(false);
@@ -23,6 +26,7 @@ function NoticiasPendientes() {
     type: "",
     value: "",
   });
+  const [showEditImage, setShowEditImage] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [body, setBody] = useState({});
 
@@ -59,6 +63,25 @@ function NoticiasPendientes() {
       showError();
     }
   };
+  const updateImagenPrincipal = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("imagen", body.imagen.file);
+    try {
+      await Axios.put(
+        `/blogs/actualizarimagenprincipalxidblog/${relativeData.idblog}`,
+        formData,
+        multipartHeader
+      );
+      showSuccess();
+      setActualizador(!actualizador);
+      setShowEditImage(false);
+      setBody({});
+    } catch (error) {
+      showError();
+    }
+  };
+
   const display = (event, element) => {
     show({ event });
     setRelativeData(element);
@@ -94,16 +117,28 @@ function NoticiasPendientes() {
       },
       show: Perm(9),
     },
-    { content: "separator", show: Perm(19) },
+    { content: "separator", show: Perm(19) || Perm(10) },
     {
-      content: "Editar etiquetas",
-      icon: "fa-pen-to-square",
+      content: "Añadir/editar etiquetas",
+      icon: "fa-tag",
       action: () => {
         const etiqueta = relativeData.etiquetas.map((el) => el.idetiqueta);
         setShowLabels(true);
         setLabels(etiqueta);
       },
       show: Perm(19),
+    },
+    {
+      content: "Editar noticia",
+      icon: "fa-newspaper",
+      action: () => navigate(`editar/${relativeData.idblog}`),
+      show: Perm(10),
+    },
+    {
+      content: "Editar imagen principal",
+      icon: "fa-image",
+      action: () => setShowEditImage(true),
+      show: Perm(10),
     },
   ];
 
@@ -172,6 +207,46 @@ function NoticiasPendientes() {
           <ModalBottom>
             <button type="submit">Guardar</button>
           </ModalBottom>
+        </form>
+      </Modal>
+      <Modal
+        title="Editar imagen"
+        show={showEditImage}
+        close={() => setShowEditImage(false)}
+        darkMode
+      >
+        <form className="h-100 w-100" onSubmit={updateImagenPrincipal}>
+          <div className="d-flex justify-content-evenly align-items-center h-10">
+            <InputImage
+              label="Selecciona la nueva imagen"
+              variable={body}
+              setVariable={setBody}
+              name="imagen"
+            />
+            <Button text="Guardar" type="submit" />
+          </div>
+          <div className="h-90 w-100 d-flex gap-2">
+            <div className="d-flex flex-column w-50 h-100">
+              <ScrollbarCustom>
+                <h4>Imagen actual</h4>
+                <img
+                  src={`${urlMain}${relativeData.imagen}`}
+                  alt="previsualización"
+                  width="100%"
+                />
+              </ScrollbarCustom>
+            </div>
+            <div className="d-flex flex-column w-50 h-100">
+              <ScrollbarCustom>
+                <h4>Imagen nueva</h4>
+                <img
+                  src={body.hasOwnProperty("imagen") && body.imagen.src}
+                  alt="previsualización"
+                  width="100%"
+                />
+              </ScrollbarCustom>
+            </div>
+          </div>
         </form>
       </Modal>
       {!isPending && (
