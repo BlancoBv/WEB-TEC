@@ -15,6 +15,7 @@ import Loader from "../../../../components/Loader";
 import Button from "../../../../components/Button";
 import Tabla from "../../../../components/Tabla";
 import format from "../../../../assets/format";
+import Perm from "../../../../auth/Perm";
 
 function ListaConvocatorias() {
   const [relativeData, setRelativeData] = useState({});
@@ -106,6 +107,7 @@ function ListaConvocatorias() {
   const contextMenuOptions = [
     {
       content: "Editar titulo o descripción",
+      icon: "fa-pen-to-square",
       action: () => {
         setBodyTitles({
           titulo: relativeData.titulo,
@@ -114,13 +116,16 @@ function ListaConvocatorias() {
         });
         setShowModal({ status: true, title: "Editar titulos", type: "titles" });
       },
+      show: Perm(14),
     },
     {
       content: "submenu",
+      icon: "fa-file",
       label: "Editar archivos",
       subOptions: [
         {
           content: "Imagen",
+          icon: "fa-image",
           action: () => {
             setBodyFiles({
               srcActual: `${urlMain}${relativeData.imagen}`,
@@ -134,6 +139,7 @@ function ListaConvocatorias() {
         },
         {
           content: "PDF o enlace",
+          icon: "fa-link",
           action: () => {
             setBodyFiles({
               srcActual: `${urlMain}${relativeData.pdf}`,
@@ -146,9 +152,10 @@ function ListaConvocatorias() {
           },
         },
       ],
+      show: Perm(14),
     },
 
-    { content: "separator" },
+    { content: "separator", show: Perm(15) },
 
     {
       content: "Eliminar",
@@ -157,6 +164,7 @@ function ListaConvocatorias() {
       action: () => {
         setShowConfirm(true);
       },
+      show: Perm(15),
     },
   ];
 

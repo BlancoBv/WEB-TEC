@@ -9,6 +9,7 @@ import Button from "../../../../components/Button";
 import Tabla from "../../../../components/Tabla";
 import format from "../../../../assets/format";
 import Loader from "../../../../components/Loader";
+import Perm from "../../../../auth/Perm";
 
 function ManageLabels() {
   const [body, setBody] = useState({});
@@ -82,13 +83,15 @@ function ManageLabels() {
         setBody({ etiqueta: relativeData.etiqueta });
         setShowModal({ status: true, title: "Editar etiqueta", type: "edit" });
       },
+      show: Perm(22),
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(23) },
     {
       content: "Eliminar",
       style: "text-danger",
       icon: "fa-trash-can",
       action: () => setShowConfirm(true),
+      show: Perm(23),
     },
   ];
   return (

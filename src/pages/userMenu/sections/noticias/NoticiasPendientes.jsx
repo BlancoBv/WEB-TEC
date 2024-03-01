@@ -10,6 +10,7 @@ import NoticiaContent from "../../../../components/NoticiaContent";
 import Tabla from "../../../../components/Tabla";
 import ContextualMenu, { show } from "../../../../components/ContextualMenu";
 import ScrollbarCustom from "../../../../components/ScrollbarCustom";
+import Perm from "../../../../auth/Perm";
 
 function NoticiasPendientes() {
   const { showSuccess, showError } = useContext(AlertsContexts);
@@ -77,8 +78,9 @@ function NoticiasPendientes() {
       disabled:
         relativeData.hasOwnProperty("etiquetas") &&
         relativeData.etiquetas.length <= 0,
+      show: Perm(9),
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(9) },
     {
       content: "Rechazar",
       icon: "fa-xmark",
@@ -90,17 +92,18 @@ function NoticiasPendientes() {
           value: "rechazado",
         });
       },
+      show: Perm(9),
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(19) },
     {
       content: "Editar etiquetas",
       icon: "fa-pen-to-square",
       action: () => {
-        console.log(relativeData);
         const etiqueta = relativeData.etiquetas.map((el) => el.idetiqueta);
         setShowLabels(true);
         setLabels(etiqueta);
       },
+      show: Perm(19),
     },
   ];
 

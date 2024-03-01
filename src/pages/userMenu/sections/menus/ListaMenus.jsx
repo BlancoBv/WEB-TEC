@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import regularExp from "../../../../assets/regularExp";
 import Button from "../../../../components/Button";
 import { TablaDropdown } from "../../../../components/Tabla";
+import Perm from "../../../../auth/Perm";
 
 function ListaMenus() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ function ListaMenus() {
           type: "update",
         });
       },
+      show: true,
     },
     {
       content: "Añadir subcategoria",
@@ -80,8 +82,9 @@ function ListaMenus() {
       disabled:
         relativeData.hasOwnProperty("dropcollapse") &&
         !relativeData.dropcollapse,
+      show: true,
     },
-    { content: "separator" },
+    { content: "separator", show: true },
     {
       content: "Editar articulo",
       icon: "fa-file-code",
@@ -90,8 +93,9 @@ function ListaMenus() {
       },
       disabled:
         relativeData.dropcollapse || regularExp("http", relativeData.ruta),
+      show: Perm(2) || Perm(3),
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(5) },
     {
       content: "Eliminar",
       style: "text-danger",
@@ -102,6 +106,7 @@ function ListaMenus() {
           route: "/categorias/eliminar/",
           target: "idcategoria",
         }),
+      show: Perm(5),
     },
   ];
   //opciones del menu de las subcategorias
@@ -126,8 +131,9 @@ function ListaMenus() {
           type: "update",
         });
       },
+      show: true,
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(3) },
     {
       content: "Editar articulo",
       icon: "fa-file-code",
@@ -136,8 +142,9 @@ function ListaMenus() {
       },
       disabled:
         relativeData.dropcollapse || regularExp("http", relativeData.ruta),
+      show: Perm(3),
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(4) },
     {
       content: "Eliminar",
       style: "text-danger",
@@ -148,6 +155,7 @@ function ListaMenus() {
           route: "/subcategorias/eliminar/",
           target: "idsubcategoria",
         }),
+      show: Perm(4),
     },
   ];
   const handle = (e) => {
@@ -203,7 +211,6 @@ function ListaMenus() {
       showError();
     }
   };
-  console.log(showModal);
 
   return (
     <div className="h-100 w-100 d-flex flex-column gap-2">

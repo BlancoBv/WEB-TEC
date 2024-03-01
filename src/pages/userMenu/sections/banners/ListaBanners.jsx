@@ -130,14 +130,16 @@ function Banners() {
       content: relativeData.mostrar ? "Dejar de mostrar" : "Hacer visible",
       icon: "fa-eye",
       action: updateVisibility,
+      show: Perm(20),
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(6) },
     {
       content: "Editar imagen",
       icon: "fa-pen-to-square",
       action: () => {
         setShowEditImage(true);
       },
+      show: Perm(6),
     },
     {
       content: "Añadir/editar enlace",
@@ -146,13 +148,15 @@ function Banners() {
         setBody({ url: relativeData.url });
         setShowEditLink(true);
       },
+      show: Perm(6),
     },
-    { content: "separator" },
+    { content: "separator", show: Perm(7) || Perm(21) },
     {
       content: "Eliminar",
       style: "text-danger",
       icon: "fa-trash-can",
       action: () => setShowConfirm(true),
+      show: Perm(7),
     },
     {
       content: "Eliminar enlace",
@@ -160,6 +164,7 @@ function Banners() {
       icon: "fa-trash-can",
       action: () => setShowConfirmLink(true),
       disabled: !relativeData.url,
+      show: Perm(21),
     },
   ];
 

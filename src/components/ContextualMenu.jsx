@@ -14,38 +14,51 @@ export const { show } = useContextMenu({
 function ContextualMenu({ elements, id }) {
   const SEPARATOR = "separator";
   const SUBMENU = "submenu";
+  const HASVALIDPERMS = elements.some((item) => item.show === true);
   return (
-    <Menu id={id}>
-      {elements.map((el, i) => {
-        if (el.content === SEPARATOR) {
-          return <Separator key={i} />;
-        }
-        if (el.content === SUBMENU) {
-          return (
-            <Submenu label={el.label} key={i}>
-              {el.subOptions.map((option) => (
-                <Item key={option.content} onClick={option.action}>
-                  {option.content}
+    <>
+      {HASVALIDPERMS && (
+        <Menu id={id}>
+          {elements.map((el, i) => {
+            if (el.content === SEPARATOR && el.show) {
+              return <Separator key={i} />;
+            }
+            if (el.content === SUBMENU && el.show) {
+              return (
+                <Submenu
+                  label={
+                    <span>
+                      <i className={`fa-solid ${el.icon}`} /> {el.label}
+                    </span>
+                  }
+                  key={i}
+                >
+                  {el.subOptions.map((option) => (
+                    <Item key={option.content} onClick={option.action}>
+                      <span>
+                        {" "}
+                        <i className={`fa-solid ${option.icon}`} />{" "}
+                        {option.content}
+                      </span>
+                    </Item>
+                  ))}
+                </Submenu>
+              );
+            }
+            if (el.show) {
+              return (
+                <Item onClick={el.action} key={i} disabled={el.disabled}>
+                  <span className={el.style}>
+                    <i className={`fa-solid ${el.icon}`} /> {el.content}
+                  </span>
                 </Item>
-              ))}
-            </Submenu>
-          );
-        }
-
-        return (
-          <Item onClick={el.action} key={i} disabled={el.disabled}>
-            <span className={el.style}>
-              <i className={`fa-solid ${el.icon}`} /> {el.content}
-            </span>
-          </Item>
-        );
-      })}
-
-      {/* <Submenu label="Submenu">
-          <Item onClick={handleItemClick}>Sub Item 1</Item>
-          <Item onClick={handleItemClick}>Sub Item 2</Item>
-        </Submenu> */}
-    </Menu>
+              );
+            }
+            return null;
+          })}
+        </Menu>
+      )}
+    </>
   );
 }
 ContextualMenu.defaultProps = {

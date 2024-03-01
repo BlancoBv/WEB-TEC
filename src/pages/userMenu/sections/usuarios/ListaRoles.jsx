@@ -68,13 +68,15 @@ function ListaRoles() {
         setBody({ rol: relativeData.rol, permisos: [] });
         setShowAddPerms(true);
       },
+      show: true,
     },
-    { content: "separator" },
+    { content: "separator", show: true },
     {
       content: "Eliminar",
       style: "text-danger",
       icon: "fa-trash-can",
       action: () => setShowConfirm(true),
+      show: true,
     },
   ];
   console.log(body);

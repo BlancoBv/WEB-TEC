@@ -73,6 +73,7 @@ function ListaMenusSec() {
         setBody({ nombre, url });
         setShowEditMenu({ status: true, type: "editMenu" });
       },
+      show: true,
     },
     {
       content: "Añadir subcategoria",
@@ -82,8 +83,9 @@ function ListaMenusSec() {
         setBody({ idMenu: idmenu });
         setShowEditMenu({ status: true, type: "addSub" });
       },
+      show: true,
     },
-    { content: "separator" },
+    { content: "separator", show: true },
     {
       content: "Eliminar",
       style: "text-danger",
@@ -97,6 +99,7 @@ function ListaMenusSec() {
       disabled:
         relativeData.hasOwnProperty("white_submenus") &&
         relativeData.white_submenus.length > 0,
+      show: true,
     },
   ];
 
